@@ -1,0 +1,29 @@
+{
+  "text": "– 15.10.2026 r. – odwołane Słowiki",
+  "textSha256": "e8162c3d177ba07ce9968036c3ea1010bc3ff48d4a1b483ca0ebd1c1911039a6",
+  "model": "claude-opus-5-5",
+  "promptVersion": "2026-10-28.1",
+  "createdAt": "2026-10-28T22:53:54.740Z",
+  "usage": {
+    "input_tokens": 2199,
+    "output_tokens": 98
+  },
+  "output": {
+    "is_schedule_change": true,
+    "changes": [
+      {
+        "type": "cancelled",
+        "dates": [
+          "2026-10-15"
+        ],
+        "activity_ref": "Słowiki",
+        "group_refs": [],
+        "new_date": null,
+        "new_start": null,
+        "new_end": null,
+        "uncertain": false,
+        "note": null
+      }
+    ]
+  }
+}

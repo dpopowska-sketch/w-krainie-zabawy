@@ -1,0 +1,15 @@
+{
+  "text": "Harmonogram zajęć w projekcie „W krainie zabawy”.",
+  "textSha256": "4c72f521e7a399f4293d0227dfadb8f45718261fa694ef1b9eb023b99d2e46b7",
+  "model": "claude-opus-5-5",
+  "promptVersion": "2026-10-28.1",
+  "createdAt": "2026-10-28T22:53:43.877Z",
+  "usage": {
+    "input_tokens": 2204,
+    "output_tokens": 21
+  },
+  "output": {
+    "is_schedule_change": false,
+    "changes": []
+  }
+}

@@ -14,6 +14,7 @@ import {
   SOURCE_PAGE_URL,
   SOURCES_DIR,
   USER_AGENT,
+  isMain,
   loadGroups,
   readJsonIfExists,
   writeJson,
@@ -250,7 +251,7 @@ export async function discover(): Promise<Manifest> {
   }
 }
 
-if (process.argv[1]?.endsWith("discover.ts")) {
+if (isMain(import.meta.url)) {
   discover().catch((err) => {
     console.error("Synchronizacja nie powiodła się:", err);
     process.exitCode = 1;

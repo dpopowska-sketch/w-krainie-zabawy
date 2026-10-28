@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 export const ROOT = process.cwd();
 export const DATA_DIR = path.join(ROOT, "data");
@@ -56,6 +57,13 @@ export function readJsonIfExists<T>(file: string): T | undefined {
 export function writeJson(file: string, value: unknown): void {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, JSON.stringify(value, null, 2) + "\n", "utf8");
+}
+
+/** Czy ten plik został uruchomiony bezpośrednio (a nie zaimportowany przez inny skrypt). */
+export function isMain(importMetaUrl: string): boolean {
+  if (!process.argv[1]) return false;
+  const norm = (p: string) => path.resolve(p).toLowerCase();
+  return norm(process.argv[1]) === norm(fileURLToPath(importMetaUrl));
 }
 
 /** Ładuje .env, jeśli istnieje (klucz API nie jest wtedy potrzebny w zmiennych systemowych). */

@@ -1,0 +1,283 @@
+[
+  {
+    "text": "Harmonogram zajęć w projekcie „W krainie zabawy”.",
+    "textSha256": "4c72f521e7a399f4293d0227dfadb8f45718261fa694ef1b9eb023b99d2e46b7",
+    "firstSeen": "2026-10-28T22:53:43.877Z",
+    "isScheduleChange": false,
+    "changes": []
+  },
+  {
+    "text": "Zmiany terminów zajęć:",
+    "textSha256": "caa849fd27965b7fe380b550725df98cd8f7040b57ccacb532b39e38e02fe1eb",
+    "firstSeen": "2026-10-28T22:53:45.922Z",
+    "isScheduleChange": false,
+    "changes": []
+  },
+  {
+    "text": "– 5.10.2026 r. – odwołane zajęcia z preorientacji zawodowej – Sówki",
+    "textSha256": "8fb045778dce78523cec7f85cf17e252460e0ed1729fd42eb5adbd1d3b453b1c",
+    "firstSeen": "2026-10-28T22:53:48.593Z",
+    "isScheduleChange": true,
+    "changes": [
+      {
+        "change": {
+          "type": "cancelled",
+          "dates": [
+            "2026-10-05"
+          ],
+          "activity_ref": "preorientacji zawodowej",
+          "group_refs": [
+            "Sówki"
+          ],
+          "new_date": null,
+          "new_start": null,
+          "new_end": null,
+          "uncertain": false,
+          "note": null
+        },
+        "resolution": {
+          "status": "needs_review",
+          "reason": "Brak terminu „Zajęcia z preorientacji zawodowej” w dniu 2026-10-05 w harmonogramie"
+        }
+      }
+    ]
+  },
+  {
+    "text": "– 6.10.2026 r. – odwołane zajęcia z kk – grupa Miki",
+    "textSha256": "e2db117ad0ff2e7a8d21c70cd458eb2c32fe09fa45088acfb953b3920279552d",
+    "firstSeen": "2026-10-28T22:53:51.473Z",
+    "isScheduleChange": true,
+    "changes": [
+      {
+        "change": {
+          "type": "cancelled",
+          "dates": [
+            "2026-10-06"
+          ],
+          "activity_ref": "kk",
+          "group_refs": [
+            "Miki"
+          ],
+          "new_date": null,
+          "new_start": null,
+          "new_end": null,
+          "uncertain": false,
+          "note": null
+        },
+        "resolution": {
+          "status": "applied",
+          "effects": [
+            {
+              "kind": "cancel",
+              "target": {
+                "key": "motylki|2026-10-06|07:30",
+                "group": "motylki",
+                "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+                "date": "2026-10-06",
+                "start": "07:30",
+                "end": "08:30"
+              }
+            }
+          ],
+          "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+          "groups": [
+            "motylki",
+            "wilczki"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "text": "– 20.10. 2026 r., 27.10.2026 r. – odwołane zajęcia Przedszkolak Mały Projektant",
+    "textSha256": "d626000111ad5f09d21c3a1d42768df492fa670dbbdabbac05fce02dfeaf3462",
+    "firstSeen": "2026-10-28T22:53:53.070Z",
+    "isScheduleChange": true,
+    "changes": [
+      {
+        "change": {
+          "type": "cancelled",
+          "dates": [
+            "2026-10-20",
+            "2026-10-27"
+          ],
+          "activity_ref": "Przedszkolak Mały Projektant",
+          "group_refs": [],
+          "new_date": null,
+          "new_start": null,
+          "new_end": null,
+          "uncertain": false,
+          "note": null
+        },
+        "resolution": {
+          "status": "applied",
+          "effects": [
+            {
+              "kind": "cancel",
+              "target": {
+                "key": "sloneczka|2026-10-20|07:30",
+                "group": "sloneczka",
+                "activity": "Zajęcia Przedszkolak Mały projektant i technolog",
+                "date": "2026-10-20",
+                "start": "07:30",
+                "end": "08:30"
+              }
+            },
+            {
+              "kind": "cancel",
+              "target": {
+                "key": "wiewiorki|2026-10-20|07:30",
+                "group": "wiewiorki",
+                "activity": "Zajęcia Przedszkolak Mały projektant i technolog",
+                "date": "2026-10-20",
+                "start": "07:30",
+                "end": "08:30"
+              }
+            },
+            {
+              "kind": "cancel",
+              "target": {
+                "key": "sowki|2026-10-20|07:30",
+                "group": "sowki",
+                "activity": "Zajęcia Przedszkolak Mały projektant i technolog",
+                "date": "2026-10-20",
+                "start": "07:30",
+                "end": "08:30"
+              }
+            },
+            {
+              "kind": "cancel",
+              "target": {
+                "key": "zabki|2026-10-20|07:30",
+                "group": "zabki",
+                "activity": "Zajęcia Przedszkolak Mały projektant i technolog",
+                "date": "2026-10-20",
+                "start": "07:30",
+                "end": "08:30"
+              }
+            },
+            {
+              "kind": "cancel",
+              "target": {
+                "key": "motylki|2026-10-27|07:30",
+                "group": "motylki",
+                "activity": "Zajęcia Przedszkolak Mały projektant i technolog",
+                "date": "2026-10-27",
+                "start": "07:30",
+                "end": "08:30"
+              }
+            },
+            {
+              "kind": "cancel",
+              "target": {
+                "key": "wilczki|2026-10-27|07:30",
+                "group": "wilczki",
+                "activity": "Zajęcia Przedszkolak Mały projektant i technolog",
+                "date": "2026-10-27",
+                "start": "07:30",
+                "end": "08:30"
+              }
+            }
+          ],
+          "activity": "Zajęcia Przedszkolak Mały projektant i technolog",
+          "groups": "all"
+        }
+      }
+    ]
+  },
+  {
+    "text": "– 15.10.2026 r. – odwołane Słowiki",
+    "textSha256": "e8162c3d177ba07ce9968036c3ea1010bc3ff48d4a1b483ca0ebd1c1911039a6",
+    "firstSeen": "2026-10-28T22:53:54.740Z",
+    "isScheduleChange": true,
+    "changes": [
+      {
+        "change": {
+          "type": "cancelled",
+          "dates": [
+            "2026-10-15"
+          ],
+          "activity_ref": "Słowiki",
+          "group_refs": [],
+          "new_date": null,
+          "new_start": null,
+          "new_end": null,
+          "uncertain": false,
+          "note": null
+        },
+        "resolution": {
+          "status": "applied",
+          "effects": [
+            {
+              "kind": "cancel",
+              "target": {
+                "key": "sowki|2026-10-15|12:45",
+                "group": "sowki",
+                "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
+                "date": "2026-10-15",
+                "start": "12:45",
+                "end": "13:45"
+              }
+            },
+            {
+              "kind": "cancel",
+              "target": {
+                "key": "zabki|2026-10-15|12:45",
+                "group": "zabki",
+                "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
+                "date": "2026-10-15",
+                "start": "12:45",
+                "end": "13:45"
+              }
+            }
+          ],
+          "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
+          "groups": "all"
+        }
+      }
+    ]
+  },
+  {
+    "text": "– 26.10.2026 r. – dodatkowe zajęcia dla Sówek z Preorientacji zawodowej – 14.00 – 15.00",
+    "textSha256": "fd587547ddad9e6d0462489744e0a531f5c913f05d24414898363d45344e0d18",
+    "firstSeen": "2026-10-28T22:53:56.489Z",
+    "isScheduleChange": true,
+    "changes": [
+      {
+        "change": {
+          "type": "additional",
+          "dates": [
+            "2026-10-26"
+          ],
+          "activity_ref": "Preorientacja zawodowa",
+          "group_refs": [
+            "Sówki"
+          ],
+          "new_date": null,
+          "new_start": "14:00",
+          "new_end": "15:00",
+          "uncertain": false,
+          "note": null
+        },
+        "resolution": {
+          "status": "applied",
+          "effects": [
+            {
+              "kind": "add",
+              "group": "sowki",
+              "activity": "Zajęcia z preorientacji zawodowej",
+              "teacher": "M. Marchewka",
+              "date": "2026-10-26",
+              "start": "14:00",
+              "end": "15:00"
+            }
+          ],
+          "activity": "Zajęcia z preorientacji zawodowej",
+          "groups": [
+            "sowki"
+          ]
+        }
+      }
+    ]
+  }
+]

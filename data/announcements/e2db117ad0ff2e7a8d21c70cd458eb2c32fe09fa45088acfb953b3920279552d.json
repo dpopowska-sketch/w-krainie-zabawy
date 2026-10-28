@@ -1,0 +1,31 @@
+{
+  "text": "– 6.10.2026 r. – odwołane zajęcia z kk – grupa Miki",
+  "textSha256": "e2db117ad0ff2e7a8d21c70cd458eb2c32fe09fa45088acfb953b3920279552d",
+  "model": "claude-opus-5-5",
+  "promptVersion": "2026-10-28.1",
+  "createdAt": "2026-10-28T22:53:51.473Z",
+  "usage": {
+    "input_tokens": 2209,
+    "output_tokens": 99
+  },
+  "output": {
+    "is_schedule_change": true,
+    "changes": [
+      {
+        "type": "cancelled",
+        "dates": [
+          "2026-10-06"
+        ],
+        "activity_ref": "kk",
+        "group_refs": [
+          "Miki"
+        ],
+        "new_date": null,
+        "new_start": null,
+        "new_end": null,
+        "uncertain": false,
+        "note": null
+      }
+    ]
+  }
+}

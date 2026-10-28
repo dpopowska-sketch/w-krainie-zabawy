@@ -31,6 +31,43 @@ export const PageExtraction = z.object({
 });
 export type PageExtraction = z.infer<typeof PageExtraction>;
 
+/**
+ * Interpretacja jednej linii ogłoszenia. Model nie dopasowuje terminów –
+ * podaje tylko, co ogłoszenie mówi. Dopasowanie robi kod (resolve.ts).
+ */
+export const AnnouncedChange = z.object({
+  type: z
+    .enum(["cancelled", "rescheduled", "additional", "time_changed", "other"])
+    .describe("cancelled = odwołane; rescheduled = przeniesione na inny dzień; additional = dodatkowe zajęcia; time_changed = zmiana godziny tego samego dnia"),
+  dates: z.array(z.string()).describe("Daty, których dotyczy zmiana (dla przeniesienia: data PIERWOTNA), format YYYY-MM-DD"),
+  activity_ref: z.string().nullable().describe("Nazwa lub skrót zajęć dokładnie jak w ogłoszeniu, np. 'kk', 'Słowiki'"),
+  group_refs: z
+    .array(z.string())
+    .describe("Grupy lub miejsca wymienione w ogłoszeniu, w mianowniku, np. 'Sówki', 'Miki'. Pusta lista, jeśli nie podano"),
+  new_date: z.string().nullable().describe("Nowa data (przeniesienie), YYYY-MM-DD"),
+  new_start: z.string().nullable().describe("Nowa lub podana godzina rozpoczęcia, HH:MM"),
+  new_end: z.string().nullable().describe("Nowa lub podana godzina zakończenia, HH:MM"),
+  uncertain: z.boolean().describe("true, jeśli ogłoszenie da się zrozumieć na więcej niż jeden sposób"),
+  note: z.string().nullable(),
+});
+export type AnnouncedChange = z.infer<typeof AnnouncedChange>;
+
+export const AnnouncementParse = z.object({
+  is_schedule_change: z.boolean().describe("Czy linia ogłasza zmianę w zajęciach (a nie np. tytuł lub nagłówek)"),
+  changes: z.array(AnnouncedChange).describe("Zwykle jedna zmiana; kilka, jeśli linia zawiera kilka niezależnych zmian"),
+});
+export type AnnouncementParse = z.infer<typeof AnnouncementParse>;
+
+export interface AnnouncementRecord {
+  text: string;
+  textSha256: string;
+  model: string;
+  promptVersion: string;
+  createdAt: string;
+  usage: { input_tokens: number; output_tokens: number };
+  output: AnnouncementParse;
+}
+
 export interface ExtractionRecord {
   documentUrl: string;
   documentSha256: string;

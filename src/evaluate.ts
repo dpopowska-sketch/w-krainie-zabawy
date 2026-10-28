@@ -1,12 +1,10 @@
 // M0: porównuje odczyty Claude ze wzorcem przepisanym ręcznie
 // i sprawdza, czy walidacja wyłapuje znane problemy w źródle.
-import fs from "node:fs";
 import path from "node:path";
-import { DATA_DIR, MANIFEST_PATH, ROOT, loadGroups, readJson, writeJson } from "./config.js";
-import type { Manifest } from "./discover.js";
-import { PRICE_PER_MTOK, RUNS, extractionPath } from "./extract.js";
-import { expandEntry, markTimeConflicts, parseMonthLabel, sameActivity, sameTeacher, type CellEntry, type EntryResult, type Occurrence } from "./normalize.js";
-import type { ExtractionRecord } from "./schema.js";
+import { DATA_DIR, ROOT, loadGroups, readJson, writeJson } from "./config.js";
+import { PRICE_PER_MTOK, RUNS } from "./extract.js";
+import { expandEntry, markTimeConflicts, sameActivity, sameTeacher, type Occurrence } from "./normalize.js";
+import { loadRun } from "./schedule.js";
 
 interface GoldenEntry {
   page: number;
@@ -30,12 +28,6 @@ interface Golden {
 
 const config = loadGroups();
 const golden = readJson<Golden>(path.join(ROOT, "test", "golden", "2026-10.json"));
-const manifest = readJson<Manifest>(MANIFEST_PATH);
-
-/** Numer strony z nazwy pliku: …-0-scaled.jpg → 0 */
-function pageIndex(url: string): number {
-  return Number(url.match(/-(\d+)(?:-scaled)?\.\w+$/)?.[1] ?? -1);
-}
 
 function expandGolden(): { occurrences: Occurrence[]; cells: (GoldenEntry & { group: string })[] } {
   const occurrences: Occurrence[] = [];
@@ -49,47 +41,6 @@ function expandGolden(): { occurrences: Occurrence[]; cells: (GoldenEntry & { gr
     }
   }
   return { occurrences, cells };
-}
-
-function expandRun(run: string) {
-  const results: (EntryResult & { page: number; entry: CellEntry })[] = [];
-  let usage = { input: 0, output: 0 };
-  let missingFiles = 0;
-  const docs = manifest.documents.filter((d) => d.removedAt === null);
-  const records = docs.flatMap((doc) => {
-    const file = extractionPath(doc, run);
-    if (!fs.existsSync(file)) {
-      missingFiles++;
-      return [];
-    }
-    return [readJson<ExtractionRecord>(file)];
-  });
-  // Miesiąc jest tylko w nagłówku pierwszej strony – bierzemy go z dowolnej strony zestawu.
-  const period = records.map((r) => parseMonthLabel(r.output.month_label)).find(Boolean) ?? null;
-
-  for (const rec of records) {
-    usage.input += rec.usage.input_tokens;
-    usage.output += rec.usage.output_tokens;
-    if (!period) continue;
-    for (const e of rec.output.entries) {
-      const entry: CellEntry = {
-        activity: e.activity_name,
-        teacher: e.teacher,
-        groupLabel: e.group_column,
-        weekday: e.weekday,
-        start: e.start,
-        end: e.end,
-        dates: e.dates,
-        location: e.location,
-        subgroup: e.subgroup,
-        cellText: e.cell_text,
-        uncertain: e.uncertain,
-        note: e.note,
-      };
-      results.push({ ...expandEntry(entry, period.year, period.month, config), page: pageIndex(rec.documentUrl), entry });
-    }
-  }
-  return { results, period, usage, missingFiles, records };
 }
 
 function pct(n: number, d: number): string {
@@ -123,15 +74,14 @@ let totalCost = 0;
 console.log(`Wzorzec: ${gold.occurrences.length} terminów w ${golden.entries.length} komórkach (${golden.month}.${golden.year})\n`);
 
 for (const run of RUNS) {
-  const { results, period, usage, missingFiles, records } = expandRun(run);
+  const { cells: results, occurrences: occ, period, missingFiles, records } = loadRun(run);
+  const usage = records.reduce((u, r) => ({ input: u.input + r.usage.input_tokens, output: u.output + r.usage.output_tokens }), { input: 0, output: 0 });
   if (records.length === 0) {
     console.log(`Przebieg ${run}: brak odczytów – uruchom najpierw "npm run extract".`);
     continue;
   }
   const cost = (usage.input * PRICE_PER_MTOK.input + usage.output * PRICE_PER_MTOK.output) / 1e6;
   totalCost += cost;
-  const occ = results.flatMap((r) => r.occurrences);
-  markTimeConflicts(occ);
   runOccurrences[run] = occ;
 
   const { pairs, onlyLeft: missing, onlyRight: extra } = pair(gold.occurrences, occ);

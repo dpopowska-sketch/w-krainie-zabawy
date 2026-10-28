@@ -10,8 +10,11 @@
   "scripts": {
     "discover": "tsx src/discover.ts",
     "extract": "tsx src/extract.ts",
+    "announcements": "tsx src/announcements.ts",
     "evaluate": "tsx src/evaluate.ts",
-    "typecheck": "tsc --noEmit"
+    "evaluate:announcements": "tsx src/evaluate-announcements.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test test/*.test.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.3.0",

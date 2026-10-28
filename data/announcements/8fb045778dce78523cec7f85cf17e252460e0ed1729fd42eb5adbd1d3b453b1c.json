@@ -1,0 +1,31 @@
+{
+  "text": "– 5.10.2026 r. – odwołane zajęcia z preorientacji zawodowej – Sówki",
+  "textSha256": "8fb045778dce78523cec7f85cf17e252460e0ed1729fd42eb5adbd1d3b453b1c",
+  "model": "claude-opus-5-5",
+  "promptVersion": "2026-10-28.1",
+  "createdAt": "2026-10-28T22:53:48.593Z",
+  "usage": {
+    "input_tokens": 2215,
+    "output_tokens": 108
+  },
+  "output": {
+    "is_schedule_change": true,
+    "changes": [
+      {
+        "type": "cancelled",
+        "dates": [
+          "2026-10-05"
+        ],
+        "activity_ref": "preorientacji zawodowej",
+        "group_refs": [
+          "Sówki"
+        ],
+        "new_date": null,
+        "new_start": null,
+        "new_end": null,
+        "uncertain": false,
+        "note": null
+      }
+    ]
+  }
+}
