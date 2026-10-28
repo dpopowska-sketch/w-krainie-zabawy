@@ -1,0 +1,50 @@
+{
+  "_comment": "Wzorzec przepisany ręcznie z 3 obrazów harmonogramu na październik 2026 (media 17007–17009). Każdy wpis = jedna komórka tabeli; 'groups' łączy identyczne komórki w jednym wierszu. Do sprawdzenia przez człowieka z obrazami źródłowymi.",
+  "year": 2026,
+  "month": 10,
+  "entries": [
+    { "page": 0, "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania", "teacher": "J. Bieniek", "groups": ["motylki"], "weekday": "Poniedziałek", "start": "07:30", "end": "08:30", "dates": ["06.10", "12.10", "20.10", "27.10"], "location": null, "subgroup": null, "expectIssue": "weekday_mismatch" },
+    { "page": 0, "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania", "teacher": "J. Bieniek", "groups": ["motylki"], "weekday": "Czwartek", "start": "07:30", "end": "08:30", "dates": ["29.10"], "location": null, "subgroup": null },
+    { "page": 0, "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania", "teacher": "J. Bieniek", "groups": ["wilczki"], "weekday": "Środa", "start": "07:30", "end": "08:30", "dates": ["07.10", "21.10", "28.10"], "location": null, "subgroup": null },
+    { "page": 0, "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania", "teacher": "J. Bieniek", "groups": ["wilczki"], "weekday": "Czwartek", "start": "07:30", "end": "08:30", "dates": ["08.10", "22.10"], "location": null, "subgroup": null },
+
+    { "page": 0, "activity": "Zajęcia Przedszkolak Mały projektant i technolog", "teacher": "K. Wilczek", "groups": ["sloneczka", "wiewiorki", "sowki", "zabki"], "weekday": "Wtorek", "start": "07:30", "end": "08:30", "dates": ["06.10", "20.10"], "location": "Górnicza", "subgroup": null },
+    { "page": 0, "activity": "Zajęcia Przedszkolak Mały projektant i technolog", "teacher": "K. Wilczek", "groups": ["motylki", "wilczki"], "weekday": "Wtorek", "start": "07:30", "end": "08:30", "dates": ["13.10", "27.10"], "location": "Miki", "subgroup": null },
+
+    { "page": 0, "activity": "Zajęcia Mali Artyści - rozwijanie kompetencji w zakresie świadomości i ekspresji kulturalnej", "teacher": "B. Kasza", "groups": ["sloneczka", "wiewiorki", "sowki", "zabki"], "weekday": "Poniedziałek", "start": "14:15", "end": "15:15", "dates": ["12.10", "26.10"], "location": "Górnicza", "subgroup": null },
+    { "page": 0, "activity": "Zajęcia Mali Artyści - rozwijanie kompetencji w zakresie świadomości i ekspresji kulturalnej", "teacher": "B. Kasza", "groups": ["motylki", "wilczki"], "weekday": "Poniedziałek", "start": "14:15", "end": "15:15", "dates": ["05.10", "19.10"], "location": "Miki", "subgroup": null },
+
+    { "page": 0, "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu", "teacher": "J. Skoczowska", "groups": ["sowki", "zabki"], "weekday": "Czwartek", "start": "12:45", "end": "13:45", "dates": ["15.10", "29.10"], "location": "Górnicza", "subgroup": null },
+    { "page": 0, "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu", "teacher": "J. Skoczowska", "groups": ["motylki", "wilczki"], "weekday": "Czwartek", "start": "12:45", "end": "13:45", "dates": ["08.10", "22.10"], "location": "Miki", "subgroup": null },
+
+    { "page": 0, "activity": "Wielozmysłowa stymulacja rozwoju dziecka", "teacher": "N. Nieciecka-Dul", "groups": ["sloneczka", "wiewiorki"], "weekday": "Czwartek", "start": "07:30", "end": "08:30", "dates": ["08.10", "22.10"], "location": "Górnicza", "subgroup": "I" },
+    { "page": 0, "activity": "Wielozmysłowa stymulacja rozwoju dziecka", "teacher": "N. Nieciecka-Dul", "groups": ["sowki"], "weekday": "Czwartek", "start": "09:00", "end": "10:00", "dates": ["08.10", "22.10"], "location": "Górnicza", "subgroup": "II" },
+    { "page": 0, "activity": "Wielozmysłowa stymulacja rozwoju dziecka", "teacher": "N. Nieciecka-Dul", "groups": ["zabki"], "weekday": "Czwartek", "start": "07:30", "end": "08:30", "dates": ["15.10", "29.10"], "location": "Górnicza", "subgroup": "III" },
+
+    { "page": 1, "activity": "TUS - zajęcia rozwijające kompetencje emocjonalno-społeczne", "teacher": "J. Olszówka", "groups": ["motylki", "wilczki"], "weekday": "Środa", "start": "09:45", "end": "10:45", "dates": ["07.10", "21.10", "28.10"], "location": null, "subgroup": null },
+    { "page": 1, "activity": "Zajęcia korekcyjno-kompensacyjne", "teacher": "B. Bogdał", "groups": ["zabki"], "weekday": "Piątek", "start": "13:55", "end": "14:55", "dates": ["02.10", "09.10", "16.10", "23.10", "30.10"], "location": null, "subgroup": null },
+    { "page": 1, "activity": "Zajęcia korekcyjno-kompensacyjne", "teacher": "J. Olszówka", "groups": ["motylki", "wilczki"], "weekday": "Wtorek", "start": "09:45", "end": "10:45", "dates": ["20.10", "27.10"], "location": null, "subgroup": null },
+    { "page": 1, "activity": "Zajęcia logopedyczne", "teacher": "B. Pawliczek", "groups": ["sloneczka"], "weekday": "Środa", "start": "10:35", "end": "11:35", "dates": ["07.10", "21.10", "28.10"], "location": null, "subgroup": "I" },
+    { "page": 1, "activity": "Zajęcia logopedyczne", "teacher": "B. Pawliczek", "groups": ["wiewiorki"], "weekday": "Środa", "start": "09:30", "end": "10:30", "dates": ["07.10", "21.10", "28.10"], "location": null, "subgroup": "II" },
+    { "page": 1, "activity": "Zajęcia logopedyczne", "teacher": "B. Bogdał", "groups": ["zabki"], "weekday": "Środa", "start": "13:55", "end": "14:55", "dates": ["07.10", "14.10", "21.10", "28.10"], "location": null, "subgroup": "IV" },
+    { "page": 1, "activity": "Zajęcia logopedyczne", "teacher": "B. Kasza", "groups": ["kotki"], "weekday": "Środa", "start": "14:15", "end": "15:15", "dates": ["07.10", "21.10", "28.10"], "location": null, "subgroup": "III" },
+    { "page": 1, "activity": "Zajęcia z preorientacji zawodowej", "teacher": "M. Marchewka", "groups": ["sowki"], "weekday": "Poniedziałek", "start": null, "end": null, "dates": [], "location": null, "subgroup": null, "expectIssue": "incomplete" },
+    { "page": 1, "activity": "Zajęcia z preorientacji zawodowej", "teacher": "M. Marchewka", "groups": ["zabki"], "weekday": "Poniedziałek", "start": "12:45", "end": "13:45", "dates": ["12.10"], "location": null, "subgroup": null },
+    { "page": 1, "activity": "Zajęcia z preorientacji zawodowej", "teacher": "M. Marchewka", "groups": ["motylki"], "weekday": "Poniedziałek", "start": "12:45", "end": "13:45", "dates": ["19.10"], "location": null, "subgroup": null },
+    { "page": 1, "activity": "Zajęcia z preorientacji zawodowej", "teacher": "M. Marchewka", "groups": ["wilczki"], "weekday": "Poniedziałek", "start": "12:45", "end": "13:45", "dates": ["26.10"], "location": null, "subgroup": null },
+
+    { "page": 2, "activity": "Warsztaty o charakterze terapeutycznym Tadek Niejadek", "teacher": "J. Szombierska", "groups": ["kotki"], "weekday": "Poniedziałek", "start": "10:00", "end": "11:00", "dates": ["26.10"], "location": null, "subgroup": null },
+    { "page": 2, "activity": "Zajęcia ruchowe połączone z elementami sensoplastyki", "teacher": "B. Smolnik", "groups": ["kotki"], "weekday": "Wtorek", "start": "07:00", "end": "08:00", "dates": ["06.10"], "location": null, "subgroup": null },
+    { "page": 2, "activity": "Zajęcia ruchowe połączone z elementami sensoplastyki", "teacher": "B. Smolnik", "groups": ["sloneczka"], "weekday": "Piątek", "start": "07:00", "end": "08:00", "dates": ["09.10"], "location": null, "subgroup": null },
+    { "page": 2, "activity": "Zajęcia ruchowe połączone z elementami sensoplastyki", "teacher": "B. Smolnik", "groups": ["wiewiorki"], "weekday": "Wtorek", "start": "07:00", "end": "08:00", "dates": ["13.10"], "location": null, "subgroup": null },
+    { "page": 2, "activity": "Zajęcia ruchowe połączone z elementami sensoplastyki", "teacher": "B. Smolnik", "groups": ["wiewiorki"], "weekday": "Piątek", "start": "07:00", "end": "08:00", "dates": ["30.10"], "location": null, "subgroup": null },
+    { "page": 2, "activity": "Zajęcia ruchowe połączone z elementami sensoplastyki", "teacher": "B. Smolnik", "groups": ["sowki"], "weekday": "Piątek", "start": "07:00", "end": "08:00", "dates": ["16.10"], "location": null, "subgroup": null },
+    { "page": 2, "activity": "Zajęcia ruchowe połączone z elementami sensoplastyki", "teacher": "B. Smolnik", "groups": ["zabki"], "weekday": "Wtorek", "start": "07:00", "end": "08:00", "dates": ["20.10"], "location": null, "subgroup": null },
+    { "page": 2, "activity": "Zajęcia ruchowe połączone z elementami sensoplastyki", "teacher": "B. Smolnik", "groups": ["motylki"], "weekday": "Piątek", "start": "07:00", "end": "08:00", "dates": ["23.10"], "location": null, "subgroup": null },
+    { "page": 2, "activity": "Zajęcia ruchowe połączone z elementami sensoplastyki", "teacher": "B. Smolnik", "groups": ["wilczki"], "weekday": "Wtorek", "start": "07:00", "end": "08:00", "dates": ["27.10"], "location": null, "subgroup": null },
+    { "page": 2, "activity": "Zajęcia sprawnościowo-zdrowotne", "teacher": "K. Zborowska", "groups": ["zabki"], "weekday": "Środa", "start": "14:40", "end": "15:40", "dates": ["07.10", "21.10", "28.10"], "location": null, "subgroup": null },
+    { "page": 2, "activity": "Zajęcia sprawnościowo-zdrowotne", "teacher": "K. Zborowska", "groups": ["wilczki"], "weekday": "Piątek", "start": "12:45", "end": "13:45", "dates": ["02.10", "09.10", "16.10", "23.10", "30.10"], "location": null, "subgroup": null },
+    { "page": 2, "activity": "Zajęcia sprawnościowo-zdrowotne", "teacher": "S. Kot", "groups": ["sowki"], "weekday": "Poniedziałek", "start": "12:40", "end": "13:40", "dates": ["05.10", "12.10", "19.10", "26.10"], "location": null, "subgroup": null },
+    { "page": 2, "activity": "Zajęcia sprawnościowo-zdrowotne", "teacher": "S. Kot", "groups": ["motylki"], "weekday": "Piątek", "start": "12:30", "end": "13:30", "dates": ["02.10", "09.10", "23.10", "30.10"], "location": null, "subgroup": null }
+  ]
+}

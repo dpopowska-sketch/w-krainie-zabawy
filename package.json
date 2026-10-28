@@ -1,0 +1,26 @@
+{
+  "name": "w-krainie-zabawy",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Harmonogram zajęć dodatkowych projektu „W krainie zabawy” – Słoneczne Przedszkole w Żernicy",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "discover": "tsx src/discover.ts",
+    "extract": "tsx src/extract.ts",
+    "evaluate": "tsx src/evaluate.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.3.0",
+    "cheerio": "^1.2.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}

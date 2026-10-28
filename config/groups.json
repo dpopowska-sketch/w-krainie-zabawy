@@ -1,0 +1,20 @@
+{
+  "groups": [
+    { "id": "kotki", "name": "Kotki", "aliases": ["KOTKI"] },
+    { "id": "sloneczka", "name": "Słoneczka", "aliases": ["SŁONECZKA"] },
+    { "id": "wiewiorki", "name": "Wiewiórki", "aliases": ["WIEWIÓRKI"] },
+    { "id": "sowki", "name": "Sówki", "aliases": ["SÓWKI", "Sówek"] },
+    { "id": "zabki", "name": "Żabki", "aliases": ["ŻABKI", "Żabek"] },
+    { "id": "motylki", "name": "Motylki", "aliases": ["MOTYLKI", "Motylków"] },
+    { "id": "wilczki", "name": "Wilczki", "aliases": ["WILCZKI", "Wilczków"] },
+    { "id": "jezyki", "name": "Jeżyki", "aliases": ["JEŻYKI", "Jeżyków"] }
+  ],
+  "locations": {
+    "Górnicza": ["kotki", "sloneczka", "wiewiorki", "sowki", "zabki"],
+    "Miki": ["motylki", "wilczki"]
+  },
+  "activityAliases": {
+    "kk": "kompetencje kluczowe"
+  },
+  "ignoreAttachments": ["/FE-SL-kolor", "/logo\\.png$"]
+}

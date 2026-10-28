@@ -1,0 +1,58 @@
+{
+  "lastChecked": "2026-10-28T22:16:39.412Z",
+  "lastSuccess": "2026-10-28T22:16:39.412Z",
+  "lastError": null,
+  "page": {
+    "id": 12985,
+    "link": "https://przedszkole-zspzernica.pilchowice.pl/harmonogram-zajec-w-krainie-zabawy/",
+    "modifiedGmt": "2026-10-22T19:25:45",
+    "contentSha256": "4f1837888c587f9890e51028fba28b67e59b6a5723b0583a9370f42c2eb35eef"
+  },
+  "documents": [
+    {
+      "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/10/a26fad0e-f685-42c6-96cd-326d842f621f-0-scaled.jpg",
+      "pageUrls": [
+        "media:17007"
+      ],
+      "sha256": "6818c86aa0d586e3b9f34194f392717ace1b59889b129218ffec3d1941c1833e",
+      "bytes": 430047,
+      "contentType": "image/jpeg",
+      "file": "sources/6818c86aa0d586e3b9f34194f392717ace1b59889b129218ffec3d1941c1833e.jpg",
+      "lastModifiedHeader": "Mon, 05 Oct 2026 19:17:35 GMT",
+      "firstSeen": "2026-10-28T22:16:33.884Z",
+      "lastSeen": "2026-10-28T22:16:39.412Z",
+      "removedAt": null,
+      "history": []
+    },
+    {
+      "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/10/a26fad0e-f685-42c6-96cd-326d842f621f-1-scaled.jpg",
+      "pageUrls": [
+        "media:17008"
+      ],
+      "sha256": "a04fb89142b0f06fc21892b3697e1baf1351dbf21eba8f2a1f2193785fdd53b7",
+      "bytes": 292246,
+      "contentType": "image/jpeg",
+      "file": "sources/a04fb89142b0f06fc21892b3697e1baf1351dbf21eba8f2a1f2193785fdd53b7.jpg",
+      "lastModifiedHeader": "Mon, 05 Oct 2026 19:17:41 GMT",
+      "firstSeen": "2026-10-28T22:16:33.884Z",
+      "lastSeen": "2026-10-28T22:16:39.412Z",
+      "removedAt": null,
+      "history": []
+    },
+    {
+      "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/10/a26fad0e-f685-42c6-96cd-326d842f621f-2-scaled.jpg",
+      "pageUrls": [
+        "media:17009"
+      ],
+      "sha256": "92747c00ce072da21697a9a0095d42bf69cf44dc27fbf3823604a72e93216544",
+      "bytes": 245194,
+      "contentType": "image/jpeg",
+      "file": "sources/92747c00ce072da21697a9a0095d42bf69cf44dc27fbf3823604a72e93216544.jpg",
+      "lastModifiedHeader": "Mon, 05 Oct 2026 19:17:47 GMT",
+      "firstSeen": "2026-10-28T22:16:33.884Z",
+      "lastSeen": "2026-10-28T22:16:39.412Z",
+      "removedAt": null,
+      "history": []
+    }
+  ]
+}

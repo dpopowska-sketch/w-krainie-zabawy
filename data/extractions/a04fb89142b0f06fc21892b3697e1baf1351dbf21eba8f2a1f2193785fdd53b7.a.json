@@ -1,0 +1,259 @@
+{
+  "documentUrl": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/10/a26fad0e-f685-42c6-96cd-326d842f621f-1-scaled.jpg",
+  "documentSha256": "a04fb89142b0f06fc21892b3697e1baf1351dbf21eba8f2a1f2193785fdd53b7",
+  "run": "a",
+  "model": "claude-opus-5-5",
+  "promptVersion": "2026-10-28.1",
+  "createdAt": "2026-10-28T22:34:31.325Z",
+  "stopReason": "end_turn",
+  "usage": {
+    "input_tokens": 7770,
+    "output_tokens": 3073
+  },
+  "output": {
+    "is_schedule": true,
+    "title": null,
+    "month_label": null,
+    "group_columns": [
+      "KOTKI",
+      "SŁONECZKA",
+      "WIEWIÓRKI",
+      "SÓWKI",
+      "ŻABKI",
+      "MOTYLKI",
+      "WILCZKI"
+    ],
+    "entries": [
+      {
+        "activity_name": "TUS - zajęcia rozwijające kompetencje emocjonalno-społeczne",
+        "teacher": "J. Olszówka",
+        "group_column": "MOTYLKI",
+        "weekday": "Środa",
+        "start": "09:45",
+        "end": "10:45",
+        "dates": [
+          "07.10",
+          "21.10",
+          "28.10"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Środa 9.45-10.45 07.10; 21.10; 28.10;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "TUS - zajęcia rozwijające kompetencje emocjonalno-społeczne",
+        "teacher": "J. Olszówka",
+        "group_column": "WILCZKI",
+        "weekday": "Środa",
+        "start": "09:45",
+        "end": "10:45",
+        "dates": [
+          "07.10",
+          "21.10",
+          "28.10"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Środa 9.45-10.45 07.10; 21.10; 28.10;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia korekcyjno-kompensacyjne",
+        "teacher": "B. Bogdał",
+        "group_column": "ŻABKI",
+        "weekday": "Piątek",
+        "start": "13:55",
+        "end": "14:55",
+        "dates": [
+          "02.10",
+          "09.10",
+          "16.10",
+          "23.10",
+          "30.10"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Piątek 13.55-14.55 02.10; 09.10; 16.10; 23.10; 30.10;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia korekcyjno-kompensacyjne",
+        "teacher": "J. Olszówka",
+        "group_column": "MOTYLKI",
+        "weekday": "Wtorek",
+        "start": "09:45",
+        "end": "10:45",
+        "dates": [
+          "20.10",
+          "27.10"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Wtorek 9.45-10.45 20.10; 27.10;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia korekcyjno-kompensacyjne",
+        "teacher": "J. Olszówka",
+        "group_column": "WILCZKI",
+        "weekday": "Wtorek",
+        "start": "09:45",
+        "end": "10:45",
+        "dates": [
+          "20.10",
+          "27.10"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Wtorek 9.45-10.45 20.10; 27.10;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia logopedyczne",
+        "teacher": "B. Pawliczek",
+        "group_column": "SŁONECZKA",
+        "weekday": "Środa",
+        "start": "10:35",
+        "end": "11:35",
+        "dates": [
+          "07.10",
+          "21.10",
+          "28.10"
+        ],
+        "location": null,
+        "subgroup": "I",
+        "cell_text": "Środa 10.35-11.35 07.10; 21.10; 28.10; Grupa I",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia logopedyczne",
+        "teacher": "B. Pawliczek",
+        "group_column": "WIEWIÓRKI",
+        "weekday": "Środa",
+        "start": "09:30",
+        "end": "10:30",
+        "dates": [
+          "07.10",
+          "21.10",
+          "28.10"
+        ],
+        "location": null,
+        "subgroup": "II",
+        "cell_text": "Środa 9.30-10.30 07.10; 21.10; 28.10; Grupa II",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia logopedyczne",
+        "teacher": "B. Bogdał",
+        "group_column": "ŻABKI",
+        "weekday": "Środa",
+        "start": "13:55",
+        "end": "14:55",
+        "dates": [
+          "07.10",
+          "14.10",
+          "21.10",
+          "28.10"
+        ],
+        "location": null,
+        "subgroup": "IV",
+        "cell_text": "Środa 13.55-14.55 07.10; 14.10; 21.10; 28.10; Grupa IV",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia logopedyczne",
+        "teacher": "B. Kasza",
+        "group_column": "KOTKI",
+        "weekday": "Środa",
+        "start": "14:15",
+        "end": "15:15",
+        "dates": [
+          "07.10",
+          "21.10",
+          "28.10"
+        ],
+        "location": null,
+        "subgroup": "III",
+        "cell_text": "Środa 14.15 - 15.15 07.10; 21.10; 28.10; Grupa III",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia z preorientacji zawodowej",
+        "teacher": "M. Marchewka",
+        "group_column": "SÓWKI",
+        "weekday": "Poniedziałek",
+        "start": null,
+        "end": null,
+        "dates": [],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Poniedziałek",
+        "uncertain": true,
+        "note": "Komórka zawiera tylko dzień tygodnia, brak godzin i dat."
+      },
+      {
+        "activity_name": "Zajęcia z preorientacji zawodowej",
+        "teacher": "M. Marchewka",
+        "group_column": "ŻABKI",
+        "weekday": "Poniedziałek",
+        "start": "12:45",
+        "end": "13:45",
+        "dates": [
+          "12.10"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Poniedziałek 12.45-13.45 12.10;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia z preorientacji zawodowej",
+        "teacher": "M. Marchewka",
+        "group_column": "MOTYLKI",
+        "weekday": "Poniedziałek",
+        "start": "12:45",
+        "end": "13:45",
+        "dates": [
+          "19.10"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Poniedziałek 12.45-13.45 19.10;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia z preorientacji zawodowej",
+        "teacher": "M. Marchewka",
+        "group_column": "WILCZKI",
+        "weekday": "Poniedziałek",
+        "start": "12:45",
+        "end": "13:45",
+        "dates": [
+          "26.10"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Poniedziałek 12.45-13.45 26.10;",
+        "uncertain": false,
+        "note": null
+      }
+    ],
+    "issues": [
+      "Brak tytułu i nagłówka z miesiącem/rokiem.",
+      "Tabela ma drugi wiersz nagłówka z wiekiem i lokalizacją grup (np. '3- LATKI GÓRNICZA', '6-LATKI MIKI'); jako nagłówki kolumn użyto nazw grup z pierwszego wiersza.",
+      "Komórka WILCZKI w wierszu 'Zajęcia logopedyczne p. B. Pawliczek' jest pokolorowana, ale pusta – pominięta."
+    ]
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "goldenOccurrences": 106,
+  "a": {
+    "period": {
+      "year": 2026,
+      "month": 10
+    },
+    "recall": 1,
+    "precision": 1,
+    "missing": [],
+    "extra": [],
+    "fieldErrors": [],
+    "issueDiffs": [],
+    "expectations": [
+      {
+        "group": "sowki",
+        "activity": "Zajęcia z preorientacji zawodowej",
+        "expected": "incomplete",
+        "flagged": true
+      }
+    ],
+    "usage": {
+      "input": 23310,
+      "output": 12183
+    },
+    "costUsd": 0.3369
+  },
+  "b": {
+    "period": {
+      "year": 2026,
+      "month": 10
+    },
+    "recall": 1,
+    "precision": 1,
+    "missing": [],
+    "extra": [],
+    "fieldErrors": [],
+    "issueDiffs": [],
+    "expectations": [
+      {
+        "group": "sowki",
+        "activity": "Zajęcia z preorientacji zawodowej",
+        "expected": "incomplete",
+        "flagged": true
+      }
+    ],
+    "usage": {
+      "input": 23310,
+      "output": 12026
+    },
+    "costUsd": 0.33376
+  },
+  "disagreements": {
+    "onlyA": [],
+    "onlyB": [],
+    "differing": []
+  }
+}
