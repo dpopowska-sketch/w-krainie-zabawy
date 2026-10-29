@@ -1,37 +1,33 @@
 /*
- * Ciemny motyw zgodny z jira-apps.vilisoft.com:
- * czarne tło z niebieską poświatą, granatowy pasek, pomarańczowy gradient na przyciskach głównych,
- * półprzezroczyste przyciski drugorzędne z cienką ramką (style .vs-primary-button / .vs-secondary-button).
+ * Motyw na wzór szablonu Natone (html.design, CC 3.0 – dopisek w stopce):
+ * białe tło, czcionka Poppins, czerwone przyciski z ostrymi rogami (#be2623),
+ * morski granat (#0e3746) na banerze, paskach kart i nagłówkach, ciemna stopka (#091f27).
+ * Statusy zajęć mają zaokrąglone etykiety, żeby nie myliły się z (kanciastymi) przyciskami.
  */
 :root {
-  --bg: #02060d;
-  --glow: rgba(32, 89, 200, 0.28);
-  --navy: #0b2350;
-  --surface: rgba(255, 255, 255, 0.03);
-  --surface-strong: rgba(255, 255, 255, 0.06);
-  --text: #f3f6fc;
-  --muted: #9fb0c8;
-  --border: rgba(120, 155, 214, 0.16);
-  --border-strong: rgba(120, 155, 214, 0.3);
-  --accent: #ff7b00;
-  --accent-hover-border: rgba(255, 148, 0, 0.5);
-  --accent-soft: rgba(255, 148, 0, 0.1);
-  --accent-text: #ffa24d;
-  --gradient: linear-gradient(90deg, #ffdd00 0%, #ff9400 35%, #ff7b00 65%, #cc6200 100%);
-  --on-gradient: #1d1200;
-  --cancelled: #ff6b5e;
-  --cancelled-soft: rgba(255, 90, 80, 0.09);
-  --rescheduled: #ffb347;
-  --rescheduled-soft: rgba(255, 179, 71, 0.09);
-  --additional: #3ddc97;
-  --additional-soft: rgba(61, 220, 151, 0.09);
-  --review: #6cb6ff;
-  --review-soft: rgba(46, 163, 242, 0.12);
-  --radius: 14px;
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
-  color-scheme: dark;
-  font-family: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  line-height: 1.5;
+  --bg: #ffffff;
+  --bg-soft: #f4f6f7;
+  --text: #333333;
+  --heading: #0e3746;
+  --muted: #5f6b70;
+  --border: #dde3e6;
+  --red: #be2623;
+  --red-dark: #9c1e1c;
+  --navy: #0e3746;
+  --navy-deep: #091f27;
+  --shadow: 0 0 15px 0 rgba(0, 0, 0, 0.12);
+  --cancelled: #9b1c1a;
+  --cancelled-soft: #fbeaea;
+  --cancelled-bar: #6b7a80;
+  --rescheduled: #9a5b00;
+  --rescheduled-soft: #fff4e2;
+  --additional: #1e6b46;
+  --additional-soft: #e6f4ec;
+  --review: #1f5fa8;
+  --review-soft: #e8f0fa;
+  color-scheme: light;
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.55;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -41,24 +37,12 @@
 
 body {
   margin: 0;
-  min-height: 100vh;
+  background: var(--bg);
   color: var(--text);
-  background-color: var(--bg);
-  /* Niebieska poświata jak w sekcjach strony Vilisoft */
-  background-image:
-    radial-gradient(ellipse 70% 45% at 0% 35%, var(--glow), transparent 70%),
-    radial-gradient(ellipse 60% 40% at 100% 75%, rgba(32, 89, 200, 0.2), transparent 70%);
-  background-attachment: fixed;
-}
-
-h1,
-h2,
-.activity {
-  font-family: "Poppins", "Open Sans", system-ui, sans-serif;
 }
 
 a {
-  color: var(--accent-text);
+  color: var(--red);
 }
 
 button {
@@ -70,124 +54,143 @@ button {
 button:focus-visible,
 a:focus-visible,
 summary:focus-visible {
-  outline: 3px solid var(--accent-hover-border);
-  outline-offset: 3px;
+  outline: 3px solid rgba(190, 38, 35, 0.45);
+  outline-offset: 2px;
 }
 
 .page {
   max-width: 760px;
   margin: 0 auto;
-  padding: 18px 16px calc(24px + env(safe-area-inset-bottom));
+  padding: 24px 16px 8px;
 }
 
-/* ── Przyciski: główny (gradient) i drugorzędny (szkło z ramką) ── */
-.btn,
-.chip,
-.segmented button,
-.icon {
+/* ── Górny pasek: biały z cieniem, nazwa wersalikami jak „NATONE” ── */
+.header {
+  background: #fff;
+  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 2;
+}
+.header-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sun {
+  width: 36px;
+  height: auto;
+  flex: none;
+}
+.brand {
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #000;
+}
+
+/* ── Baner: granatowa nakładka jak na zdjęciu w Natone, zamiast zdjęcia słoneczko ── */
+.hero {
   position: relative;
   overflow: hidden;
-  border: 1.5px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
+  background: linear-gradient(to right, #0e3746, #164b5e);
+  color: #fff;
+  text-align: center;
+}
+.hero-sun {
+  position: absolute;
+  right: -45px;
+  top: -45px;
+  width: 150px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+.hero-inner {
+  position: relative;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 34px 16px 30px;
+}
+.hero h1 {
+  margin: 0;
+  font-size: 1.75rem;
   font-weight: 600;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.hero p {
+  margin: 10px auto 0;
+  max-width: 34rem;
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ── Nagłówki sekcji: wersaliki, granat, czerwona kreska ── */
+.eyebrow {
+  margin: 0 0 12px;
+  color: var(--heading);
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.eyebrow::after {
+  content: "";
+  display: block;
+  width: 42px;
+  height: 3px;
+  margin-top: 6px;
+  background: var(--red);
+}
+
+/* ── Przyciski: kanciaste jak btn1 / btn2 w Natone ── */
+.btn,
+.chip,
+.segmented button {
+  border-radius: 0;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: #000;
+  font-weight: 500;
   transition:
-    transform 0.35s var(--ease),
-    box-shadow 0.35s var(--ease),
-    border-color 0.35s var(--ease);
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s;
 }
 .btn {
-  border-radius: 8px;
-  padding: 9px 16px;
+  padding: 9px 18px;
   min-height: 42px;
   white-space: nowrap;
 }
 .chip[aria-pressed="true"],
 .segmented button[aria-pressed="true"],
 .btn-primary {
-  background: var(--gradient);
-  color: var(--on-gradient);
-  border-color: transparent;
-  box-shadow: 0 16px 40px -18px rgba(255, 148, 0, 0.55);
-}
-/* Błysk przesuwający się po przycisku przy najechaniu */
-.chip::after,
-.btn::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
-  transform: translateX(-120%);
-  transition: transform 0.7s var(--ease);
-  pointer-events: none;
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
 }
 @media (hover: hover) {
   .btn:hover,
-  .chip:hover,
-  .icon:hover {
-    border-color: var(--accent-hover-border);
-    transform: translateY(-2px);
+  .chip:hover {
+    border-color: var(--red);
+    color: var(--red);
   }
   .chip[aria-pressed="true"]:hover,
   .btn-primary:hover {
-    border-color: transparent;
-    box-shadow: 0 22px 50px -16px rgba(255, 148, 0, 0.6);
-  }
-  .btn:hover::after,
-  .chip:hover::after {
-    transform: translateX(120%);
+    background: transparent;
+    color: var(--red);
   }
 }
 
-/* ── Nagłówek: granatowy pasek jak nawigacja Vilisoft ── */
-.header {
-  background: var(--navy);
-  border-bottom: 1px solid var(--border);
-}
-.header-inner {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 14px 16px;
-}
-.header h1 {
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 1.45rem;
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: -0.01em;
-}
-.sun {
-  width: 40px;
-  height: auto;
-  flex: none;
-}
-.header p {
-  margin: 2px 0 0;
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
-/* Etykieta sekcji – pomarańczowe wersaliki jak „ABOUT US” */
-.eyebrow {
-  margin: 0 0 8px;
-  color: var(--accent);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-/* ── Wybór grupy: pigułki jak „Trusted by teams at” ── */
+/* ── Wybór grupy ── */
 .groups {
   display: flex;
   gap: 8px;
   overflow-x: auto;
-  padding: 4px 2px 14px;
+  padding: 2px 2px 18px;
   scrollbar-width: none;
 }
 .groups::-webkit-scrollbar {
@@ -195,10 +198,8 @@ summary:focus-visible {
 }
 .chip {
   flex: none;
-  border-radius: 999px;
   padding: 8px 16px;
   min-height: 42px;
-  font-family: "Poppins", "Open Sans", sans-serif;
 }
 
 /* ── Pasek miesiąca i widoku ── */
@@ -208,27 +209,39 @@ summary:focus-visible {
   align-items: center;
   justify-content: space-between;
   gap: 10px 12px;
-  margin: 4px 0 16px;
+  margin: 4px 0 18px;
 }
 .month-nav {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 .month-nav h2 {
   margin: 0;
-  font-size: 1.3rem;
-  font-weight: 600;
   min-width: 10.5ch;
   text-align: center;
-  color: #fff;
+  color: var(--heading);
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
+/* Okrągłe czerwone strzałki jak w karuzeli kursów Natone */
 .icon {
   width: 42px;
   height: 42px;
-  border-radius: 8px;
+  border-radius: 50%;
+  border: none;
+  background: var(--red);
+  color: #fff;
   font-size: 1.4rem;
   line-height: 1;
+  transition: background-color 0.2s;
+}
+@media (hover: hover) {
+  .icon:hover {
+    background: var(--red-dark);
+  }
 }
 .toolbar-right {
   display: flex;
@@ -237,20 +250,13 @@ summary:focus-visible {
 }
 .segmented {
   display: inline-flex;
-  gap: 4px;
-  padding: 4px;
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-  background: var(--surface);
 }
 .segmented button {
-  border-radius: 7px;
-  border-color: transparent;
-  background: transparent;
-  padding: 7px 14px;
-  min-height: 36px;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
+  padding: 8px 16px;
+  min-height: 42px;
+}
+.segmented button + button {
+  border-left: none;
 }
 
 /* ── Komunikaty ── */
@@ -263,40 +269,26 @@ summary:focus-visible {
   margin: 0 0 14px;
 }
 .message.error {
-  color: var(--cancelled);
+  color: var(--red);
 }
 .muted {
   color: var(--muted);
 }
 .banner {
   background: var(--rescheduled-soft);
-  border: 1px solid rgba(255, 179, 71, 0.35);
-  border-radius: var(--radius);
+  border-left: 4px solid var(--rescheduled);
   padding: 12px 14px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 .notice {
-  position: relative;
-  background: var(--accent-soft);
-  border: 1px solid rgba(255, 148, 0, 0.25);
-  border-radius: var(--radius);
-  padding: 12px 14px 12px 32px;
-  margin-bottom: 14px;
-}
-/* Pomarańczowy kwadracik jak punkty „What we offer” */
-.notice::before {
-  content: "";
-  position: absolute;
-  left: 14px;
-  top: 20px;
-  width: 8px;
-  height: 8px;
-  border-radius: 2px;
-  background: var(--accent);
+  background: var(--bg-soft);
+  border-left: 4px solid var(--red);
+  padding: 12px 14px;
+  margin-bottom: 16px;
 }
 .notice .muted {
   display: block;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   margin-top: 2px;
 }
 
@@ -304,9 +296,8 @@ summary:focus-visible {
 .past-toggle {
   display: block;
   width: 100%;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
   color: var(--muted);
-  font-weight: 600;
 }
 .days {
   list-style: none;
@@ -314,139 +305,142 @@ summary:focus-visible {
   padding: 0;
 }
 .day {
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 .day h3 {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--muted);
-  font-size: 0.78rem;
+  color: var(--heading);
+  font-size: 0.85rem;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 .day.today h3 {
-  color: var(--accent);
+  color: var(--red);
 }
 .today-badge {
-  background: var(--gradient);
-  color: var(--on-gradient);
+  background: var(--red);
+  color: #fff;
   border-radius: 999px;
   padding: 1px 9px;
   font-size: 0.7rem;
-  letter-spacing: 0.05em;
 }
 .cards {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 10px;
+  gap: 14px;
 }
 
-/* ── Karta zajęć ── */
+/* ── Karta zajęć: granatowy pasek z nazwą jak karty nauczycieli w Natone ── */
 .card {
-  display: grid;
-  grid-template-columns: 5.5rem 1fr;
-  gap: 10px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
-  border-radius: var(--radius);
-  padding: 12px 14px;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  box-shadow: var(--shadow);
+  padding-bottom: 10px;
 }
-.day.past .card {
-  opacity: 0.6;
-}
-.card-time {
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  color: #fff;
+.card-body {
+  display: contents; /* elementy treści układamy bezpośrednio w karcie */
 }
 .card-title {
+  order: -1;
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   gap: 4px 8px;
+  background: var(--navy);
+  color: #fff;
+  padding: 10px 14px;
 }
 .activity {
   font-weight: 600;
-  color: #fff;
+  line-height: 1.35;
+}
+.card-time {
+  padding: 10px 14px 0;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--red);
+  font-variant-numeric: tabular-nums;
+}
+.card-meta,
+.change,
+.details {
+  padding: 0 14px;
 }
 .card-meta {
   color: var(--muted);
-  font-size: 0.9rem;
-  margin-top: 2px;
+  font-size: 0.88rem;
 }
 .change {
   margin-top: 4px;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 600;
   color: var(--rescheduled);
 }
-
-.status-cancelled {
-  border-left-color: var(--cancelled);
-  background: var(--cancelled-soft);
-}
-.status-cancelled .card-time,
-.status-cancelled .activity,
-.status-moved-away .card-time,
-.status-moved-away .activity {
-  text-decoration: line-through;
+/* Minione dni: wyszarzony nagłówek dnia; karty bez wyblaknięcia, żeby nie przypominały odwołanych */
+.day.past h3 {
   color: var(--muted);
 }
-.status-rescheduled,
-.status-moved-away {
-  border-left-color: var(--rescheduled);
+
+.status-cancelled .card-title,
+.status-moved-away .card-title {
+  background: var(--cancelled-bar);
 }
-.status-moved-away {
-  background: var(--rescheduled-soft);
+.status-cancelled .activity,
+.status-cancelled .card-time,
+.status-moved-away .activity,
+.status-moved-away .card-time {
+  text-decoration: line-through;
 }
-.status-additional {
-  border-left-color: var(--additional);
-  background: var(--additional-soft);
+.status-cancelled .card-time,
+.status-moved-away .card-time {
+  color: var(--muted);
+}
+.status-rescheduled .card-title {
+  background: var(--rescheduled);
+}
+.status-additional .card-title {
+  background: var(--additional);
 }
 .card.review {
-  border-style: dashed;
-  border-left-style: solid;
-  border-left-color: var(--review);
+  outline: 2px dashed var(--review);
+  outline-offset: -2px;
 }
 
+/* Etykiety statusów – zaokrąglone, w odróżnieniu od kanciastych przycisków */
 .badge {
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.7rem;
+  font-weight: 600;
   letter-spacing: 0.03em;
+  text-transform: uppercase;
   border-radius: 999px;
   padding: 2px 9px;
   white-space: nowrap;
+  background: #fff;
 }
 .badge-cancelled {
-  background: var(--cancelled);
-  color: #2a0603;
+  color: var(--cancelled);
 }
 .badge-rescheduled {
-  background: var(--rescheduled);
-  color: #2a1700;
+  color: var(--rescheduled);
 }
 .badge-additional {
-  background: var(--additional);
-  color: #03241a;
+  color: var(--additional);
 }
 .badge-review {
-  background: var(--review-soft);
   color: var(--review);
-  border: 1px solid var(--review);
 }
 
 /* ── Szczegóły ── */
 .details {
-  margin-top: 6px;
-  font-size: 0.9rem;
+  margin-top: 4px;
+  font-size: 0.88rem;
 }
 .details summary {
   color: var(--muted);
@@ -454,14 +448,13 @@ summary:focus-visible {
   padding: 4px 0;
 }
 .details summary:hover {
-  color: var(--text);
+  color: var(--red);
 }
 .details p {
   margin: 6px 0;
 }
 .review-box {
   background: var(--review-soft);
-  border-radius: 8px;
   padding: 8px 10px;
   margin: 6px 0;
 }
@@ -479,37 +472,32 @@ summary:focus-visible {
 .calendar {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
+  gap: 4px;
 }
 .cal-head {
   text-align: center;
   font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--heading);
   padding: 4px 0;
 }
 .cal-cell {
   aspect-ratio: 1 / 1;
   min-height: 44px;
   border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--surface);
+  background: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 3px;
   padding: 2px;
-  transition:
-    border-color 0.25s var(--ease),
-    transform 0.25s var(--ease);
+  transition: border-color 0.2s;
 }
 @media (hover: hover) {
   .cal-cell.has:hover {
-    border-color: var(--accent-hover-border);
-    transform: translateY(-1px);
+    border-color: var(--red);
   }
 }
 .cal-cell.empty {
@@ -518,22 +506,23 @@ summary:focus-visible {
 }
 .cal-cell:disabled {
   cursor: default;
-  color: rgba(159, 176, 200, 0.45);
-  background: transparent;
-  border-color: rgba(120, 155, 214, 0.07);
+  color: #a8b2b6;
+  background: var(--bg-soft);
+  border-color: transparent;
 }
 .cal-cell.has {
   font-weight: 600;
-  color: #fff;
-  background: var(--surface-strong);
+  color: var(--heading);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 .cal-cell.today {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--red);
   outline-offset: -2px;
 }
 .cal-cell.selected {
-  background: var(--accent-soft);
-  border-color: var(--accent);
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
 }
 .dots {
   display: flex;
@@ -547,10 +536,13 @@ summary:focus-visible {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--navy);
+}
+.cal-cell.selected .dot-scheduled {
+  background: #fff;
 }
 .dot-cancelled {
-  background: var(--cancelled);
+  background: var(--cancelled-bar);
 }
 .dot-rescheduled,
 .dot-moved-away {
@@ -575,23 +567,43 @@ summary:focus-visible {
   margin-right: 5px;
 }
 
-/* ── Stopka ── */
+/* ── Stopka: ciemna sekcja jak „info_section” + pasek z dopiskiem licencji ── */
 .footer {
-  margin-top: 36px;
-  padding-top: 14px;
-  border-top: 1px solid var(--border);
+  margin-top: 40px;
+  background: var(--navy-deep);
+  color: rgba(255, 255, 255, 0.82);
   font-size: 0.85rem;
-  color: var(--muted);
+}
+.footer-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 30px 16px 18px;
+}
+.footer h4 {
+  margin: 0 0 12px;
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 .footer p {
-  margin: 4px 0;
+  margin: 6px 0;
+}
+.footer a {
+  color: #fff;
+}
+.footer-credit {
+  background: #fff;
+  color: #000;
+  text-align: center;
+  padding: 14px 16px calc(14px + env(safe-area-inset-bottom));
+  font-size: 0.8rem;
+}
+.footer-credit a {
+  color: inherit;
 }
 
 @media (max-width: 420px) {
-  .card {
-    grid-template-columns: 1fr;
-    gap: 2px;
-  }
   .toolbar {
     flex-direction: column;
     align-items: stretch;
@@ -608,13 +620,9 @@ summary:focus-visible {
     padding: 9px 10px;
   }
   .segmented button {
-    padding: 7px 11px;
+    padding: 8px 12px;
   }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::after {
-    transition: none !important;
+  .hero h1 {
+    font-size: 1.45rem;
   }
 }

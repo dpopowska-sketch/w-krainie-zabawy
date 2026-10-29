@@ -133,18 +133,22 @@ function Shell(props: { status: SyncStatus | null; sourcePage?: string; children
     <>
       <header class="header">
         <div class="header-inner">
-          <h1>
-            <img class="sun" src="./slonce.png" alt="" width="40" height="39" />
-            W krainie zabawy
-          </h1>
-          <p>Zajęcia dodatkowe · Słoneczne Przedszkole w Żernicy</p>
+          <img class="sun" src="./slonce.png" alt="" width="40" height="39" />
+          <span class="brand">W krainie zabawy</span>
         </div>
       </header>
+      <section class="hero">
+        <img class="hero-sun" src="./slonce.png" alt="" aria-hidden="true" />
+        <div class="hero-inner">
+          <h1>Harmonogram zajęć</h1>
+          <p>Zajęcia dodatkowe projektu „W krainie zabawy” · Słoneczne Przedszkole w Żernicy</p>
+        </div>
+      </section>
       <div class="page">
         <SyncBanner status={props.status} />
         <main>{props.children}</main>
-        <Footer status={props.status} sourcePage={props.sourcePage} />
       </div>
+      <Footer status={props.status} sourcePage={props.sourcePage} />
     </>
   );
 }
@@ -166,15 +170,22 @@ function SyncBanner({ status }: { status: SyncStatus | null }) {
 function Footer({ status, sourcePage }: { status: SyncStatus | null; sourcePage?: string }) {
   return (
     <footer class="footer">
-      {status?.lastChecked && <p>Ostatnie sprawdzenie strony przedszkola: {formatTimestamp(status.lastChecked)}</p>}
-      {status?.lastDataChange && <p>Ostatnia zmiana w harmonogramie: {formatTimestamp(status.lastDataChange)}</p>}
-      <p>
-        Harmonogram jest odczytywany automatycznie z{" "}
-        <a href={sourcePage ?? "https://przedszkole-zspzernica.pilchowice.pl/harmonogram-zajec-w-krainie-zabawy/"} target="_blank" rel="noopener">
-          oficjalnej strony przedszkola
-        </a>
-        . W razie rozbieżności obowiązuje strona przedszkola.
-      </p>
+      <div class="footer-inner">
+        <h4>O harmonogramie</h4>
+        <p>
+          Harmonogram jest odczytywany automatycznie z{" "}
+          <a href={sourcePage ?? "https://przedszkole-zspzernica.pilchowice.pl/harmonogram-zajec-w-krainie-zabawy/"} target="_blank" rel="noopener">
+            oficjalnej strony przedszkola
+          </a>
+          . W razie rozbieżności obowiązuje strona przedszkola.
+        </p>
+        {status?.lastChecked && <p>Ostatnie sprawdzenie strony przedszkola: {formatTimestamp(status.lastChecked)}</p>}
+        {status?.lastDataChange && <p>Ostatnia zmiana w harmonogramie: {formatTimestamp(status.lastDataChange)}</p>}
+      </div>
+      {/* Wymóg licencji szablonu Natone (CC 3.0): dopisek musi zostać w stopce. */}
+      <div class="footer-credit">
+        <a href="https://html.design/" target="_blank" rel="noopener">free template via html.design</a>
+      </div>
     </footer>
   );
 }
