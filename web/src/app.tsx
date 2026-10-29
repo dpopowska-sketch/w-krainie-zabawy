@@ -227,14 +227,18 @@ function GroupSchedule(props: {
     return new Map([...map.entries()].sort(([a], [b]) => a.localeCompare(b)));
   }, [schedule, group, prefix]);
 
+  const groupName = schedule.groups.find((g) => g.id === group)?.name ?? group;
+  const isCurrent = monthKey(currentMonth()) === prefix;
+  // W bieżącym miesiącu komunikaty o minionych dniach chowamy (jak minione dni na liście);
+  // przeglądając miniony miesiąc, widać je dalej.
+  const today = todayIso();
   const notices = schedule.notices.filter(
     (n) =>
       !n.removedAt &&
       (n.groups === "all" || n.groups.includes(group)) &&
-      (n.dates.length === 0 || n.dates.some((d) => d.startsWith(prefix))),
+      (n.dates.length === 0 || n.dates.some((d) => d.startsWith(prefix))) &&
+      !(isCurrent && n.dates.length > 0 && n.dates.every((d) => d < today)),
   );
-  const groupName = schedule.groups.find((g) => g.id === group)?.name ?? group;
-  const isCurrent = monthKey(currentMonth()) === prefix;
 
   // Najbliższy miesiąc z zajęciami – podpowiedź, gdy w wybranym nic nie ma.
   const monthsWithData = [...new Set(schedule.activities.filter((a) => a.group === group).map((a) => a.date.slice(0, 7)))].sort();
@@ -263,7 +267,7 @@ function GroupSchedule(props: {
       {byDay.size === 0 ? (
         <EmptyMonth months={monthsWithData} current={prefix} onPick={(key) => props.setMonth(parseMonthKey(key)!)} />
       ) : props.view === "list" ? (
-        <DayList byDay={byDay} />
+        <DayList key={`${group}-${prefix}`} byDay={byDay} collapsePast />
       ) : (
         <Calendar month={month} byDay={byDay} selected={props.selectedDay} onSelect={props.setSelectedDay} />
       )}
@@ -296,11 +300,27 @@ function EmptyMonth(props: { months: string[]; current: string; onPick: (key: st
   );
 }
 
-function DayList({ byDay }: { byDay: Map<string, DayItem[]> }) {
+/**
+ * Lista dni. Z collapsePast minione dni są schowane pod przyciskiem, żeby lista zaczynała się
+ * od dzisiaj – ale tylko gdy w miesiącu są jeszcze dni przyszłe (miesiąc w całości miniony
+ * pokazujemy normalnie).
+ */
+function DayList({ byDay, collapsePast = false }: { byDay: Map<string, DayItem[]>; collapsePast?: boolean }) {
   const today = todayIso();
+  const [showPast, setShowPast] = useState(false);
+  const entries = [...byDay.entries()];
+  const pastCount = entries.filter(([day]) => day < today).length;
+  const canCollapse = collapsePast && pastCount > 0 && entries.some(([day]) => day >= today);
+  const visible = canCollapse && !showPast ? entries.filter(([day]) => day >= today) : entries;
   return (
-    <ol class="days">
-      {[...byDay.entries()].map(([day, items]) => (
+    <>
+      {canCollapse && (
+        <button type="button" class="btn past-toggle" aria-expanded={showPast} onClick={() => setShowPast(!showPast)}>
+          {showPast ? "Ukryj minione dni" : `Pokaż minione dni (${pastCount})`}
+        </button>
+      )}
+      <ol class="days">
+      {visible.map(([day, items]) => (
         <li class={`day${day === today ? " today" : ""}${day < today ? " past" : ""}`} id={`d-${day}`}>
           <h3>
             {formatDay(day)}
@@ -311,7 +331,8 @@ function DayList({ byDay }: { byDay: Map<string, DayItem[]> }) {
           </ul>
         </li>
       ))}
-    </ol>
+      </ol>
+    </>
   );
 }
 
