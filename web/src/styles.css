@@ -75,8 +75,15 @@ summary:focus-visible {
   font-size: 1.6rem;
   font-weight: 700;
 }
-.header h1::before {
-  content: "☀️ ";
+.header h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sun {
+  width: 40px;
+  height: auto;
+  flex: none;
 }
 .header p {
   margin: 2px 0 0;

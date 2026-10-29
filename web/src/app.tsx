@@ -132,7 +132,10 @@ function Shell(props: { status: SyncStatus | null; sourcePage?: string; children
     <>
       <header class="header">
         <div class="header-inner">
-          <h1>W krainie zabawy</h1>
+          <h1>
+            <img class="sun" src="./slonce.png" alt="" width="40" height="39" />
+            W krainie zabawy
+          </h1>
           <p>Zajęcia dodatkowe · Słoneczne Przedszkole w Żernicy</p>
         </div>
       </header>
