@@ -8,6 +8,8 @@ import type { ExtractionRecord } from "./schema.js";
 
 export interface ScheduledOccurrence extends Occurrence {
   sourceUrl: string;
+  /** Kiedy plik źródłowy (w tej wersji) pojawił się na stronie. */
+  sourceFirstSeen: string;
   cellText: string | null;
 }
 
@@ -20,11 +22,29 @@ export interface RunResult {
   occurrences: ScheduledOccurrence[];
 }
 
-export function activeDocuments(): SourceDocument[] {
-  return readJson<Manifest>(MANIFEST_PATH).documents.filter((d) => d.removedAt === null);
+/**
+ * Wszystkie dokumenty, także usunięte ze strony – ich terminy są historią i zostają.
+ * Gdy plik pod tym samym adresem się zmienił, liczy się tylko najnowsza wersja.
+ */
+export function allDocuments(): SourceDocument[] {
+  return readJson<Manifest>(MANIFEST_PATH).documents;
 }
 
-export function loadRun(run: string, docs = activeDocuments()): RunResult {
+/**
+ * Zestaw plików jednego harmonogramu: WordPress nadaje im wspólny początek nazwy
+ * (…-0-scaled.jpg, …-1-scaled.jpg). Miesiąc jest zwykle tylko na pierwszej stronie.
+ */
+export function batchKey(url: string): string {
+  return url.replace(/-\d+(?:-scaled)?\.\w+$/, "").replace(/(?:-scaled)?\.\w+$/, "");
+}
+
+/** Rok i miesiąc z adresu wgrania (/uploads/2026/10/) – tylko jako ostateczność. */
+function uploadPeriod(url: string): { year: number; month: number } | null {
+  const m = url.match(/\/uploads\/(\d{4})\/(\d{2})\//);
+  return m ? { year: Number(m[1]), month: Number(m[2]) } : null;
+}
+
+export function loadRun(run: string, docs = allDocuments()): RunResult {
   const config = loadGroups();
   let missingFiles = 0;
   const records = docs.flatMap((doc) => {
@@ -35,12 +55,27 @@ export function loadRun(run: string, docs = activeDocuments()): RunResult {
     }
     return [readJson<ExtractionRecord>(file)];
   });
-  // Miesiąc jest tylko w nagłówku pierwszej strony – bierzemy go z dowolnej strony zestawu.
-  const period = records.map((r) => parseMonthLabel(r.output.month_label)).find(Boolean) ?? null;
+
+  const periods = new Map<string, { year: number; month: number; inferred: boolean }>();
+  for (const rec of records) {
+    const key = batchKey(rec.documentUrl);
+    const parsed = parseMonthLabel(rec.output.month_label);
+    if (parsed) periods.set(key, { ...parsed, inferred: false });
+  }
+  for (const rec of records) {
+    const key = batchKey(rec.documentUrl);
+    const fallback = uploadPeriod(rec.documentUrl);
+    if (!periods.has(key) && fallback) periods.set(key, { ...fallback, inferred: true });
+  }
+  // Najnowszy okres – do kontekstu przy interpretacji ogłoszeń.
+  const period = [...periods.values()].sort((a, b) => b.year * 12 + b.month - (a.year * 12 + a.month))[0] ?? null;
 
   const cells: RunResult["cells"] = [];
-  if (period) {
-    for (const rec of records) {
+  for (const rec of records) {
+    if (!rec.output.is_schedule) continue;
+    const batchPeriod = periods.get(batchKey(rec.documentUrl));
+    if (!batchPeriod) continue;
+    {
       for (const e of rec.output.entries) {
         const entry: CellEntry = {
           activity: e.activity_name,
@@ -56,12 +91,15 @@ export function loadRun(run: string, docs = activeDocuments()): RunResult {
           uncertain: e.uncertain,
           note: e.note,
         };
-        cells.push({ ...expandEntry(entry, period.year, period.month, config), sourceUrl: rec.documentUrl, entry });
+        const result = expandEntry(entry, batchPeriod.year, batchPeriod.month, config);
+        if (batchPeriod.inferred) for (const o of result.occurrences) o.issues.push("month_inferred");
+        cells.push({ ...result, sourceUrl: rec.documentUrl, entry });
       }
     }
   }
+  const firstSeen = new Map(docs.map((d) => [d.url, d.firstSeen]));
   const occurrences = cells.flatMap((c) =>
-    c.occurrences.map((o) => ({ ...o, sourceUrl: c.sourceUrl, cellText: c.entry.cellText ?? null })),
+    c.occurrences.map((o) => ({ ...o, sourceUrl: c.sourceUrl, sourceFirstSeen: firstSeen.get(c.sourceUrl) ?? "", cellText: c.entry.cellText ?? null })),
   );
   markTimeConflicts(occurrences);
   return { run, records, missingFiles, period, cells, occurrences };

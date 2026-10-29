@@ -3,7 +3,8 @@
   "a": {
     "period": {
       "year": 2026,
-      "month": 10
+      "month": 10,
+      "inferred": false
     },
     "recall": 1,
     "precision": 1,
@@ -28,7 +29,8 @@
   "b": {
     "period": {
       "year": 2026,
-      "month": 10
+      "month": 10,
+      "inferred": false
     },
     "recall": 1,
     "precision": 1,

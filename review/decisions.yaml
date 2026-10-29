@@ -1,0 +1,26 @@
+# Ręczne decyzje dla pozycji „do weryfikacji”.
+#
+# Lista pozycji z gotowymi fragmentami do skopiowania jest w review/pending.md.
+# Plik można edytować bezpośrednio na GitHubie (ikona ołówka). Zmiany pojawią się
+# na stronie przy najbliższej synchronizacji.
+#
+# Dostępne decyzje:
+#
+#   - id: <identyfikator terminu>
+#     action: confirm          # termin jest poprawny, pokaż jako zweryfikowany
+#     note: "sprawdzone z sekretariatem"   # opcjonalnie
+#
+#   - id: <identyfikator terminu>
+#     action: hide             # błędny odczyt, nie pokazuj
+#
+#   - id: <identyfikator terminu>
+#     action: edit             # popraw wartości (tylko te, które podasz)
+#     set:
+#       date: "2026-10-13"
+#       start: "07:30"
+#       end: "08:30"
+#
+#   - notice: <identyfikator komunikatu>
+#     action: dismiss          # ukryj komunikat bez dopasowania
+
+decisions: []

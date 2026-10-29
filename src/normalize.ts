@@ -10,7 +10,9 @@ export type IssueCode =
   | "invalid_time"
   | "unknown_group"
   | "uncertain_read"
-  | "time_conflict";
+  | "time_conflict"
+  | "month_inferred"
+  | "runs_disagree";
 
 export interface CellEntry {
   activity: string;

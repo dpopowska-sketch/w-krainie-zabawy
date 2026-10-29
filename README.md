@@ -9,13 +9,37 @@ pobierany automatycznie ze [strony przedszkola](https://przedszkole-zspzernica.p
 npm install
 cp .env.example .env      # i wpisz ANTHROPIC_API_KEY
 
+npm run sync              # wszystkie kroki naraz → data/published/schedule.json, data/status.json
+```
+
+Kroki można też uruchamiać osobno:
+
+```bash
 npm run discover          # pobiera stronę i załączniki → data/manifest.json, data/page.json
 npm run extract           # odczyt obrazów przez Claude (2 przebiegi) → data/extractions/
 npm run announcements     # interpretacja ogłoszeń i dopasowanie do terminów → data/changes.json
+npm run build             # scalenie z decyzjami → data/published/schedule.json, review/pending.md
 ```
 
-`extract` i `announcements` wysyłają do Claude tylko nowe pliki i nowe linie
-(cache po hashu treści), więc ponowne uruchomienie bez zmian na stronie nic nie kosztuje.
+Do Claude trafiają tylko nowe pliki i nowe linie ogłoszeń (cache po hashu treści),
+więc synchronizacja bez zmian na stronie nic nie kosztuje.
+
+## Automatyczna synchronizacja
+
+`.github/workflows/sync.yml` uruchamia `npm run sync` w GitHub Actions dwa razy dziennie
+(ok. 5:15 i 15:15 zimą, 6:15 i 16:15 latem), po każdej zapisanej decyzji oraz ręcznie
+(zakładka **Actions** → **Synchronizacja harmonogramu** → **Run workflow**).
+Wymaga sekretu `ANTHROPIC_API_KEY` w ustawieniach repozytorium.
+
+Zmiany danych są zapisywane w repozytorium od razu; sam czas sprawdzenia – raz dziennie.
+
+## Weryfikacja ręczna
+
+- `review/pending.md` – lista pozycji do sprawdzenia (generowana automatycznie).
+- `review/decisions.yaml` – Twoje decyzje: `confirm`, `hide`, `edit`, `dismiss`.
+
+Gdy strona przedszkola jest niedostępna albo odczyt się nie powiedzie, dane nie są
+usuwane ani nadpisywane – błąd trafia do `data/status.json`.
 
 ## Testy i ocena dokładności
 

@@ -1,0 +1,67 @@
+name: Synchronizacja harmonogramu
+
+on:
+  schedule:
+    # Czas UTC: 4:15 i 14:15 = 5:15 i 15:15 zimą / 6:15 i 16:15 latem w Polsce.
+    # GitHub może uruchomić zadanie z kilkunastominutowym opóźnieniem.
+    - cron: "15 4,14 * * *"
+  workflow_dispatch: # przycisk „Run workflow” w zakładce Actions
+  push:
+    branches: [main]
+    paths: ["review/decisions.yaml"] # zapisana decyzja → od razu nowa wersja danych
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - run: npm ci
+
+      - name: Synchronizacja
+        id: sync
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: npm run sync
+
+      - name: Zapis zmian w repozytorium
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data review
+          if git diff --cached --quiet; then
+            echo "Brak zmian."
+            exit 0
+          fi
+          if git diff --cached --quiet -- . ':(exclude)data/status.json'; then
+            # Zmienił się tylko czas sprawdzenia – zapisujemy go najwyżej raz dziennie.
+            last=$(git show HEAD:data/status.json 2>/dev/null | jq -r '.lastChecked // "" | .[0:10]')
+            if [ "$last" = "$(date -u +%F)" ] && [ "${{ steps.sync.outcome }}" = "success" ]; then
+              echo "Tylko status, już zapisany dzisiaj."
+              exit 0
+            fi
+          fi
+          git commit -m "Synchronizacja $(date -u +'%Y-%m-%d %H:%M') UTC"
+          # Ktoś mógł w międzyczasie zapisać decyzję w repozytorium.
+          git pull --rebase
+          git push
+
+      - name: Zgłoszenie błędu synchronizacji
+        if: steps.sync.outcome == 'failure'
+        run: |
+          echo "::error::Synchronizacja zakończyła się błędem – szczegóły w kroku 'Synchronizacja' i w data/status.json"
+          exit 1

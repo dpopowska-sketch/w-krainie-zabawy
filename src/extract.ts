@@ -67,25 +67,26 @@ async function extractOne(doc: SourceDocument, run: string): Promise<ExtractionR
   };
 }
 
-export async function extractAll(): Promise<void> {
+/** Odczytuje pliki, których jeszcze nie czytano. Zwraca błędy zamiast przerywać – pozostałe pliki są czytane dalej. */
+export async function extractAll(): Promise<{ errors: string[]; cost: number; extracted: number }> {
+  const manifest = readJson<Manifest>(MANIFEST_PATH);
+  const todo = manifest.documents
+    .filter((d) => d.removedAt === null)
+    .flatMap((doc) => RUNS.map((run) => ({ doc, run, file: extractionPath(doc, run) })))
+    .filter((t) => !fs.existsSync(t.file));
+  const errors: string[] = [];
+  let cost = 0;
+  let extracted = 0;
+  if (todo.length === 0) return { errors, cost, extracted };
+
   try {
     getClient();
   } catch (err) {
-    console.error((err as Error).message);
-    process.exitCode = 1;
-    return;
+    return { errors: [(err as Error).message], cost, extracted };
   }
-  const manifest = readJson<Manifest>(MANIFEST_PATH);
-  const docs = manifest.documents.filter((d) => d.removedAt === null);
-  let cost = 0;
 
-  for (const doc of docs) {
-    for (const run of RUNS) {
-      const file = extractionPath(doc, run);
-      if (fs.existsSync(file)) {
-        console.log(`[pominięto – już odczytany] ${path.basename(doc.url)} (${run})`);
-        continue;
-      }
+  for (const { doc, run, file } of todo) {
+    {
       process.stdout.write(`Odczyt ${path.basename(doc.url)} (${run})… `);
       const started = Date.now();
       try {
@@ -93,19 +94,25 @@ export async function extractAll(): Promise<void> {
         writeJson(file, record);
         const c = costUsd(record.usage);
         cost += c;
+        extracted++;
         console.log(
           `${record.output.entries.length} wpisów, ${record.usage.input_tokens} + ${record.usage.output_tokens} tokenów, ` +
             `$${c.toFixed(3)}, ${((Date.now() - started) / 1000).toFixed(0)} s${record.model !== MODEL ? `, model: ${record.model}` : ""}`,
         );
       } catch (err) {
-        console.error(`\nBŁĄD: ${err instanceof Error ? err.message : String(err)}`);
-        process.exitCode = 1;
+        const message = `Odczyt ${path.basename(doc.url)} (${run}) nie powiódł się: ${err instanceof Error ? err.message : String(err)}`;
+        console.log("BŁĄD");
+        errors.push(message);
       }
     }
   }
-  console.log(`Łączny koszt tego uruchomienia: $${cost.toFixed(3)}`);
+  return { errors, cost, extracted };
 }
 
 if (isMain(import.meta.url)) {
-  extractAll();
+  extractAll().then(({ errors, cost, extracted }) => {
+    for (const e of errors) console.error(`BŁĄD: ${e}`);
+    console.log(extracted === 0 && errors.length === 0 ? "Brak nowych plików do odczytu." : `Koszt: $${cost.toFixed(3)}`);
+    if (errors.length) process.exitCode = 1;
+  });
 }

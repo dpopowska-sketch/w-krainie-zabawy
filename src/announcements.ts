@@ -73,47 +73,70 @@ export interface ChangeEntry {
   text: string;
   textSha256: string;
   firstSeen: string;
+  /** Kiedy linia zniknęła ze strony; zmiana zostaje w historii, nie jest cofana automatycznie. */
+  removedAt: string | null;
   isScheduleChange: boolean;
   changes: { change: AnnouncedChange; resolution: Resolution }[];
 }
 
-export function resolveAll(records: AnnouncementRecord[], schedule: ScheduledOccurrence[]): ChangeEntry[] {
+/** Rejestr wszystkich linii, jakie kiedykolwiek pojawiły się na stronie. */
+type AnnouncementIndex = Record<string, { text: string; firstSeen: string; removedAt: string | null }>;
+const INDEX_PATH = path.join(ANNOUNCEMENTS_DIR, "index.json");
+
+export function resolveAll(records: AnnouncementRecord[], index: AnnouncementIndex, schedule: ScheduledOccurrence[]): ChangeEntry[] {
   const config = loadGroups();
-  return records.map((rec) => ({
-    text: rec.text,
-    textSha256: rec.textSha256,
-    firstSeen: rec.createdAt,
-    isScheduleChange: rec.output.is_schedule_change,
-    changes: rec.output.is_schedule_change
-      ? rec.output.changes.map((change) => ({ change, resolution: resolveChange(change, schedule, config) }))
-      : [],
-  }));
+  return records
+    .map((rec) => ({
+      text: rec.text,
+      textSha256: rec.textSha256,
+      firstSeen: index[rec.textSha256]?.firstSeen ?? rec.createdAt,
+      removedAt: index[rec.textSha256]?.removedAt ?? null,
+      isScheduleChange: rec.output.is_schedule_change,
+      changes: rec.output.is_schedule_change
+        ? rec.output.changes.map((change) => ({ change, resolution: resolveChange(change, schedule, config) }))
+        : [],
+    }))
+    .sort((a, b) => a.firstSeen.localeCompare(b.firstSeen));
+}
+
+/** Interpretuje nowe linie ze strony (wywołuje Claude) i aktualizuje rejestr ogłoszeń. */
+export async function interpretNewLines(period: { year: number; month: number }): Promise<{ records: AnnouncementRecord[]; index: AnnouncementIndex; cost: number }> {
+  const page = readJson<{ lines: string[] }>(PAGE_PATH);
+  fs.mkdirSync(ANNOUNCEMENTS_DIR, { recursive: true });
+  const index: AnnouncementIndex = fs.existsSync(INDEX_PATH) ? readJson<AnnouncementIndex>(INDEX_PATH) : {};
+  const now = new Date().toISOString();
+  const current = new Set<string>();
+  let cost = 0;
+
+  for (const raw of page.lines) {
+    const text = normalizeLine(raw);
+    const hash = sha256(text);
+    current.add(hash);
+    const file = path.join(ANNOUNCEMENTS_DIR, `${hash}.json`);
+    if (!fs.existsSync(file)) {
+      process.stdout.write(`Interpretacja: „${text.slice(0, 70)}”… `);
+      const rec = await parseLine(text, period);
+      writeJson(file, rec);
+      cost += costUsd(rec.usage);
+      console.log(`$${costUsd(rec.usage).toFixed(3)}`);
+    }
+    const entry = index[hash];
+    if (!entry) index[hash] = { text, firstSeen: readJson<AnnouncementRecord>(file).createdAt, removedAt: null };
+    else entry.removedAt = null;
+  }
+  for (const [hash, entry] of Object.entries(index)) {
+    if (!current.has(hash) && entry.removedAt === null) entry.removedAt = now;
+  }
+  writeJson(INDEX_PATH, Object.fromEntries(Object.entries(index).sort(([, a], [, b]) => a.firstSeen.localeCompare(b.firstSeen))));
+  const records = Object.keys(index).map((hash) => readJson<AnnouncementRecord>(path.join(ANNOUNCEMENTS_DIR, `${hash}.json`)));
+  return { records, index, cost };
 }
 
 export async function processAnnouncements(): Promise<ChangeEntry[]> {
-  const page = readJson<{ lines: string[] }>(PAGE_PATH);
   const { occurrences, period } = loadConsensus();
   if (!period) throw new Error("Brak odczytanego harmonogramu – uruchom najpierw npm run extract");
-
-  fs.mkdirSync(ANNOUNCEMENTS_DIR, { recursive: true });
-  const records: AnnouncementRecord[] = [];
-  let cost = 0;
-  for (const raw of page.lines) {
-    const text = normalizeLine(raw);
-    const file = path.join(ANNOUNCEMENTS_DIR, `${sha256(text)}.json`);
-    if (fs.existsSync(file)) {
-      records.push(readJson<AnnouncementRecord>(file));
-      continue;
-    }
-    process.stdout.write(`Interpretacja: „${text.slice(0, 70)}”… `);
-    const rec = await parseLine(text, period);
-    writeJson(file, rec);
-    cost += costUsd(rec.usage);
-    console.log(`$${costUsd(rec.usage).toFixed(3)}`);
-    records.push(rec);
-  }
-
-  const entries = resolveAll(records, occurrences);
+  const { records, index, cost } = await interpretNewLines(period);
+  const entries = resolveAll(records, index, occurrences);
   writeJson(
     CHANGES_PATH,
     entries.map((e) => ({
