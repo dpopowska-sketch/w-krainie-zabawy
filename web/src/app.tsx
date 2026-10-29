@@ -129,15 +129,19 @@ export function App() {
 
 function Shell(props: { status: SyncStatus | null; sourcePage?: string; children: ComponentChildren }) {
   return (
-    <div class="page">
+    <>
       <header class="header">
-        <h1>W krainie zabawy</h1>
-        <p>Zajęcia dodatkowe · Słoneczne Przedszkole w Żernicy</p>
+        <div class="header-inner">
+          <h1>W krainie zabawy</h1>
+          <p>Zajęcia dodatkowe · Słoneczne Przedszkole w Żernicy</p>
+        </div>
       </header>
-      <SyncBanner status={props.status} />
-      <main>{props.children}</main>
-      <Footer status={props.status} sourcePage={props.sourcePage} />
-    </div>
+      <div class="page">
+        <SyncBanner status={props.status} />
+        <main>{props.children}</main>
+        <Footer status={props.status} sourcePage={props.sourcePage} />
+      </div>
+    </>
   );
 }
 
