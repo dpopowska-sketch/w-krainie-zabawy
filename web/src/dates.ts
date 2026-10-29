@@ -21,16 +21,6 @@ export function monthKey(m: Month): string {
   return `${m.year}-${String(m.month).padStart(2, "0")}`;
 }
 
-export function parseMonthKey(key: string | null): Month | null {
-  const m = key?.match(/^(\d{4})-(\d{2})$/);
-  return m ? { year: Number(m[1]), month: Number(m[2]) } : null;
-}
-
-export function addMonths(m: Month, delta: number): Month {
-  const index = m.year * 12 + (m.month - 1) + delta;
-  return { year: Math.floor(index / 12), month: (index % 12) + 1 };
-}
-
 function utcNoon(iso: string): Date {
   return new Date(`${iso}T12:00:00Z`);
 }

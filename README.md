@@ -36,6 +36,19 @@ Vite + Preact w `web/`. Dane: `data/published/schedule.json` i `data/status.json
 na urządzeniu; grupa, miesiąc i widok są też w adresie (`#grupa=sowki&miesiac=2026-10&widok=lista`),
 więc link można wysłać innemu rodzicowi.
 
+## Widoczne grupy i historia zmian
+
+W `config/groups.json`:
+
+- `publicGroups` – grupy pokazywane na stronie (teraz tylko Wilczki). Pozostałe grupy są
+  odczytywane i przetwarzane normalnie, więc udostępnienie kolejnej to dopisanie jej `id`.
+- `historyGroups` – grupy, dla których prowadzona jest historia w `history/<grupa>/`:
+  - `RRRR-MM.md` – harmonogram miesiąca (stan aktualny) i dziennik zmian z datami,
+  - `events.json`, `state.json` – te same dane w formie do przetwarzania.
+
+Strona pokazuje tylko bieżący miesiąc (czas polski); publiczny plik z danymi też zawiera
+tylko bieżący miesiąc i widoczne grupy. Pełne dane zostają w repozytorium.
+
 ## Automatyczna synchronizacja
 
 `.github/workflows/sync.yml` uruchamia `npm run sync` w GitHub Actions dwa razy dziennie

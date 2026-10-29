@@ -3,7 +3,6 @@ import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import type { Notice, PublishedActivity, PublishedSchedule, Status, SyncStatus } from "../../src/published";
 import {
   WEEKDAYS_SHORT,
-  addMonths,
   calendarGrid,
   currentMonth,
   formatDay,
@@ -12,7 +11,6 @@ import {
   formatTimeRange,
   formatTimestamp,
   monthKey,
-  parseMonthKey,
   todayIso,
   type Month,
 } from "./dates";
@@ -52,13 +50,12 @@ function writeStorage(key: string, value: string) {
   }
 }
 
-/** Grupa i miesiąc w adresie (#grupa=sowki&miesiac=2026-10) – można wysłać link innemu rodzicowi. */
-function readHash(): { group: string | null; month: Month | null; view: View | null } {
+/** Grupa i widok w adresie (#grupa=wilczki&widok=lista) – można wysłać link innemu rodzicowi. */
+function readHash(): { group: string | null; view: View | null } {
   const params = new URLSearchParams(location.hash.slice(1));
   const view = params.get("widok");
   return {
     group: params.get("grupa"),
-    month: parseMonthKey(params.get("miesiac")),
     view: view === "kalendarz" ? "calendar" : view === "lista" ? "list" : null,
   };
 }
@@ -85,7 +82,8 @@ export function App() {
   const { schedule, status, error } = useData();
   const initial = readHash();
   const [group, setGroup] = useState<string | null>(initial.group ?? readStorage(STORAGE_GROUP));
-  const [month, setMonth] = useState<Month>(initial.month ?? currentMonth());
+  // Publikujemy tylko bieżący miesiąc – bez przeglądania innych.
+  const month = currentMonth();
   const [view, setView] = useState<View>(initial.view ?? (readStorage(STORAGE_VIEW) === "calendar" ? "calendar" : "list"));
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
 
@@ -93,29 +91,35 @@ export function App() {
     if (group) writeStorage(STORAGE_GROUP, group);
     const params = new URLSearchParams();
     if (group) params.set("grupa", group);
-    params.set("miesiac", monthKey(month));
     params.set("widok", view === "calendar" ? "kalendarz" : "lista");
     history.replaceState(null, "", `#${params}`);
-  }, [group, month, view]);
+  }, [group, view]);
 
   useEffect(() => writeStorage(STORAGE_VIEW, view), [view]);
-  useEffect(() => setSelectedDay(null), [month, group]);
+  useEffect(() => setSelectedDay(null), [group]);
 
   if (error) return <Shell status={status}><p class="message error">{error}</p></Shell>;
   if (!schedule) return <Shell status={status}><p class="message">Wczytywanie…</p></Shell>;
 
-  const validGroup = schedule.groups.some((g) => g.id === group) ? group : null;
+  // Jedna udostępniona grupa – wybieramy ją od razu, bez przycisków wyboru.
+  const single = schedule.groups.length === 1 ? schedule.groups[0]! : null;
+  const validGroup = single ? single.id : schedule.groups.some((g) => g.id === group) ? group : null;
 
   return (
     <Shell status={status} sourcePage={schedule.sourcePage}>
-      <p class="eyebrow">Grupa</p>
-      <GroupPicker groups={schedule.groups} value={validGroup} onChange={setGroup} />
+      {single ? (
+        <p class="eyebrow">Grupa {single.name}</p>
+      ) : (
+        <>
+          <p class="eyebrow">Grupa</p>
+          <GroupPicker groups={schedule.groups} value={validGroup} onChange={setGroup} />
+        </>
+      )}
       {validGroup ? (
         <GroupSchedule
           schedule={schedule}
           group={validGroup}
           month={month}
-          setMonth={setMonth}
           view={view}
           setView={setView}
           selectedDay={selectedDay}
@@ -213,7 +217,6 @@ function GroupSchedule(props: {
   schedule: PublishedSchedule;
   group: string;
   month: Month;
-  setMonth: (m: Month) => void;
   view: View;
   setView: (v: View) => void;
   selectedDay: string | null;
@@ -239,44 +242,30 @@ function GroupSchedule(props: {
   }, [schedule, group, prefix]);
 
   const groupName = schedule.groups.find((g) => g.id === group)?.name ?? group;
-  const isCurrent = monthKey(currentMonth()) === prefix;
-  // W bieżącym miesiącu komunikaty o minionych dniach chowamy (jak minione dni na liście);
-  // przeglądając miniony miesiąc, widać je dalej.
+  // Komunikaty o minionych dniach chowamy, tak jak minione dni na liście.
   const today = todayIso();
   const notices = schedule.notices.filter(
     (n) =>
       !n.removedAt &&
       (n.groups === "all" || n.groups.includes(group)) &&
       (n.dates.length === 0 || n.dates.some((d) => d.startsWith(prefix))) &&
-      !(isCurrent && n.dates.length > 0 && n.dates.every((d) => d < today)),
+      !(n.dates.length > 0 && n.dates.every((d) => d < today)),
   );
-
-  // Najbliższy miesiąc z zajęciami – podpowiedź, gdy w wybranym nic nie ma.
-  const monthsWithData = [...new Set(schedule.activities.filter((a) => a.group === group).map((a) => a.date.slice(0, 7)))].sort();
 
   return (
     <section aria-label={`Zajęcia – ${groupName}`}>
       <div class="toolbar">
-        <div class="month-nav">
-          <button type="button" class="icon" aria-label="Poprzedni miesiąc" onClick={() => props.setMonth(addMonths(month, -1))}>‹</button>
-          <h2>{formatMonth(month)}</h2>
-          <button type="button" class="icon" aria-label="Następny miesiąc" onClick={() => props.setMonth(addMonths(month, 1))}>›</button>
-        </div>
-        <div class="toolbar-right">
-          {!isCurrent && (
-            <button type="button" class="btn" onClick={() => props.setMonth(currentMonth())}>Bieżący miesiąc</button>
-          )}
-          <div class="segmented" role="group" aria-label="Widok">
-            <button type="button" aria-pressed={props.view === "list"} onClick={() => props.setView("list")}>Lista</button>
-            <button type="button" aria-pressed={props.view === "calendar"} onClick={() => props.setView("calendar")}>Kalendarz</button>
-          </div>
+        <h2 class="month-title">{formatMonth(month)}</h2>
+        <div class="segmented" role="group" aria-label="Widok">
+          <button type="button" aria-pressed={props.view === "list"} onClick={() => props.setView("list")}>Lista</button>
+          <button type="button" aria-pressed={props.view === "calendar"} onClick={() => props.setView("calendar")}>Kalendarz</button>
         </div>
       </div>
 
       {notices.map((n) => <NoticeBox notice={n} />)}
 
       {byDay.size === 0 ? (
-        <EmptyMonth months={monthsWithData} current={prefix} onPick={(key) => props.setMonth(parseMonthKey(key)!)} />
+        <p class="message">Brak opublikowanych zajęć tej grupy w tym miesiącu.</p>
       ) : props.view === "list" ? (
         <DayList key={`${group}-${prefix}`} byDay={byDay} collapsePast />
       ) : (
@@ -295,33 +284,16 @@ function NoticeBox({ notice }: { notice: Notice }) {
   );
 }
 
-function EmptyMonth(props: { months: string[]; current: string; onPick: (key: string) => void }) {
-  const later = props.months.find((m) => m > props.current);
-  const earlier = [...props.months].reverse().find((m) => m < props.current);
-  const suggestion = later ?? earlier;
-  return (
-    <div class="message">
-      <p>Brak opublikowanych zajęć tej grupy w tym miesiącu.</p>
-      {suggestion && (
-        <button type="button" class="btn btn-primary" onClick={() => props.onPick(suggestion)}>
-          Pokaż {formatMonth(parseMonthKey(suggestion)!).toLocaleLowerCase("pl")}
-        </button>
-      )}
-    </div>
-  );
-}
-
 /**
  * Lista dni. Z collapsePast minione dni są schowane pod przyciskiem, żeby lista zaczynała się
- * od dzisiaj – ale tylko gdy w miesiącu są jeszcze dni przyszłe (miesiąc w całości miniony
- * pokazujemy normalnie).
+ * od dzisiaj (albo najbliższych zajęć).
  */
 function DayList({ byDay, collapsePast = false }: { byDay: Map<string, DayItem[]>; collapsePast?: boolean }) {
   const today = todayIso();
   const [showPast, setShowPast] = useState(false);
   const entries = [...byDay.entries()];
   const pastCount = entries.filter(([day]) => day < today).length;
-  const canCollapse = collapsePast && pastCount > 0 && entries.some(([day]) => day >= today);
+  const canCollapse = collapsePast && pastCount > 0;
   const visible = canCollapse && !showPast ? entries.filter(([day]) => day >= today) : entries;
   return (
     <>
@@ -330,6 +302,7 @@ function DayList({ byDay, collapsePast = false }: { byDay: Map<string, DayItem[]
           {showPast ? "Ukryj minione dni" : `Pokaż minione dni (${pastCount})`}
         </button>
       )}
+      {visible.length === 0 && <p class="message">Wszystkie zajęcia w tym miesiącu już się odbyły.</p>}
       <ol class="days">
       {visible.map(([day, items]) => (
         <li class={`day${day === today ? " today" : ""}${day < today ? " past" : ""}`} id={`d-${day}`}>
@@ -388,6 +361,20 @@ function ActivityCard({ item }: { item: DayItem }) {
   );
 }
 
+type MarkStatus = Status;
+
+/** Znaczniki w kalendarzu: różny kształt i kolor, żeby statusy dało się odróżnić bez wczytywania się w kolory. */
+const MARK: Record<MarkStatus, { symbol: string; label: string }> = {
+  scheduled: { symbol: "", label: "zajęcia" },
+  cancelled: { symbol: "✕", label: "odwołane" },
+  rescheduled: { symbol: "↻", label: "przeniesione" },
+  additional: { symbol: "+", label: "dodatkowe" },
+};
+
+function Mark({ status }: { status: MarkStatus }) {
+  return <span class={`mark mark-${status}`}>{MARK[status].symbol}</span>;
+}
+
 /** Źródła i powody weryfikacji – rozwijane, żeby nie zaśmiecać listy. */
 function Details({ activity: a }: { activity: PublishedActivity }) {
   return (
@@ -437,8 +424,13 @@ function Calendar(props: { month: Month; byDay: Map<string, DayItem[]>; selected
         {cells.map((day) => {
           if (!day) return <div class="cal-cell empty" />;
           const items = props.byDay.get(day) ?? [];
-          const statuses = items.map((i) => (i.movedAway ? "moved-away" : i.activity.status));
-          const label = `${formatDay(day)}${items.length ? `, zajęć: ${items.length}` : ", brak zajęć"}`;
+          const statuses = items.map((i): MarkStatus => (i.movedAway ? "rescheduled" : i.activity.status));
+          const counts = (Object.keys(MARK) as MarkStatus[])
+            .map((s) => [MARK[s].label, statuses.filter((x) => x === s).length] as const)
+            .filter(([, n]) => n > 0)
+            .map(([l, n]) => `${l}: ${n}`)
+            .join(", ");
+          const label = `${formatDay(day)}${items.length ? `, ${counts}` : ", brak zajęć"}`;
           return (
             <button
               type="button"
@@ -449,18 +441,20 @@ function Calendar(props: { month: Month; byDay: Map<string, DayItem[]>; selected
               onClick={() => props.onSelect(day === props.selected ? null : day)}
             >
               <span class="cal-num">{Number(day.slice(8))}</span>
-              <span class="dots" aria-hidden="true">
-                {statuses.map((s) => <span class={`dot dot-${s}`} />)}
+              <span class="marks" aria-hidden="true">
+                {statuses.map((s) => <Mark status={s} />)}
               </span>
             </button>
           );
         })}
       </div>
       <p class="legend">
-        <span><span class="dot dot-scheduled" />zajęcia</span>
-        <span><span class="dot dot-cancelled" />odwołane</span>
-        <span><span class="dot dot-rescheduled" />przeniesione</span>
-        <span><span class="dot dot-additional" />dodatkowe</span>
+        {(Object.keys(MARK) as MarkStatus[]).map((s) => (
+          <span>
+            <Mark status={s} />
+            {MARK[s].label}
+          </span>
+        ))}
       </p>
       {selectedItems ? (
         <DayList byDay={new Map([[props.selected!, selectedItems]])} />

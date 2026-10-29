@@ -30,6 +30,10 @@ export interface GroupsConfig {
   activityAliases: Record<string, string>;
   /** Wzorce adresów plików, które nie są harmonogramem (np. logotypy). */
   ignoreAttachments: string[];
+  /** Grupy pokazywane na stronie. Pozostałe są przetwarzane, ale nie publikowane. */
+  publicGroups: string[];
+  /** Grupy, dla których prowadzimy historię zmian w history/<grupa>/. */
+  historyGroups: string[];
 }
 
 export function loadGroups(): GroupsConfig {

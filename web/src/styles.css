@@ -211,42 +211,13 @@ summary:focus-visible {
   gap: 10px 12px;
   margin: 4px 0 18px;
 }
-.month-nav {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.month-nav h2 {
+.month-title {
   margin: 0;
-  min-width: 10.5ch;
-  text-align: center;
   color: var(--heading);
   font-size: 1.15rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.02em;
-}
-/* Okrągłe czerwone strzałki jak w karuzeli kursów Natone */
-.icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: none;
-  background: var(--red);
-  color: #fff;
-  font-size: 1.4rem;
-  line-height: 1;
-  transition: background-color 0.2s;
-}
-@media (hover: hover) {
-  .icon:hover {
-    background: var(--red-dark);
-  }
-}
-.toolbar-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 .segmented {
   display: inline-flex;
@@ -524,32 +495,48 @@ summary:focus-visible {
   border-color: var(--navy);
   color: #fff;
 }
-.dots {
+/* Znaczniki statusów: kształt + kolor (● zajęcia, ✕ odwołane, ↻ przeniesione, + dodatkowe) */
+.marks {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 2px;
   max-width: 100%;
 }
-.dot {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
+.mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+}
+.mark-scheduled {
+  width: 10px;
+  height: 10px;
+  margin: 2.5px;
   border-radius: 50%;
   background: var(--navy);
 }
-.cal-cell.selected .dot-scheduled {
+.mark-cancelled {
+  background: #c0392b;
+}
+.mark-rescheduled {
+  background: #d98200;
+}
+.mark-additional {
+  background: #1e8a54;
+  font-size: 13px;
+}
+.cal-cell.selected .mark-scheduled {
   background: #fff;
 }
-.dot-cancelled {
-  background: var(--cancelled-bar);
-}
-.dot-rescheduled,
-.dot-moved-away {
-  background: var(--rescheduled);
-}
-.dot-additional {
-  background: var(--additional);
+.cal-cell.selected .mark:not(.mark-scheduled) {
+  box-shadow: 0 0 0 1.5px #fff;
 }
 .legend {
   font-size: 0.8rem;
@@ -562,9 +549,9 @@ summary:focus-visible {
 }
 .legend > span {
   white-space: nowrap;
-}
-.legend .dot {
-  margin-right: 5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 
 /* ── Stopka: ciemna sekcja jak „info_section” + pasek z dopiskiem licencji ── */
@@ -604,21 +591,6 @@ summary:focus-visible {
 }
 
 @media (max-width: 420px) {
-  .toolbar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .month-nav {
-    justify-content: space-between;
-  }
-  .toolbar-right {
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-  .toolbar-right .btn {
-    flex: 1 1 auto;
-    padding: 9px 10px;
-  }
   .segmented button {
     padding: 8px 12px;
   }

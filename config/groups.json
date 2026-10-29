@@ -8,6 +8,8 @@
     { "id": "motylki", "name": "Motylki", "aliases": ["MOTYLKI", "Motylków"] },
     { "id": "wilczki", "name": "Wilczki", "aliases": ["WILCZKI", "Wilczków"] }
   ],
+  "publicGroups": ["wilczki"],
+  "historyGroups": ["wilczki"],
   "locations": {
     "Górnicza": ["kotki", "sloneczka", "wiewiorki", "sowki", "zabki"],
     "Miki": ["motylki", "wilczki"]

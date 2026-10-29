@@ -8,6 +8,7 @@ import path from "node:path";
 import YAML from "yaml";
 import { DATA_DIR, ROOT, SOURCE_PAGE_URL, isMain, loadGroups, readJson, writeJson } from "./config.js";
 import { resolveAll, type ChangeEntry } from "./announcements.js";
+import { updateHistory } from "./history.js";
 import { fold, type IssueCode } from "./normalize.js";
 import { resolveGroupRef } from "./resolve.js";
 import { loadConsensus, type ScheduledOccurrence } from "./schedule.js";
@@ -251,7 +252,7 @@ function writePending(schedule: PublishedSchedule, problems: string[]) {
   fs.writeFileSync(PENDING_PATH, lines.join("\n"), "utf8");
 }
 
-export function build(): { schedule: PublishedSchedule; problems: string[] } {
+export function build(): { schedule: PublishedSchedule; published: PublishedSchedule; problems: string[]; historyEvents: number } {
   const config = loadGroups();
   const { occurrences, disagreements } = loadConsensus();
 
@@ -276,19 +277,46 @@ export function build(): { schedule: PublishedSchedule; problems: string[] } {
   const problems = applyDecisions(activities, notices, loadDecisions());
 
   const order = (a: PublishedActivity) => `${a.date} ${a.start ?? "99:99"} ${config.groups.findIndex((g) => g.id === a.group)}`;
+  // Pełny stan wszystkich grup i miesięcy – do weryfikacji i historii (nie publikujemy go).
   const schedule: PublishedSchedule = {
     sourcePage: SOURCE_PAGE_URL,
     groups: config.groups.map((g) => ({ id: g.id, name: g.name })),
     activities: [...activities.values()].sort((a, b) => order(a).localeCompare(order(b))),
     notices,
   };
-  writeJson(PUBLISHED_PATH, schedule);
   writePending(schedule, problems);
-  return { schedule, problems };
+  const historyEvents = updateHistory(schedule.activities);
+
+  const published = publicView(schedule, config.publicGroups, currentMonthKey());
+  writeJson(PUBLISHED_PATH, published);
+  return { schedule, published, problems, historyEvents };
+}
+
+/** Bieżący miesiąc (RRRR-MM) w strefie Europe/Warsaw. */
+function currentMonthKey(): string {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Warsaw", year: "numeric", month: "2-digit" }).format(new Date()).slice(0, 7);
+}
+
+/**
+ * To, co widzą rodzice: tylko grupy z publicGroups i tylko bieżący miesiąc
+ * (termin przeniesiony z/do tego miesiąca też się liczy).
+ */
+function publicView(full: PublishedSchedule, groups: string[], month: string): PublishedSchedule {
+  const inMonth = (d: string) => d.startsWith(month);
+  return {
+    sourcePage: full.sourcePage,
+    groups: full.groups.filter((g) => groups.includes(g.id)),
+    activities: full.activities.filter((a) => groups.includes(a.group) && (inMonth(a.date) || (a.previous !== null && inMonth(a.previous.date)))),
+    notices: full.notices.filter(
+      (n) => (n.groups === "all" || n.groups.some((g) => groups.includes(g))) && (n.dates.length === 0 || n.dates.some(inMonth)),
+    ),
+  };
 }
 
 if (isMain(import.meta.url)) {
-  const { schedule, problems } = build();
+  const { schedule, published, problems, historyEvents } = build();
+  console.log(`Publicznie: ${published.groups.map((g) => g.name).join(", ")} – ${published.activities.length} terminów, ${published.notices.length} komunikatów`);
+  console.log(`Historia: ${historyEvents} nowych zdarzeń`);
   const count = (s: Status) => schedule.activities.filter((a) => a.status === s).length;
   console.log(
     `Terminów: ${schedule.activities.length} (zaplanowane ${count("scheduled")}, odwołane ${count("cancelled")}, ` +
