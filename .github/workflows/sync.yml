@@ -26,7 +26,11 @@ jobs:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
+      # Zawsze najnowszy kod z main – także przy „Re-run” starego uruchomienia,
+      # który inaczej opublikowałby z powrotem starą wersję strony.
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: actions/setup-node@v4
         with:
