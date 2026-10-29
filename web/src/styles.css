@@ -1,28 +1,37 @@
-/* Paleta zgodna z jira-apps.vilisoft.com (zmienne --vs-* ze strony) */
+/*
+ * Ciemny motyw zgodny z jira-apps.vilisoft.com:
+ * czarne tło z niebieską poświatą, granatowy pasek, pomarańczowy gradient na przyciskach głównych,
+ * półprzezroczyste przyciski drugorzędne z cienką ramką (style .vs-primary-button / .vs-secondary-button).
+ */
 :root {
-  --bg: #f1f4f9;
-  --surface: #ffffff;
-  --text: #3d4f6e;
-  --muted: #64748b;
-  --border: #e1e6ee;
+  --bg: #02060d;
+  --glow: rgba(32, 89, 200, 0.28);
   --navy: #0b2350;
-  --navy-deep: #021931;
-  --navy-muted: #9fb0c8;
+  --surface: rgba(255, 255, 255, 0.03);
+  --surface-strong: rgba(255, 255, 255, 0.06);
+  --text: #f3f6fc;
+  --muted: #9fb0c8;
+  --border: rgba(120, 155, 214, 0.16);
+  --border-strong: rgba(120, 155, 214, 0.3);
   --accent: #ff7b00;
-  --accent-strong: #0b2350;
-  --accent-soft: #fff1e3;
-  --cancelled: #c0392b;
-  --cancelled-soft: #fdecea;
-  --rescheduled: #b35400;
-  --rescheduled-soft: #fff4e8;
-  --additional: #1e7d4f;
-  --additional-soft: #e5f6ec;
-  --review: #1f6fb2;
-  --review-soft: #e8f3fc;
-  --radius: 12px;
-  color-scheme: light;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  line-height: 1.45;
+  --accent-hover-border: rgba(255, 148, 0, 0.5);
+  --accent-soft: rgba(255, 148, 0, 0.1);
+  --accent-text: #ffa24d;
+  --gradient: linear-gradient(90deg, #ffdd00 0%, #ff9400 35%, #ff7b00 65%, #cc6200 100%);
+  --on-gradient: #1d1200;
+  --cancelled: #ff6b5e;
+  --cancelled-soft: rgba(255, 90, 80, 0.09);
+  --rescheduled: #ffb347;
+  --rescheduled-soft: rgba(255, 179, 71, 0.09);
+  --additional: #3ddc97;
+  --additional-soft: rgba(61, 220, 151, 0.09);
+  --review: #6cb6ff;
+  --review-soft: rgba(46, 163, 242, 0.12);
+  --radius: 14px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  color-scheme: dark;
+  font-family: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -32,12 +41,24 @@
 
 body {
   margin: 0;
-  background: var(--bg);
+  min-height: 100vh;
   color: var(--text);
+  background-color: var(--bg);
+  /* Niebieska poświata jak w sekcjach strony Vilisoft */
+  background-image:
+    radial-gradient(ellipse 70% 45% at 0% 35%, var(--glow), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 100% 75%, rgba(32, 89, 200, 0.2), transparent 70%);
+  background-attachment: fixed;
+}
+
+h1,
+h2,
+.activity {
+  font-family: "Poppins", "Open Sans", system-ui, sans-serif;
 }
 
 a {
-  color: var(--accent-strong);
+  color: var(--accent-text);
 }
 
 button {
@@ -49,36 +70,96 @@ button {
 button:focus-visible,
 a:focus-visible,
 summary:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 2px;
+  outline: 3px solid var(--accent-hover-border);
+  outline-offset: 3px;
 }
 
 .page {
   max-width: 760px;
   margin: 0 auto;
-  padding: 16px 16px calc(24px + env(safe-area-inset-bottom));
+  padding: 18px 16px calc(24px + env(safe-area-inset-bottom));
 }
 
-/* Nagłówek: granatowy pas z pomarańczową linią, jak na stronie Vilisoft */
+/* ── Przyciski: główny (gradient) i drugorzędny (szkło z ramką) ── */
+.btn,
+.chip,
+.segmented button,
+.icon {
+  position: relative;
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 600;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition:
+    transform 0.35s var(--ease),
+    box-shadow 0.35s var(--ease),
+    border-color 0.35s var(--ease);
+}
+.btn {
+  border-radius: 8px;
+  padding: 9px 16px;
+  min-height: 42px;
+  white-space: nowrap;
+}
+.chip[aria-pressed="true"],
+.segmented button[aria-pressed="true"],
+.btn-primary {
+  background: var(--gradient);
+  color: var(--on-gradient);
+  border-color: transparent;
+  box-shadow: 0 16px 40px -18px rgba(255, 148, 0, 0.55);
+}
+/* Błysk przesuwający się po przycisku przy najechaniu */
+.chip::after,
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.7s var(--ease);
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .btn:hover,
+  .chip:hover,
+  .icon:hover {
+    border-color: var(--accent-hover-border);
+    transform: translateY(-2px);
+  }
+  .chip[aria-pressed="true"]:hover,
+  .btn-primary:hover {
+    border-color: transparent;
+    box-shadow: 0 22px 50px -16px rgba(255, 148, 0, 0.6);
+  }
+  .btn:hover::after,
+  .chip:hover::after {
+    transform: translateX(120%);
+  }
+}
+
+/* ── Nagłówek: granatowy pasek jak nawigacja Vilisoft ── */
 .header {
   background: var(--navy);
-  border-bottom: 4px solid var(--accent);
-  color: #fff;
+  border-bottom: 1px solid var(--border);
 }
 .header-inner {
   max-width: 760px;
   margin: 0 auto;
-  padding: 18px 16px 16px;
+  padding: 14px 16px;
 }
 .header h1 {
   margin: 0;
-  font-size: 1.6rem;
-  font-weight: 700;
-}
-.header h1 {
   display: flex;
   align-items: center;
   gap: 10px;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
 }
 .sun {
   width: 40px;
@@ -87,104 +168,99 @@ summary:focus-visible {
 }
 .header p {
   margin: 2px 0 0;
-  color: var(--navy-muted);
+  color: var(--muted);
+  font-size: 0.9rem;
 }
 
-/* Wybór grupy – przewijany poziomo na telefonie */
+/* Etykieta sekcji – pomarańczowe wersaliki jak „ABOUT US” */
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Wybór grupy: pigułki jak „Trusted by teams at” ── */
 .groups {
   display: flex;
   gap: 8px;
   overflow-x: auto;
-  padding: 4px 0 12px;
+  padding: 4px 2px 14px;
   scrollbar-width: none;
+}
+.groups::-webkit-scrollbar {
+  display: none;
 }
 .chip {
   flex: none;
-  border: 1px solid var(--border);
-  background: var(--surface);
   border-radius: 999px;
-  padding: 8px 14px;
-  min-height: 40px;
-}
-.chip[aria-pressed="true"] {
-  background: var(--navy);
-  border-color: var(--navy);
-  color: #fff;
-  font-weight: 600;
-  box-shadow: inset 0 -3px 0 var(--accent);
+  padding: 8px 16px;
+  min-height: 42px;
+  font-family: "Poppins", "Open Sans", sans-serif;
 }
 
-/* Pasek miesiąca i widoku */
+/* ── Pasek miesiąca i widoku ── */
 .toolbar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 8px 12px;
-  margin: 4px 0 12px;
+  gap: 10px 12px;
+  margin: 4px 0 16px;
 }
 .month-nav {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 .month-nav h2 {
   margin: 0;
-  color: var(--navy);
-  font-size: 1.25rem;
+  font-size: 1.3rem;
+  font-weight: 600;
   min-width: 10.5ch;
   text-align: center;
+  color: #fff;
 }
 .icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--navy);
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
   font-size: 1.4rem;
   line-height: 1;
-}
-.icon:hover {
-  border-color: var(--navy);
 }
 .toolbar-right {
   display: flex;
   align-items: center;
-  gap: 12px;
-}
-.link {
-  background: none;
-  border: none;
-  color: var(--accent-strong);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  padding: 8px 0;
+  gap: 10px;
 }
 .segmented {
   display: inline-flex;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  overflow: hidden;
+  gap: 4px;
+  padding: 4px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
   background: var(--surface);
 }
 .segmented button {
-  border: none;
-  background: none;
-  padding: 8px 14px;
-  min-height: 40px;
-}
-.segmented button[aria-pressed="true"] {
-  background: var(--navy);
-  color: #fff;
-  font-weight: 600;
+  border-radius: 7px;
+  border-color: transparent;
+  background: transparent;
+  padding: 7px 14px;
+  min-height: 36px;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
-/* Komunikaty */
+/* ── Komunikaty ── */
 .message {
   text-align: center;
-  padding: 24px 8px;
+  padding: 28px 8px;
   color: var(--muted);
+}
+.message p {
+  margin: 0 0 14px;
 }
 .message.error {
   color: var(--cancelled);
@@ -194,17 +270,29 @@ summary:focus-visible {
 }
 .banner {
   background: var(--rescheduled-soft);
-  border: 1px solid #f2d39b;
+  border: 1px solid rgba(255, 179, 71, 0.35);
   border-radius: var(--radius);
-  padding: 10px 14px;
-  margin-bottom: 12px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
 }
 .notice {
+  position: relative;
   background: var(--accent-soft);
-  border-left: 4px solid var(--accent);
-  border-radius: 8px;
-  padding: 10px 14px;
-  margin-bottom: 12px;
+  border: 1px solid rgba(255, 148, 0, 0.25);
+  border-radius: var(--radius);
+  padding: 12px 14px 12px 32px;
+  margin-bottom: 14px;
+}
+/* Pomarańczowy kwadracik jak punkty „What we offer” */
+.notice::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 20px;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--accent);
 }
 .notice .muted {
   display: block;
@@ -212,57 +300,65 @@ summary:focus-visible {
   margin-top: 2px;
 }
 
-/* Lista dni */
+/* ── Lista dni ── */
 .days {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 .day {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 .day h3 {
-  font-size: 1rem;
   margin: 0 0 8px;
   display: flex;
   align-items: center;
   gap: 8px;
-}
-.day.past h3 {
   color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.day.today h3 {
+  color: var(--accent);
 }
 .today-badge {
-  background: var(--navy);
-  color: #fff;
+  background: var(--gradient);
+  color: var(--on-gradient);
   border-radius: 999px;
-  padding: 1px 8px;
-  font-size: 0.75rem;
+  padding: 1px 9px;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
 }
 .cards {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 8px;
+  gap: 10px;
 }
 
-/* Karta zajęć */
+/* ── Karta zajęć ── */
 .card {
   display: grid;
   grid-template-columns: 5.5rem 1fr;
   gap: 10px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-left: 5px solid var(--accent);
+  border-left: 3px solid var(--accent);
   border-radius: var(--radius);
-  padding: 10px 12px;
+  padding: 12px 14px;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 .day.past .card {
-  opacity: 0.75;
+  opacity: 0.6;
 }
 .card-time {
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+  color: #fff;
 }
 .card-title {
   display: flex;
@@ -272,6 +368,7 @@ summary:focus-visible {
 }
 .activity {
   font-weight: 600;
+  color: #fff;
 }
 .card-meta {
   color: var(--muted);
@@ -290,7 +387,9 @@ summary:focus-visible {
   background: var(--cancelled-soft);
 }
 .status-cancelled .card-time,
-.status-cancelled .activity {
+.status-cancelled .activity,
+.status-moved-away .card-time,
+.status-moved-away .activity {
   text-decoration: line-through;
   color: var(--muted);
 }
@@ -301,11 +400,6 @@ summary:focus-visible {
 .status-moved-away {
   background: var(--rescheduled-soft);
 }
-.status-moved-away .card-time,
-.status-moved-away .activity {
-  text-decoration: line-through;
-  color: var(--muted);
-}
 .status-additional {
   border-left-color: var(--additional);
   background: var(--additional-soft);
@@ -313,37 +407,36 @@ summary:focus-visible {
 .card.review {
   border-style: dashed;
   border-left-style: solid;
+  border-left-color: var(--review);
 }
 
 .badge {
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
   border-radius: 999px;
-  padding: 1px 8px;
+  padding: 2px 9px;
   white-space: nowrap;
 }
 .badge-cancelled {
   background: var(--cancelled);
-  color: #fff;
+  color: #2a0603;
 }
 .badge-rescheduled {
   background: var(--rescheduled);
-  color: #fff;
+  color: #2a1700;
 }
 .badge-additional {
   background: var(--additional);
-  color: #fff;
+  color: #03241a;
 }
 .badge-review {
   background: var(--review-soft);
   color: var(--review);
   border: 1px solid var(--review);
 }
-.card.review {
-  border-left-color: var(--review);
-}
 
-/* Szczegóły */
+/* ── Szczegóły ── */
 .details {
   margin-top: 6px;
   font-size: 0.9rem;
@@ -352,6 +445,9 @@ summary:focus-visible {
   color: var(--muted);
   cursor: pointer;
   padding: 4px 0;
+}
+.details summary:hover {
+  color: var(--text);
 }
 .details p {
   margin: 6px 0;
@@ -372,15 +468,18 @@ summary:focus-visible {
   word-break: break-word;
 }
 
-/* Kalendarz */
+/* ── Kalendarz ── */
 .calendar {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
+  gap: 5px;
 }
 .cal-head {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--muted);
   padding: 4px 0;
 }
@@ -396,6 +495,15 @@ summary:focus-visible {
   justify-content: center;
   gap: 3px;
   padding: 2px;
+  transition:
+    border-color 0.25s var(--ease),
+    transform 0.25s var(--ease);
+}
+@media (hover: hover) {
+  .cal-cell.has:hover {
+    border-color: var(--accent-hover-border);
+    transform: translateY(-1px);
+  }
 }
 .cal-cell.empty {
   border: none;
@@ -403,11 +511,14 @@ summary:focus-visible {
 }
 .cal-cell:disabled {
   cursor: default;
-  color: var(--muted);
+  color: rgba(159, 176, 200, 0.45);
   background: transparent;
+  border-color: rgba(120, 155, 214, 0.07);
 }
 .cal-cell.has {
   font-weight: 600;
+  color: #fff;
+  background: var(--surface-strong);
 }
 .cal-cell.today {
   outline: 2px solid var(--accent);
@@ -447,17 +558,20 @@ summary:focus-visible {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 4px 10px;
-  margin: 10px 0 14px;
+  gap: 4px 12px;
+  margin: 12px 0 16px;
+}
+.legend > span {
+  white-space: nowrap;
 }
 .legend .dot {
-  margin-right: 3px;
+  margin-right: 5px;
 }
 
-/* Stopka */
+/* ── Stopka ── */
 .footer {
-  margin-top: 32px;
-  padding-top: 12px;
+  margin-top: 36px;
+  padding-top: 14px;
   border-top: 1px solid var(--border);
   font-size: 0.85rem;
   color: var(--muted);
@@ -480,5 +594,20 @@ summary:focus-visible {
   }
   .toolbar-right {
     justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .toolbar-right .btn {
+    flex: 1 1 auto;
+    padding: 9px 10px;
+  }
+  .segmented button {
+    padding: 7px 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::after {
+    transition: none !important;
   }
 }

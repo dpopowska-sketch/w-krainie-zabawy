@@ -108,6 +108,7 @@ export function App() {
 
   return (
     <Shell status={status} sourcePage={schedule.sourcePage}>
+      <p class="eyebrow">Grupa</p>
       <GroupPicker groups={schedule.groups} value={validGroup} onChange={setGroup} />
       {validGroup ? (
         <GroupSchedule
@@ -248,7 +249,7 @@ function GroupSchedule(props: {
         </div>
         <div class="toolbar-right">
           {!isCurrent && (
-            <button type="button" class="link" onClick={() => props.setMonth(currentMonth())}>Bieżący miesiąc</button>
+            <button type="button" class="btn" onClick={() => props.setMonth(currentMonth())}>Bieżący miesiąc</button>
           )}
           <div class="segmented" role="group" aria-label="Widok">
             <button type="button" aria-pressed={props.view === "list"} onClick={() => props.setView("list")}>Lista</button>
@@ -287,7 +288,7 @@ function EmptyMonth(props: { months: string[]; current: string; onPick: (key: st
     <div class="message">
       <p>Brak opublikowanych zajęć tej grupy w tym miesiącu.</p>
       {suggestion && (
-        <button type="button" class="link" onClick={() => props.onPick(suggestion)}>
+        <button type="button" class="btn btn-primary" onClick={() => props.onPick(suggestion)}>
           Pokaż {formatMonth(parseMonthKey(suggestion)!).toLocaleLowerCase("pl")}
         </button>
       )}
@@ -424,8 +425,10 @@ function Calendar(props: { month: Month; byDay: Map<string, DayItem[]>; selected
         })}
       </div>
       <p class="legend">
-        <span class="dot dot-scheduled" /> zajęcia <span class="dot dot-cancelled" /> odwołane{" "}
-        <span class="dot dot-rescheduled" /> przeniesione <span class="dot dot-additional" /> dodatkowe
+        <span><span class="dot dot-scheduled" />zajęcia</span>
+        <span><span class="dot dot-cancelled" />odwołane</span>
+        <span><span class="dot dot-rescheduled" />przeniesione</span>
+        <span><span class="dot dot-additional" />dodatkowe</span>
       </p>
       {selectedItems ? (
         <DayList byDay={new Map([[props.selected!, selectedItems]])} />
