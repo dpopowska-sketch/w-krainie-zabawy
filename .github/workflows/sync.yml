@@ -7,11 +7,12 @@ on:
     - cron: "15 4,14 * * *"
   workflow_dispatch: # przycisk „Run workflow” w zakładce Actions
   push:
-    branches: [main]
-    paths: ["review/decisions.yaml"] # zapisana decyzja → od razu nowa wersja danych
+    branches: [main] # zapisana decyzja lub zmiana strony → od razu nowa wersja
 
 permissions:
-  contents: write
+  contents: write # zapis danych w repozytorium
+  pages: write # publikacja strony
+  id-token: write
 
 concurrency:
   group: sync
@@ -21,6 +22,9 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -39,6 +43,8 @@ jobs:
         run: npm run sync
 
       - name: Zapis zmian w repozytorium
+        id: commit
+        continue-on-error: true
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -60,8 +66,23 @@ jobs:
           git pull --rebase
           git push
 
+      # Strona jest publikowana zawsze – także po błędzie synchronizacji
+      # (wtedy z ostatnimi sprawdzonymi danymi i ostrzeżeniem dla rodziców).
+      - name: Budowanie strony
+        run: npm run web:build
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Publikacja strony
+        id: deploy
+        uses: actions/deploy-pages@v4
+
       - name: Zgłoszenie błędu synchronizacji
-        if: steps.sync.outcome == 'failure'
+        if: steps.sync.outcome == 'failure' || steps.commit.outcome == 'failure'
         run: |
-          echo "::error::Synchronizacja zakończyła się błędem – szczegóły w kroku 'Synchronizacja' i w data/status.json"
+          echo "::error::Synchronizacja lub zapis zakończyły się błędem – szczegóły w krokach powyżej i w data/status.json"
           exit 1

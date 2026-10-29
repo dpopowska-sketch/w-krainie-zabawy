@@ -9,19 +9,10 @@ import { PUBLISHED_PATH, build } from "./build.js";
 import { DATA_DIR, readJsonIfExists, writeJson } from "./config.js";
 import { discover } from "./discover.js";
 import { extractAll } from "./extract.js";
+import type { SyncStatus } from "./published.js";
 import { loadConsensus } from "./schedule.js";
 
 export const STATUS_PATH = path.join(DATA_DIR, "status.json");
-
-export interface SyncStatus {
-  /** Ostatnie sprawdzenie strony (udane lub nie). */
-  lastChecked: string | null;
-  /** Ostatnia synchronizacja bez żadnych błędów. */
-  lastSuccess: string | null;
-  /** Ostatnia zmiana danych widocznych dla rodziców. */
-  lastDataChange: string | null;
-  errors: string[];
-}
 
 function fileHash(file: string): string | null {
   return fs.existsSync(file) ? crypto.createHash("sha256").update(fs.readFileSync(file)).digest("hex") : null;

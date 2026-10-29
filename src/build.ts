@@ -11,54 +11,15 @@ import { resolveAll, type ChangeEntry } from "./announcements.js";
 import { fold, type IssueCode } from "./normalize.js";
 import { resolveGroupRef } from "./resolve.js";
 import { loadConsensus, type ScheduledOccurrence } from "./schedule.js";
+import type { Notice, PublishedActivity, PublishedSchedule, Source, Status } from "./published.js";
 import type { AnnouncementRecord } from "./schema.js";
+
+export type { Notice, PublishedActivity, PublishedSchedule, Source, Status };
 
 export const PUBLISHED_PATH = path.join(DATA_DIR, "published", "schedule.json");
 const DECISIONS_PATH = path.join(ROOT, "review", "decisions.yaml");
 const PENDING_PATH = path.join(ROOT, "review", "pending.md");
 const ANNOUNCEMENTS_DIR = path.join(DATA_DIR, "announcements");
-
-export type Status = "scheduled" | "cancelled" | "rescheduled" | "additional";
-
-export type Source =
-  | { type: "schedule"; url: string; cellText: string | null; firstSeen: string }
-  | { type: "announcement"; text: string; firstSeen: string; removedAt: string | null }
-  | { type: "manual"; note: string | null };
-
-export interface PublishedActivity {
-  id: string;
-  group: string;
-  activity: string;
-  teacher: string | null;
-  date: string;
-  start: string | null;
-  end: string | null;
-  location: string | null;
-  subgroup: string | null;
-  status: Status;
-  previous: { date: string; start: string | null; end: string | null } | null;
-  verification: "verified" | "needs_review";
-  reviewReasons: string[];
-  warnings: string[];
-  sources: Source[];
-  updatedAt: string;
-}
-
-export interface Notice {
-  id: string;
-  text: string;
-  groups: string[] | "all";
-  reason: string;
-  firstSeen: string;
-  removedAt: string | null;
-}
-
-export interface PublishedSchedule {
-  sourcePage: string;
-  groups: { id: string; name: string }[];
-  activities: PublishedActivity[];
-  notices: Notice[];
-}
 
 type Decision =
   | { id: string; action: "confirm"; note?: string }
@@ -132,10 +93,12 @@ function applyAnnouncements(activities: Map<string, PublishedActivity>, entries:
 
     const reviewReasons: string[] = [];
     const noticeGroups = new Set<string>();
+    const noticeDates = new Set<string>();
     for (const { change, resolution } of entry.changes) {
       if (resolution.status === "needs_review") {
         reviewReasons.push(resolution.reason);
         for (const ref of change.group_refs) for (const g of resolveGroupRef(ref, config) ?? []) noticeGroups.add(g);
+        for (const d of [...change.dates, ...(change.new_date ? [change.new_date] : [])]) noticeDates.add(d);
         continue;
       }
       for (const effect of resolution.effects) {
@@ -187,6 +150,7 @@ function applyAnnouncements(activities: Map<string, PublishedActivity>, entries:
         id: entry.textSha256.slice(0, 12),
         text: entry.text.replace(/^[–-]\s*/, ""),
         groups: noticeGroups.size ? [...noticeGroups] : "all",
+        dates: [...noticeDates].sort(),
         reason: reviewReasons.join("; "),
         firstSeen: entry.firstSeen,
         removedAt: entry.removedAt,

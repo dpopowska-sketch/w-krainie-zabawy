@@ -13,20 +13,27 @@
     "announcements": "tsx src/announcements.ts",
     "evaluate": "tsx src/evaluate.ts",
     "evaluate:announcements": "tsx src/evaluate-announcements.ts",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p web",
     "test": "tsx --test test/*.test.ts",
     "build": "tsx src/build.ts",
-    "sync": "tsx src/sync.ts"
+    "sync": "tsx src/sync.ts",
+    "web:data": "node scripts/copy-data.mjs",
+    "web:dev": "node scripts/copy-data.mjs && vite",
+    "web:build": "node scripts/copy-data.mjs && vite build",
+    "web:preview": "vite preview"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.3.0",
     "cheerio": "^1.2.0",
+    "preact": "^11.1.0",
     "yaml": "^2.9.1",
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@preact/preset-vite": "^2.10.6",
     "@types/node": "^26.6.6",
     "tsx": "^4.23.15",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5"
   }
 }

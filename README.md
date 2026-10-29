@@ -24,12 +24,26 @@ npm run build             # scalenie z decyzjami → data/published/schedule.jso
 Do Claude trafiają tylko nowe pliki i nowe linie ogłoszeń (cache po hashu treści),
 więc synchronizacja bez zmian na stronie nic nie kosztuje.
 
+## Strona dla rodziców
+
+```bash
+npm run web:dev           # podgląd na żywo (http://localhost:5173)
+npm run web:build         # wersja do publikacji → dist/
+```
+
+Vite + Preact w `web/`. Dane: `data/published/schedule.json` i `data/status.json`
+(kopiowane do `web/public/data/` przy uruchomieniu). Wybrana grupa i widok są zapamiętywane
+na urządzeniu; grupa, miesiąc i widok są też w adresie (`#grupa=sowki&miesiac=2026-10&widok=lista`),
+więc link można wysłać innemu rodzicowi.
+
 ## Automatyczna synchronizacja
 
 `.github/workflows/sync.yml` uruchamia `npm run sync` w GitHub Actions dwa razy dziennie
-(ok. 5:15 i 15:15 zimą, 6:15 i 16:15 latem), po każdej zapisanej decyzji oraz ręcznie
-(zakładka **Actions** → **Synchronizacja harmonogramu** → **Run workflow**).
-Wymaga sekretu `ANTHROPIC_API_KEY` w ustawieniach repozytorium.
+(ok. 5:15 i 15:15 zimą, 6:15 i 16:15 latem), po każdej zmianie w repozytorium oraz ręcznie
+(zakładka **Actions** → **Synchronizacja harmonogramu** → **Run workflow**), a następnie
+publikuje stronę na GitHub Pages – także po błędzie synchronizacji (z ostatnimi sprawdzonymi
+danymi i ostrzeżeniem). Wymaga sekretu `ANTHROPIC_API_KEY` oraz włączonego GitHub Pages
+ze źródłem **GitHub Actions** (Settings → Pages).
 
 Zmiany danych są zapisywane w repozytorium od razu; sam czas sprawdzenia – raz dziennie.
 
