@@ -230,6 +230,118 @@ summary:focus-visible {
   border-left: none;
 }
 
+/* ── Moje zajęcia ── */
+.btn-small {
+  min-height: 36px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+.btn-link {
+  border-color: transparent;
+  background: transparent;
+  color: var(--muted);
+  text-decoration: underline;
+}
+.my-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.my-bar-empty {
+  background: var(--bg-soft);
+  border-left: 4px solid var(--navy);
+  padding: 12px 14px;
+}
+.my-bar-empty p {
+  margin: 0;
+  flex: 1 1 14rem;
+}
+.my-actions {
+  display: flex;
+  gap: 8px;
+}
+.info {
+  position: relative;
+  background: var(--additional-soft);
+  border-left: 4px solid var(--additional);
+  padding: 10px 40px 10px 14px;
+  margin: 0 0 16px;
+  font-size: 0.9rem;
+  word-break: break-word;
+}
+.info-close {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  border: none;
+  background: none;
+  font-size: 1.3rem;
+  line-height: 1;
+  padding: 6px;
+  color: var(--muted);
+}
+.editor {
+  border: none;
+  margin: 0 0 20px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+.editor legend {
+  float: left;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 4px;
+  color: var(--heading);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.editor > p {
+  clear: both;
+  margin: 0 0 10px;
+  font-size: 0.85rem;
+}
+.editor-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.editor-list li + li {
+  border-top: 1px solid var(--border);
+}
+.editor-list label {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 2px;
+  cursor: pointer;
+}
+.editor-list input {
+  width: 22px;
+  height: 22px;
+  margin: 2px 0 0;
+  flex: none;
+  accent-color: var(--red);
+}
+.editor-list .muted {
+  display: block;
+  font-size: 0.82rem;
+}
+.editor-name {
+  display: block;
+  font-weight: 500;
+  color: var(--heading);
+}
+.editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
 /* ── Komunikaty ── */
 .message {
   text-align: center;
