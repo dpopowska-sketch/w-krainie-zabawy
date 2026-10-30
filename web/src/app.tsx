@@ -14,6 +14,18 @@ import {
   todayIso,
   type Month,
 } from "./dates";
+import {
+  activityTypes,
+  isSelected,
+  loadSelection,
+  sameKind,
+  saveSelection,
+  selectionFromCodes,
+  shareLink,
+  unseenTypes,
+  type ActivityType,
+  type Selection,
+} from "./selection";
 
 type View = "list" | "calendar";
 
@@ -50,13 +62,17 @@ function writeStorage(key: string, value: string) {
   }
 }
 
-/** Grupa i widok w adresie (#grupa=wilczki&widok=lista) – można wysłać link innemu rodzicowi. */
-function readHash(): { group: string | null; view: View | null } {
+/**
+ * Grupa i widok w adresie (#grupa=wilczki&widok=lista) – można wysłać link innemu rodzicowi.
+ * „moje” to wybór zajęć udostępniony linkiem (kody rodzajów zajęć).
+ */
+function readHash(): { group: string | null; view: View | null; myCodes: string | null } {
   const params = new URLSearchParams(location.hash.slice(1));
   const view = params.get("widok");
   return {
     group: params.get("grupa"),
     view: view === "kalendarz" ? "calendar" : view === "lista" ? "list" : null,
+    myCodes: params.get("moje"),
   };
 }
 
@@ -81,6 +97,8 @@ function useData() {
 export function App() {
   const { schedule, status, error } = useData();
   const initial = readHash();
+  // Odczytujemy raz – po pierwszym renderze adres jest nadpisywany (bez „moje”).
+  const [linkCodes] = useState(() => ({ group: initial.group, codes: initial.myCodes }));
   const [group, setGroup] = useState<string | null>(initial.group ?? readStorage(STORAGE_GROUP));
   // Publikujemy tylko bieżący miesiąc – bez przeglądania innych.
   const month = currentMonth();
@@ -117,9 +135,11 @@ export function App() {
       )}
       {validGroup ? (
         <GroupSchedule
+          key={validGroup}
           schedule={schedule}
           group={validGroup}
           month={month}
+          linkCodes={linkCodes.codes && (!linkCodes.group || linkCodes.group === validGroup) ? linkCodes.codes : null}
           view={view}
           setView={setView}
           selectedDay={selectedDay}
@@ -217,6 +237,8 @@ function GroupSchedule(props: {
   schedule: PublishedSchedule;
   group: string;
   month: Month;
+  /** Wybór zajęć z udostępnionego linku (do zapisania na tym urządzeniu). */
+  linkCodes: string | null;
   view: View;
   setView: (v: View) => void;
   selectedDay: string | null;
@@ -225,11 +247,63 @@ function GroupSchedule(props: {
   const { schedule, group, month } = props;
   const prefix = monthKey(month);
 
+  const groupActivities = useMemo(
+    () => schedule.activities.filter((a) => a.group === group && (a.date.startsWith(prefix) || a.previous?.date.startsWith(prefix))),
+    [schedule, group, prefix],
+  );
+  const types = useMemo(() => activityTypes(groupActivities), [groupActivities]);
+
+  const [selection, setSelection] = useState<Selection | null>(() => loadSelection(group));
+  // Domyślnie (przy każdym otwarciu strony) widać tylko wybrane zajęcia.
+  const [showAll, setShowAll] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [info, setInfo] = useState<string | null>(null);
+
+  // Wybór z linku zapisujemy na tym urządzeniu.
+  useEffect(() => {
+    if (!props.linkCodes) return;
+    const fromLink = selectionFromCodes(props.linkCodes, types);
+    if (fromLink) {
+      saveSelection(group, fromLink);
+      setSelection(fromLink);
+      setInfo(`Zapisano wybór zajęć z linku (${fromLink.selected.length}). Możesz go zmienić przyciskiem „Zmień wybór”.`);
+    } else {
+      setInfo("Link z wyborem zajęć nie pasuje do obecnego harmonogramu – wybierz zajęcia ponownie.");
+    }
+  }, []);
+
+  const save = (next: Selection | null) => {
+    saveSelection(group, next);
+    setSelection(next);
+    setEditing(false);
+    setShowAll(false);
+    setInfo(next ? null : "Wybór zajęć usunięty – widać wszystkie zajęcia grupy.");
+  };
+
+  const share = async () => {
+    if (!selection) return;
+    const url = shareLink(group, selection);
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: "Moje zajęcia – W krainie zabawy", url });
+        return;
+      }
+      await navigator.clipboard.writeText(url);
+      setInfo("Skopiowano link z wybranymi zajęciami. Otwórz go na innym urządzeniu albo wyślij drugiemu rodzicowi.");
+    } catch (err) {
+      if (err instanceof DOMException && err.name === "AbortError") return; // rodzic zamknął okno udostępniania
+      setInfo(`Link z wybranymi zajęciami: ${url}`);
+    }
+  };
+
+  const filtering = selection !== null && !showAll;
+  const unseen = selection ? unseenTypes(selection, types) : [];
+
   const byDay = useMemo(() => {
     const map = new Map<string, DayItem[]>();
     const add = (day: string, item: DayItem) => map.set(day, [...(map.get(day) ?? []), item]);
-    for (const a of schedule.activities) {
-      if (a.group !== group) continue;
+    for (const a of groupActivities) {
+      if (filtering && !isSelected(selection!, a)) continue;
       if (a.date.startsWith(prefix)) add(a.date, { activity: a, movedAway: false });
       // Na pierwotny dzień przeniesionych zajęć zostawiamy informację „przeniesione na…”.
       if (a.status === "rescheduled" && a.previous && a.previous.date !== a.date && a.previous.date.startsWith(prefix)) {
@@ -239,7 +313,7 @@ function GroupSchedule(props: {
     const startOf = (i: DayItem) => (i.movedAway ? i.activity.previous?.start : i.activity.start) ?? "99:99";
     for (const items of map.values()) items.sort((x, y) => startOf(x).localeCompare(startOf(y)));
     return new Map([...map.entries()].sort(([a], [b]) => a.localeCompare(b)));
-  }, [schedule, group, prefix]);
+  }, [groupActivities, filtering, selection, prefix]);
 
   const groupName = schedule.groups.find((g) => g.id === group)?.name ?? group;
   // Komunikaty o minionych dniach chowamy, tak jak minione dni na liście.
@@ -262,16 +336,130 @@ function GroupSchedule(props: {
         </div>
       </div>
 
+      {types.length > 0 &&
+        (editing ? (
+          <SelectionEditor types={types} selection={selection} onSave={save} onCancel={() => setEditing(false)} />
+        ) : (
+          <MyActivitiesBar
+            selection={selection}
+            showAll={showAll}
+            setShowAll={setShowAll}
+            onEdit={() => setEditing(true)}
+            onShare={share}
+          />
+        ))}
+      {info && (
+        <p class="info" role="status">
+          {info}
+          <button type="button" class="info-close" aria-label="Zamknij" onClick={() => setInfo(null)}>×</button>
+        </p>
+      )}
+      {!editing && unseen.length > 0 && (
+        <div class="notice" role="note">
+          <strong>Nowe zajęcia w harmonogramie:</strong> {unseen.map((t) => t.name).join("; ")}. Sprawdź, czy dotyczą
+          Twojego dziecka.{" "}
+          <button type="button" class="btn btn-small" onClick={() => setEditing(true)}>Przejrzyj wybór</button>
+        </div>
+      )}
+
       {notices.map((n) => <NoticeBox notice={n} />)}
 
       {byDay.size === 0 ? (
-        <p class="message">Brak opublikowanych zajęć tej grupy w tym miesiącu.</p>
+        <p class="message">
+          {filtering ? "W tym miesiącu nie ma terminów wybranych zajęć." : "Brak opublikowanych zajęć tej grupy w tym miesiącu."}
+        </p>
       ) : props.view === "list" ? (
         <DayList key={`${group}-${prefix}`} byDay={byDay} collapsePast />
       ) : (
         <Calendar month={month} byDay={byDay} selected={props.selectedDay} onSelect={props.setSelectedDay} />
       )}
     </section>
+  );
+}
+
+/** Przełącznik „Moje zajęcia / Wszystkie” albo zachęta do wyboru, gdy nic nie wybrano. */
+function MyActivitiesBar(props: {
+  selection: Selection | null;
+  showAll: boolean;
+  setShowAll: (v: boolean) => void;
+  onEdit: () => void;
+  onShare: () => void;
+}) {
+  if (!props.selection) {
+    return (
+      <div class="my-bar my-bar-empty">
+        <p>Zaznacz zajęcia swojego dziecka – strona będzie domyślnie pokazywać tylko je.</p>
+        <button type="button" class="btn btn-primary" onClick={props.onEdit}>Wybierz zajęcia dziecka</button>
+      </div>
+    );
+  }
+  return (
+    <div class="my-bar">
+      <div class="segmented" role="group" aria-label="Pokazywane zajęcia">
+        <button type="button" aria-pressed={!props.showAll} onClick={() => props.setShowAll(false)}>
+          Moje zajęcia ({props.selection.selected.length})
+        </button>
+        <button type="button" aria-pressed={props.showAll} onClick={() => props.setShowAll(true)}>Wszystkie</button>
+      </div>
+      <div class="my-actions">
+        <button type="button" class="btn btn-small" onClick={props.onEdit}>Zmień wybór</button>
+        <button type="button" class="btn btn-small" onClick={props.onShare}>Udostępnij wybór</button>
+      </div>
+    </div>
+  );
+}
+
+function pluralTerms(n: number): string {
+  if (n === 1) return "termin";
+  const tens = n % 100;
+  return n % 10 >= 2 && n % 10 <= 4 && (tens < 12 || tens > 14) ? "terminy" : "terminów";
+}
+
+/** Lista rodzajów zajęć grupy z polami do zaznaczenia. */
+function SelectionEditor(props: {
+  types: ActivityType[];
+  selection: Selection | null;
+  onSave: (s: Selection | null) => void;
+  onCancel: () => void;
+}) {
+  const initiallyChecked = props.types.filter((t) => props.selection?.selected.some((s) => sameKind(s, t.key))).map((t) => t.key);
+  const [checked, setChecked] = useState<string[]>(initiallyChecked);
+  const toggle = (key: string) => setChecked((c) => (c.includes(key) ? c.filter((k) => k !== key) : [...c, key]));
+  const save = () => {
+    // Zachowujemy wybór zajęć, których w tym miesiącu nie ma (np. wrócą w następnym).
+    const absent = (props.selection?.selected ?? []).filter((s) => !props.types.some((t) => sameKind(t.key, s)));
+    const selected = [...checked, ...absent];
+    const known = [...new Set([...(props.selection?.known ?? []), ...props.types.map((t) => t.key)])];
+    props.onSave(selected.length ? { selected, known } : null);
+  };
+  return (
+    <fieldset class="editor">
+      <legend>Zajęcia mojego dziecka</legend>
+      <p class="muted">Wybór zapisuje się tylko na tym urządzeniu, w tej przeglądarce – nie wysyłamy go nigdzie.</p>
+      <ul class="editor-list">
+        {props.types.map((t) => (
+          <li>
+            <label>
+              <input type="checkbox" checked={checked.includes(t.key)} onChange={() => toggle(t.key)} />
+              <span>
+                <span class="editor-name">{t.name}</span>
+                <span class="muted">
+                  {t.teachers.length ? `prowadzi ${t.teachers.join(", ")} · ` : ""}
+                  {t.count} {pluralTerms(t.count)} w tym miesiącu
+                </span>
+              </span>
+            </label>
+          </li>
+        ))}
+      </ul>
+      <div class="editor-actions">
+        <button type="button" class="btn btn-primary" onClick={save}>Zapisz</button>
+        <button type="button" class="btn" onClick={props.onCancel}>Anuluj</button>
+        {checked.length > 0 && (
+          <button type="button" class="btn btn-link" onClick={() => setChecked([])}>Odznacz wszystkie</button>
+        )}
+      </div>
+    </fieldset>
   );
 }
 
