@@ -231,6 +231,44 @@ summary:focus-visible {
 }
 
 /* ── Moje zajęcia ── */
+/* Granat i zakładki zamiast czerwieni, żeby nie myliły się z przełącznikiem „Lista / Kalendarz”. */
+.btn-navy {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+}
+.tabs {
+  display: inline-flex;
+  border-bottom: 1px solid var(--border);
+}
+.tabs button {
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 500;
+  padding: 8px 14px;
+  min-height: 42px;
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+.tabs button[aria-pressed="true"] {
+  border-bottom-color: var(--navy);
+  color: var(--navy);
+  font-weight: 600;
+}
+@media (hover: hover) {
+  .btn-navy:hover {
+    background: transparent;
+    border-color: var(--navy);
+    color: var(--navy);
+  }
+  .tabs button:hover {
+    color: var(--navy);
+  }
+}
 .btn-small {
   min-height: 36px;
   padding: 6px 12px;

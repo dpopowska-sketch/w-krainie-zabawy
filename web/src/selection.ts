@@ -1,6 +1,6 @@
 // „Moje zajęcia”: rodzaje zajęć wybrane przez rodzica, zapisywane tylko w przeglądarce
 // (localStorage), osobno dla każdej grupy. Nic nie trafia na serwer.
-import type { PublishedActivity } from "../../src/published";
+import type { PublishedActivity } from "../../src/published.js";
 
 export interface ActivityType {
   /** Znormalizowana nazwa – klucz rodzaju zajęć. */

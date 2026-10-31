@@ -389,13 +389,13 @@ function MyActivitiesBar(props: {
     return (
       <div class="my-bar my-bar-empty">
         <p>Zaznacz zajęcia swojego dziecka – strona będzie domyślnie pokazywać tylko je.</p>
-        <button type="button" class="btn btn-primary" onClick={props.onEdit}>Wybierz zajęcia dziecka</button>
+        <button type="button" class="btn btn-navy" onClick={props.onEdit}>Wybierz zajęcia dziecka</button>
       </div>
     );
   }
   return (
     <div class="my-bar">
-      <div class="segmented" role="group" aria-label="Pokazywane zajęcia">
+      <div class="tabs" role="group" aria-label="Pokazywane zajęcia">
         <button type="button" aria-pressed={!props.showAll} onClick={() => props.setShowAll(false)}>
           Moje zajęcia ({props.selection.selected.length})
         </button>
