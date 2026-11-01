@@ -1,0 +1,312 @@
+{
+  "documentUrl": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-1.jpg",
+  "documentSha256": "1de486f100a6516ded4995f118ed946d48a4f344531b5412646c52d05c70a035",
+  "run": "b",
+  "model": "claude-opus-5-5",
+  "promptVersion": "2026-10-28.1",
+  "createdAt": "2026-11-01T14:50:05.034Z",
+  "stopReason": "end_turn",
+  "usage": {
+    "input_tokens": 7770,
+    "output_tokens": 4282
+  },
+  "output": {
+    "is_schedule": true,
+    "title": null,
+    "month_label": null,
+    "group_columns": [
+      "KOTKI",
+      "SŁONECZKA",
+      "WIEWIÓRKI",
+      "SÓWKI",
+      "ŻABKI",
+      "MOTYLKI",
+      "WILCZKI"
+    ],
+    "entries": [
+      {
+        "activity_name": "Wielozmysłowa stymulacja rozwoju dziecka",
+        "teacher": "N. Nieciecka - Dul",
+        "group_column": "SŁONECZKA",
+        "weekday": "Czwartek",
+        "start": "07:30",
+        "end": "08:30",
+        "dates": [
+          "12.11"
+        ],
+        "location": "Górnicza",
+        "subgroup": "I",
+        "cell_text": "Czwartek 7.30 – 8.30 12.11; Wtorek 14:00-15:00 24.11; Gr. Górnicza I",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Wielozmysłowa stymulacja rozwoju dziecka",
+        "teacher": "N. Nieciecka - Dul",
+        "group_column": "SŁONECZKA",
+        "weekday": "Wtorek",
+        "start": "14:00",
+        "end": "15:00",
+        "dates": [
+          "24.11"
+        ],
+        "location": "Górnicza",
+        "subgroup": "I",
+        "cell_text": "Czwartek 7.30 – 8.30 12.11; Wtorek 14:00-15:00 24.11; Gr. Górnicza I",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Wielozmysłowa stymulacja rozwoju dziecka",
+        "teacher": "N. Nieciecka - Dul",
+        "group_column": "WIEWIÓRKI",
+        "weekday": "Czwartek",
+        "start": "07:30",
+        "end": "08:30",
+        "dates": [
+          "12.11"
+        ],
+        "location": "Górnicza",
+        "subgroup": "I",
+        "cell_text": "Czwartek 7.30 – 8.30 12.11; Wtorek 14:00-15:00 24.11; Gr. Górnicza I",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Wielozmysłowa stymulacja rozwoju dziecka",
+        "teacher": "N. Nieciecka - Dul",
+        "group_column": "WIEWIÓRKI",
+        "weekday": "Wtorek",
+        "start": "14:00",
+        "end": "15:00",
+        "dates": [
+          "24.11"
+        ],
+        "location": "Górnicza",
+        "subgroup": "I",
+        "cell_text": "Czwartek 7.30 – 8.30 12.11; Wtorek 14:00-15:00 24.11; Gr. Górnicza I",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Wielozmysłowa stymulacja rozwoju dziecka",
+        "teacher": "N. Nieciecka - Dul",
+        "group_column": "SÓWKI",
+        "weekday": "Czwartek",
+        "start": "07:30",
+        "end": "08:30",
+        "dates": [
+          "19.11"
+        ],
+        "location": "Górnicza",
+        "subgroup": "II",
+        "cell_text": "Czwartek 7:30-8:30 19.11; Wtorek 14:00-15:00 10.11; Gr. Górnicza II",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Wielozmysłowa stymulacja rozwoju dziecka",
+        "teacher": "N. Nieciecka - Dul",
+        "group_column": "SÓWKI",
+        "weekday": "Wtorek",
+        "start": "14:00",
+        "end": "15:00",
+        "dates": [
+          "10.11"
+        ],
+        "location": "Górnicza",
+        "subgroup": "II",
+        "cell_text": "Czwartek 7:30-8:30 19.11; Wtorek 14:00-15:00 10.11; Gr. Górnicza II",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Wielozmysłowa stymulacja rozwoju dziecka",
+        "teacher": "N. Nieciecka - Dul",
+        "group_column": "ŻABKI",
+        "weekday": "Czwartek",
+        "start": "07:30",
+        "end": "08:30",
+        "dates": [
+          "05.11",
+          "26.11"
+        ],
+        "location": "Górnicza",
+        "subgroup": "III",
+        "cell_text": "Czwartek 7.30 – 8.30 05.11; 26.11; Gr. Górnicza III",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "TUS - zajęcia rozwijające kompetencje emocjonalno-społeczne",
+        "teacher": "J. Olszówka",
+        "group_column": "MOTYLKI",
+        "weekday": "Środa",
+        "start": "09:45",
+        "end": "10:45",
+        "dates": [
+          "04.11",
+          "18.11",
+          "25.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Środa 9.45-10.45 04.11; 18.11; 25.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "TUS - zajęcia rozwijające kompetencje emocjonalno-społeczne",
+        "teacher": "J. Olszówka",
+        "group_column": "WILCZKI",
+        "weekday": "Środa",
+        "start": "09:45",
+        "end": "10:45",
+        "dates": [
+          "04.11",
+          "18.11",
+          "25.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Środa 9.45-10.45 04.11; 18.11; 25.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia korekcyjno-kompensacyjne",
+        "teacher": "B. Bogdał",
+        "group_column": "ŻABKI",
+        "weekday": "Piątek",
+        "start": "13:55",
+        "end": "14:55",
+        "dates": [
+          "06.11",
+          "13.11",
+          "20.11",
+          "27.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Piątek 13.55-14.55 06.11; 13.11; 20.11; 27.11",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia korekcyjno-kompensacyjne",
+        "teacher": "J. Olszówka",
+        "group_column": "MOTYLKI",
+        "weekday": "Wtorek",
+        "start": "09:45",
+        "end": "10:45",
+        "dates": [
+          "03.11",
+          "10.11",
+          "17.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Wtorek 9.45-10.45 03.11; 10.11; 17.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia korekcyjno-kompensacyjne",
+        "teacher": "J. Olszówka",
+        "group_column": "WILCZKI",
+        "weekday": "Wtorek",
+        "start": "09:45",
+        "end": "10:45",
+        "dates": [
+          "03.11",
+          "10.11",
+          "17.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Wtorek 9.45-10.45 03.11; 10.11; 17.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia logopedyczne",
+        "teacher": "B. Pawliczek",
+        "group_column": "SŁONECZKA",
+        "weekday": "Środa",
+        "start": "09:30",
+        "end": "10:30",
+        "dates": [
+          "04.11",
+          "18.11",
+          "25.11"
+        ],
+        "location": null,
+        "subgroup": "I",
+        "cell_text": "Środa 9.30-10.30 04.11; 18.11; 25.11; Grupa I",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia logopedyczne",
+        "teacher": "B. Pawliczek",
+        "group_column": "WIEWIÓRKI",
+        "weekday": "Środa",
+        "start": "10:35",
+        "end": "11:35",
+        "dates": [
+          "04.11",
+          "18.11",
+          "25.11"
+        ],
+        "location": null,
+        "subgroup": "II",
+        "cell_text": "Środa 10.35-11.35 04.11; 18.11; 25.11; Grupa II",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia logopedyczne",
+        "teacher": "B. Bogdał",
+        "group_column": "ŻABKI",
+        "weekday": "Środa",
+        "start": "13:55",
+        "end": "14:55",
+        "dates": [
+          "04.11",
+          "10.11",
+          "18.11",
+          "25.11"
+        ],
+        "location": null,
+        "subgroup": "IV",
+        "cell_text": "Środa 13.55-14.55 04.11; 10.11; 18.11; 25.11 Grupa IV",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia logopedyczne",
+        "teacher": "B. Kasza",
+        "group_column": "KOTKI",
+        "weekday": "Środa",
+        "start": "14:15",
+        "end": "15:15",
+        "dates": [
+          "04.11",
+          "18.11",
+          "25.11"
+        ],
+        "location": null,
+        "subgroup": "III",
+        "cell_text": "Środa 14.15 - 15.15 04.11; 18.11; 25.11; Grupa III",
+        "uncertain": false,
+        "note": null
+      }
+    ],
+    "issues": [
+      "Brak tytułu i nagłówka z miesiącem/rokiem na stronie.",
+      "Kolumny mają drugi wiersz nagłówka z wiekiem i lokalizacją (np. '3- LATKI GÓRNICZA', '6-LATKI MIKI'); jako nazwy kolumn użyto nazw grup z pierwszego wiersza.",
+      "Komórka WILCZKI w wierszu 'Zajęcia logopedyczne p. B. Pawliczek' jest pokolorowana, ale pusta – pominięto.",
+      "W stopce widnieje dopisek 'Zdjęcie objęte prawem autorskim. Zakaz kopiowania.' – nie jest częścią harmonogramu."
+    ]
+  }
+}

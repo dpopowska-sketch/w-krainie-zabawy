@@ -3,7 +3,7 @@
 Plik generowany automatycznie przy każdej synchronizacji – nie edytuj go.
 Decyzje wpisuj w `review/decisions.yaml` (instrukcja na górze tamtego pliku).
 
-## Terminy (3)
+## Terminy (6)
 
 ### 2026-10-06 07:30–08:30 · Motylki · Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania
 
@@ -36,6 +36,40 @@ Decyzje wpisuj w `review/decisions.yaml` (instrukcja na górze tamtego pliku).
 
 ```yaml
   - id: d45b988a2130
+    action: confirm   # albo: hide / edit (z polem set)
+```
+
+### 2026-11-10 13:55–14:55 · Żabki · Zajęcia logopedyczne
+
+- Status: zaplanowane, prowadzi B. Bogdał
+- Powód: Dzień tygodnia w tabeli nie pasuje do daty
+- Tabela: „Środa 13.55-14.55 04.11; 10.11; 18.11; 25.11 Grupa IV” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-1.jpg))
+
+```yaml
+  - id: 1f5b9f04bf1b
+    action: confirm   # albo: hide / edit (z polem set)
+```
+
+### 2026-11-16 14:15–15:15 · Słoneczka · Zajęcia Mali Artyści - rozwijanie kompetencji w zakresie świadomości i kulturalnej
+
+- Status: zaplanowane, prowadzi B. Kasza
+- Powód: Fragment tabeli był nieczytelny lub niejednoznaczny
+- Powód: Dzień tygodnia w tabeli nie pasuje do daty
+- Tabela: „Poniedziałek44 14.15 – 15.15 16.11; Gr. Górnicza I” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-0.jpg))
+
+```yaml
+  - id: a79983dd75ed
+    action: confirm   # albo: hide / edit (z polem set)
+```
+
+### 2026-11-23 12:45–14:45 · Motylki · Zajęcia z preorientacji zawodowej
+
+- Status: zaplanowane, prowadzi M. Marchewka
+- Powód: Fragment tabeli był nieczytelny lub niejednoznaczny
+- Tabela: „Poniedziałek 12.45-14.45 23:11;” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-2.jpg))
+
+```yaml
+  - id: c4712bbd1b5d
     action: confirm   # albo: hide / edit (z polem set)
 ```
 

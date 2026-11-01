@@ -247,5 +247,195 @@
     "announcements": [
       "20.10. 2026 r., 27.10.2026 r. – odwołane zajęcia Przedszkolak Mały Projektant"
     ]
+  },
+  {
+    "id": "1aa17f42b742",
+    "month": "2026-11",
+    "activity": "Zajęcia korekcyjno-kompensacyjne",
+    "at": "2026-11-01T14:47:37.729Z",
+    "kind": "added",
+    "date": "2026-11-03",
+    "start": "09:45",
+    "status": "scheduled"
+  },
+  {
+    "id": "5b38b4d8a735",
+    "month": "2026-11",
+    "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+    "at": "2026-11-01T14:47:37.729Z",
+    "kind": "added",
+    "date": "2026-11-04",
+    "start": "07:30",
+    "status": "scheduled"
+  },
+  {
+    "id": "21460a2c997b",
+    "month": "2026-11",
+    "activity": "TUS - zajęcia rozwijające kompetencje emocjonalno-społeczne",
+    "at": "2026-11-01T14:47:37.729Z",
+    "kind": "added",
+    "date": "2026-11-04",
+    "start": "09:45",
+    "status": "scheduled"
+  },
+  {
+    "id": "f320327a346b",
+    "month": "2026-11",
+    "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+    "at": "2026-11-01T14:47:37.729Z",
+    "kind": "added",
+    "date": "2026-11-05",
+    "start": "07:30",
+    "status": "scheduled"
+  },
+  {
+    "id": "d369f17d5fe8",
+    "month": "2026-11",
+    "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
+    "at": "2026-11-01T14:47:37.729Z",
+    "kind": "added",
+    "date": "2026-11-05",
+    "start": "12:45",
+    "status": "scheduled"
+  },
+  {
+    "id": "75ad7dba491c",
+    "month": "2026-11",
+    "activity": "Zajęcia sprawnościowo – zdrowotne",
+    "at": "2026-11-01T14:47:37.729Z",
+    "kind": "added",
+    "date": "2026-11-06",
+    "start": "12:45",
+    "status": "scheduled"
+  },
+  {
+    "id": "7a046ec0d7db",
+    "month": "2026-11",
+    "activity": "Zajęcia Mali Artyści - rozwijanie kompetencji w zakresie świadomości i kulturalnej",
+    "at": "2026-11-01T14:47:37.729Z",
+    "kind": "added",
+    "date": "2026-11-09",
+    "start": "14:15",
+    "status": "scheduled"
+  },
+  {
+    "id": "ef39d0523a05",
+    "month": "2026-11",
+    "activity": "Zajęcia korekcyjno-kompensacyjne",
+    "at": "2026-11-01T14:47:37.729Z",
+    "kind": "added",
+    "date": "2026-11-10",
+    "start": "09:45",
+    "status": "scheduled"
+  },
+  {
+    "id": "7ce944a68008",
+    "month": "2026-11",
+    "activity": "Zajęcia sprawnościowo – zdrowotne",
+    "at": "2026-11-01T14:47:37.729Z",
+    "kind": "added",
+    "date": "2026-11-13",
+    "start": "12:45",
+    "status": "scheduled"
+  },
+  {
+    "id": "e630fb8a644c",
+    "month": "2026-11",
+    "activity": "Zajęcia korekcyjno-kompensacyjne",
+    "at": "2026-11-01T14:47:37.729Z",
+    "kind": "added",
+    "date": "2026-11-17",
+    "start": "09:45",
+    "status": "scheduled"
+  },
+  {
+    "id": "fc259daa726a",
+    "month": "2026-11",
+    "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+    "at": "2026-11-01T14:47:37.729Z",
+    "kind": "added",
+    "date": "2026-11-18",
+    "start": "07:30",
+    "status": "scheduled"
+  },
+  {
+    "id": "e77470fc3051",
+    "month": "2026-11",
+    "activity": "TUS - zajęcia rozwijające kompetencje emocjonalno-społeczne",
+    "at": "2026-11-01T14:47:37.729Z",
+    "kind": "added",
+    "date": "2026-11-18",
+    "start": "09:45",
+    "status": "scheduled"
+  },
+  {
+    "id": "2ce8f2ad5296",
+    "month": "2026-11",
+    "activity": "Zajęcia sprawnościowo – zdrowotne",
+    "at": "2026-11-01T14:47:37.729Z",
+    "kind": "added",
+    "date": "2026-11-20",
+    "start": "12:45",
+    "status": "scheduled"
+  },
+  {
+    "id": "03199534f86f",
+    "month": "2026-11",
+    "activity": "Zajęcia z preorientacji zawodowej",
+    "at": "2026-11-01T14:47:37.729Z",
+    "kind": "added",
+    "date": "2026-11-23",
+    "start": "12:45",
+    "status": "scheduled"
+  },
+  {
+    "id": "3d1ef26a4301",
+    "month": "2026-11",
+    "activity": "Zajęcia ruchowe połączone z elementami sensoplastyki",
+    "at": "2026-11-01T14:47:37.729Z",
+    "kind": "added",
+    "date": "2026-11-24",
+    "start": "07:00",
+    "status": "scheduled"
+  },
+  {
+    "id": "dc3e48252906",
+    "month": "2026-11",
+    "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+    "at": "2026-11-01T14:47:37.729Z",
+    "kind": "added",
+    "date": "2026-11-25",
+    "start": "07:30",
+    "status": "scheduled"
+  },
+  {
+    "id": "609f1d972d31",
+    "month": "2026-11",
+    "activity": "TUS - zajęcia rozwijające kompetencje emocjonalno-społeczne",
+    "at": "2026-11-01T14:47:37.729Z",
+    "kind": "added",
+    "date": "2026-11-25",
+    "start": "09:45",
+    "status": "scheduled"
+  },
+  {
+    "id": "051a76375d7d",
+    "month": "2026-11",
+    "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+    "at": "2026-11-01T14:47:37.729Z",
+    "kind": "added",
+    "date": "2026-11-26",
+    "start": "07:30",
+    "status": "scheduled"
+  },
+  {
+    "id": "f664878d63f2",
+    "month": "2026-11",
+    "activity": "Zajęcia sprawnościowo – zdrowotne",
+    "at": "2026-11-01T14:47:37.729Z",
+    "kind": "added",
+    "date": "2026-11-27",
+    "start": "12:45",
+    "status": "scheduled"
   }
 ]

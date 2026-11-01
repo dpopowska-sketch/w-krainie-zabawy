@@ -6,6 +6,482 @@
       "name": "Wilczki"
     }
   ],
-  "activities": [],
+  "activities": [
+    {
+      "id": "1aa17f42b742",
+      "group": "wilczki",
+      "activity": "Zajęcia korekcyjno-kompensacyjne",
+      "teacher": "J. Olszówka",
+      "date": "2026-11-03",
+      "start": "09:45",
+      "end": "10:45",
+      "location": null,
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-1.jpg",
+          "cellText": "Wtorek 9.45-10.45 03.11; 10.11; 17.11;",
+          "firstSeen": "2026-11-01T14:47:37.729Z"
+        }
+      ],
+      "updatedAt": "2026-11-01T14:47:37.729Z"
+    },
+    {
+      "id": "5b38b4d8a735",
+      "group": "wilczki",
+      "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+      "teacher": "J. Bieniek",
+      "date": "2026-11-04",
+      "start": "07:30",
+      "end": "08:30",
+      "location": null,
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-0.jpg",
+          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11; Czwartek 7.30 – 8.30 5.11; 26.11;",
+          "firstSeen": "2026-11-01T14:47:37.729Z"
+        }
+      ],
+      "updatedAt": "2026-11-01T14:47:37.729Z"
+    },
+    {
+      "id": "21460a2c997b",
+      "group": "wilczki",
+      "activity": "TUS - zajęcia rozwijające kompetencje emocjonalno-społeczne",
+      "teacher": "J. Olszówka",
+      "date": "2026-11-04",
+      "start": "09:45",
+      "end": "10:45",
+      "location": null,
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-1.jpg",
+          "cellText": "Środa 9.45-10.45 04.11; 18.11; 25.11;",
+          "firstSeen": "2026-11-01T14:47:37.729Z"
+        }
+      ],
+      "updatedAt": "2026-11-01T14:47:37.729Z"
+    },
+    {
+      "id": "f320327a346b",
+      "group": "wilczki",
+      "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+      "teacher": "J. Bieniek",
+      "date": "2026-11-05",
+      "start": "07:30",
+      "end": "08:30",
+      "location": null,
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-0.jpg",
+          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11; Czwartek 7.30 – 8.30 5.11; 26.11;",
+          "firstSeen": "2026-11-01T14:47:37.729Z"
+        }
+      ],
+      "updatedAt": "2026-11-01T14:47:37.729Z"
+    },
+    {
+      "id": "d369f17d5fe8",
+      "group": "wilczki",
+      "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
+      "teacher": "J. Skoczowska",
+      "date": "2026-11-05",
+      "start": "12:45",
+      "end": "13:45",
+      "location": "Miki",
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-0.jpg",
+          "cellText": "Czwartek 12.45 – 13.45 05.11; Gr. Miki",
+          "firstSeen": "2026-11-01T14:47:37.729Z"
+        }
+      ],
+      "updatedAt": "2026-11-01T14:47:37.729Z"
+    },
+    {
+      "id": "75ad7dba491c",
+      "group": "wilczki",
+      "activity": "Zajęcia sprawnościowo – zdrowotne",
+      "teacher": "K. Zborowska",
+      "date": "2026-11-06",
+      "start": "12:45",
+      "end": "13:45",
+      "location": null,
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-2.jpg",
+          "cellText": "Piątek 12.45 – 13.45 6.11; 13.11; 20.11; 27.11;",
+          "firstSeen": "2026-11-01T14:47:37.729Z"
+        }
+      ],
+      "updatedAt": "2026-11-01T14:47:37.729Z"
+    },
+    {
+      "id": "7a046ec0d7db",
+      "group": "wilczki",
+      "activity": "Zajęcia Mali Artyści - rozwijanie kompetencji w zakresie świadomości i kulturalnej",
+      "teacher": "B. Kasza",
+      "date": "2026-11-09",
+      "start": "14:15",
+      "end": "15:15",
+      "location": "Miki",
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-0.jpg",
+          "cellText": "Poniedziałek 14.15– 15.15 09.11; Gr. Miki",
+          "firstSeen": "2026-11-01T14:47:37.729Z"
+        }
+      ],
+      "updatedAt": "2026-11-01T14:47:37.729Z"
+    },
+    {
+      "id": "ef39d0523a05",
+      "group": "wilczki",
+      "activity": "Zajęcia korekcyjno-kompensacyjne",
+      "teacher": "J. Olszówka",
+      "date": "2026-11-10",
+      "start": "09:45",
+      "end": "10:45",
+      "location": null,
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-1.jpg",
+          "cellText": "Wtorek 9.45-10.45 03.11; 10.11; 17.11;",
+          "firstSeen": "2026-11-01T14:47:37.729Z"
+        }
+      ],
+      "updatedAt": "2026-11-01T14:47:37.729Z"
+    },
+    {
+      "id": "7ce944a68008",
+      "group": "wilczki",
+      "activity": "Zajęcia sprawnościowo – zdrowotne",
+      "teacher": "K. Zborowska",
+      "date": "2026-11-13",
+      "start": "12:45",
+      "end": "13:45",
+      "location": null,
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-2.jpg",
+          "cellText": "Piątek 12.45 – 13.45 6.11; 13.11; 20.11; 27.11;",
+          "firstSeen": "2026-11-01T14:47:37.729Z"
+        }
+      ],
+      "updatedAt": "2026-11-01T14:47:37.729Z"
+    },
+    {
+      "id": "e630fb8a644c",
+      "group": "wilczki",
+      "activity": "Zajęcia korekcyjno-kompensacyjne",
+      "teacher": "J. Olszówka",
+      "date": "2026-11-17",
+      "start": "09:45",
+      "end": "10:45",
+      "location": null,
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-1.jpg",
+          "cellText": "Wtorek 9.45-10.45 03.11; 10.11; 17.11;",
+          "firstSeen": "2026-11-01T14:47:37.729Z"
+        }
+      ],
+      "updatedAt": "2026-11-01T14:47:37.729Z"
+    },
+    {
+      "id": "fc259daa726a",
+      "group": "wilczki",
+      "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+      "teacher": "J. Bieniek",
+      "date": "2026-11-18",
+      "start": "07:30",
+      "end": "08:30",
+      "location": null,
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-0.jpg",
+          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11; Czwartek 7.30 – 8.30 5.11; 26.11;",
+          "firstSeen": "2026-11-01T14:47:37.729Z"
+        }
+      ],
+      "updatedAt": "2026-11-01T14:47:37.729Z"
+    },
+    {
+      "id": "e77470fc3051",
+      "group": "wilczki",
+      "activity": "TUS - zajęcia rozwijające kompetencje emocjonalno-społeczne",
+      "teacher": "J. Olszówka",
+      "date": "2026-11-18",
+      "start": "09:45",
+      "end": "10:45",
+      "location": null,
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-1.jpg",
+          "cellText": "Środa 9.45-10.45 04.11; 18.11; 25.11;",
+          "firstSeen": "2026-11-01T14:47:37.729Z"
+        }
+      ],
+      "updatedAt": "2026-11-01T14:47:37.729Z"
+    },
+    {
+      "id": "2ce8f2ad5296",
+      "group": "wilczki",
+      "activity": "Zajęcia sprawnościowo – zdrowotne",
+      "teacher": "K. Zborowska",
+      "date": "2026-11-20",
+      "start": "12:45",
+      "end": "13:45",
+      "location": null,
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-2.jpg",
+          "cellText": "Piątek 12.45 – 13.45 6.11; 13.11; 20.11; 27.11;",
+          "firstSeen": "2026-11-01T14:47:37.729Z"
+        }
+      ],
+      "updatedAt": "2026-11-01T14:47:37.729Z"
+    },
+    {
+      "id": "03199534f86f",
+      "group": "wilczki",
+      "activity": "Zajęcia z preorientacji zawodowej",
+      "teacher": "M. Marchewka",
+      "date": "2026-11-23",
+      "start": "12:45",
+      "end": "14:45",
+      "location": null,
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-2.jpg",
+          "cellText": "Poniedziałek 12.45-14.45 23.11;",
+          "firstSeen": "2026-11-01T14:47:37.729Z"
+        }
+      ],
+      "updatedAt": "2026-11-01T14:47:37.729Z"
+    },
+    {
+      "id": "3d1ef26a4301",
+      "group": "wilczki",
+      "activity": "Zajęcia ruchowe połączone z elementami sensoplastyki",
+      "teacher": "B. Smolnik",
+      "date": "2026-11-24",
+      "start": "07:00",
+      "end": "08:00",
+      "location": null,
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-2.jpg",
+          "cellText": "Wtorek 7.00-8.00 24.11;",
+          "firstSeen": "2026-11-01T14:47:37.729Z"
+        }
+      ],
+      "updatedAt": "2026-11-01T14:47:37.729Z"
+    },
+    {
+      "id": "dc3e48252906",
+      "group": "wilczki",
+      "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+      "teacher": "J. Bieniek",
+      "date": "2026-11-25",
+      "start": "07:30",
+      "end": "08:30",
+      "location": null,
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-0.jpg",
+          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11; Czwartek 7.30 – 8.30 5.11; 26.11;",
+          "firstSeen": "2026-11-01T14:47:37.729Z"
+        }
+      ],
+      "updatedAt": "2026-11-01T14:47:37.729Z"
+    },
+    {
+      "id": "609f1d972d31",
+      "group": "wilczki",
+      "activity": "TUS - zajęcia rozwijające kompetencje emocjonalno-społeczne",
+      "teacher": "J. Olszówka",
+      "date": "2026-11-25",
+      "start": "09:45",
+      "end": "10:45",
+      "location": null,
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-1.jpg",
+          "cellText": "Środa 9.45-10.45 04.11; 18.11; 25.11;",
+          "firstSeen": "2026-11-01T14:47:37.729Z"
+        }
+      ],
+      "updatedAt": "2026-11-01T14:47:37.729Z"
+    },
+    {
+      "id": "051a76375d7d",
+      "group": "wilczki",
+      "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+      "teacher": "J. Bieniek",
+      "date": "2026-11-26",
+      "start": "07:30",
+      "end": "08:30",
+      "location": null,
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-0.jpg",
+          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11; Czwartek 7.30 – 8.30 5.11; 26.11;",
+          "firstSeen": "2026-11-01T14:47:37.729Z"
+        }
+      ],
+      "updatedAt": "2026-11-01T14:47:37.729Z"
+    },
+    {
+      "id": "f664878d63f2",
+      "group": "wilczki",
+      "activity": "Zajęcia sprawnościowo – zdrowotne",
+      "teacher": "K. Zborowska",
+      "date": "2026-11-27",
+      "start": "12:45",
+      "end": "13:45",
+      "location": null,
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-2.jpg",
+          "cellText": "Piątek 12.45 – 13.45 6.11; 13.11; 20.11; 27.11;",
+          "firstSeen": "2026-11-01T14:47:37.729Z"
+        }
+      ],
+      "updatedAt": "2026-11-01T14:47:37.729Z"
+    }
+  ],
   "notices": []
 }

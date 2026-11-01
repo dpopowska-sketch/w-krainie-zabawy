@@ -1,0 +1,359 @@
+{
+  "documentUrl": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-0.jpg",
+  "documentSha256": "672630b5a35b59fde04153bcc49cd5890f7e0d6b9c261e93d4120655f88d48b1",
+  "run": "a",
+  "model": "claude-opus-5-5",
+  "promptVersion": "2026-10-28.1",
+  "createdAt": "2026-11-01T14:48:27.544Z",
+  "stopReason": "end_turn",
+  "usage": {
+    "input_tokens": 7770,
+    "output_tokens": 5726
+  },
+  "output": {
+    "is_schedule": true,
+    "title": "Harmonogram zajęć unijnych – LISTOPAD 2026",
+    "month_label": "LISTOPAD 2026",
+    "group_columns": [
+      "KOTKI",
+      "SŁONECZKA",
+      "WIEWIÓRKI",
+      "SÓWKI",
+      "ŻABKI",
+      "MOTYLKI",
+      "WILCZKI"
+    ],
+    "entries": [
+      {
+        "activity_name": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+        "teacher": "J. Bieniek",
+        "group_column": "MOTYLKI",
+        "weekday": "Wtorek",
+        "start": "07:30",
+        "end": "08:30",
+        "dates": [
+          "03.11",
+          "10.11",
+          "17.11",
+          "24.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Wtorek 7.30 – 8.30 03.11; 10.11; 17.11; 24.11; Czwartek 7.30 – 8.30 19.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+        "teacher": "J. Bieniek",
+        "group_column": "MOTYLKI",
+        "weekday": "Czwartek",
+        "start": "07:30",
+        "end": "08:30",
+        "dates": [
+          "19.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Wtorek 7.30 – 8.30 03.11; 10.11; 17.11; 24.11; Czwartek 7.30 – 8.30 19.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+        "teacher": "J. Bieniek",
+        "group_column": "WILCZKI",
+        "weekday": "Środa",
+        "start": "07:30",
+        "end": "08:30",
+        "dates": [
+          "04.11",
+          "18.11",
+          "25.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Środa 7.30 – 8.30 04.11; 18.11; 25.11; Czwartek 7.30 – 8.30 5.11; 26.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+        "teacher": "J. Bieniek",
+        "group_column": "WILCZKI",
+        "weekday": "Czwartek",
+        "start": "07:30",
+        "end": "08:30",
+        "dates": [
+          "05.11",
+          "26.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Środa 7.30 – 8.30 04.11; 18.11; 25.11; Czwartek 7.30 – 8.30 5.11; 26.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia Przedszkolak Mały projektant i technolog",
+        "teacher": "K. Wilczek",
+        "group_column": "SŁONECZKA",
+        "weekday": "Wtorek",
+        "start": "07:00",
+        "end": "08:00",
+        "dates": [
+          "10.11"
+        ],
+        "location": "Górnicza",
+        "subgroup": "I",
+        "cell_text": "Wtorek 7.00 – 8.00 10.11 Gr. Górnicza I",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia Przedszkolak Mały projektant i technolog",
+        "teacher": "K. Wilczek",
+        "group_column": "WIEWIÓRKI",
+        "weekday": "Wtorek",
+        "start": "07:00",
+        "end": "08:00",
+        "dates": [
+          "10.11"
+        ],
+        "location": "Górnicza",
+        "subgroup": "I",
+        "cell_text": "Wtorek 7.00 – 8.00 10.11 Gr. Górnicza I",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia Przedszkolak Mały projektant i technolog",
+        "teacher": "K. Wilczek",
+        "group_column": "SÓWKI",
+        "weekday": "Wtorek",
+        "start": "07:00",
+        "end": "08:00",
+        "dates": [
+          "17.11"
+        ],
+        "location": "Górnicza",
+        "subgroup": "II",
+        "cell_text": "Wtorek 7.00 – 8.00 17.11 Gr. Górnicza II",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia Przedszkolak Mały projektant i technolog",
+        "teacher": "K. Wilczek",
+        "group_column": "ŻABKI",
+        "weekday": "Wtorek",
+        "start": "07:00",
+        "end": "08:00",
+        "dates": [
+          "17.11"
+        ],
+        "location": "Górnicza",
+        "subgroup": "II",
+        "cell_text": "Wtorek 7.00 – 8.00 17.11 Gr. Górnicza II",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia Przedszkolak Mały projektant i technolog",
+        "teacher": "K. Wilczek",
+        "group_column": "MOTYLKI",
+        "weekday": "Wtorek",
+        "start": null,
+        "end": null,
+        "dates": [],
+        "location": "Miki",
+        "subgroup": null,
+        "cell_text": "Wtorek Gr. Miki",
+        "uncertain": true,
+        "note": "Komórka zawiera tylko dzień tygodnia i miejsce – brak godzin i dat."
+      },
+      {
+        "activity_name": "Zajęcia Przedszkolak Mały projektant i technolog",
+        "teacher": "K. Wilczek",
+        "group_column": "WILCZKI",
+        "weekday": "Wtorek",
+        "start": null,
+        "end": null,
+        "dates": [],
+        "location": "Miki",
+        "subgroup": null,
+        "cell_text": "Wtorek Gr. Miki",
+        "uncertain": true,
+        "note": "Komórka zawiera tylko dzień tygodnia i miejsce – brak godzin i dat."
+      },
+      {
+        "activity_name": "Zajęcia Mali Artyści - rozwijanie kompetencji w zakresie świadomości i kulturalnej",
+        "teacher": "B. Kasza",
+        "group_column": "SŁONECZKA",
+        "weekday": "Poniedziałek44",
+        "start": "14:15",
+        "end": "15:15",
+        "dates": [
+          "16.11"
+        ],
+        "location": "Górnicza",
+        "subgroup": "I",
+        "cell_text": "Poniedziałek44 14.15 – 15.15 16.11; Gr. Górnicza I",
+        "uncertain": true,
+        "note": "Dzień tygodnia zapisany jako „Poniedziałek44” – dopisane „44” wygląda na literówkę."
+      },
+      {
+        "activity_name": "Zajęcia Mali Artyści - rozwijanie kompetencji w zakresie świadomości i kulturalnej",
+        "teacher": "B. Kasza",
+        "group_column": "WIEWIÓRKI",
+        "weekday": "Poniedziałek",
+        "start": "14:15",
+        "end": "15:15",
+        "dates": [
+          "16.11"
+        ],
+        "location": "Górnicza",
+        "subgroup": "I",
+        "cell_text": "Poniedziałek 14.15 – 15.15 16.11; Gr. Górnicza I",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia Mali Artyści - rozwijanie kompetencji w zakresie świadomości i kulturalnej",
+        "teacher": "B. Kasza",
+        "group_column": "SÓWKI",
+        "weekday": "Poniedziałek",
+        "start": "14:15",
+        "end": "15:15",
+        "dates": [
+          "16.11"
+        ],
+        "location": "Górnicza",
+        "subgroup": "I",
+        "cell_text": "Poniedziałek 14.15 – 15.15 16.11; Gr. Górnicza I",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia Mali Artyści - rozwijanie kompetencji w zakresie świadomości i kulturalnej",
+        "teacher": "B. Kasza",
+        "group_column": "ŻABKI",
+        "weekday": "Poniedziałek",
+        "start": "14:15",
+        "end": "15:15",
+        "dates": [
+          "23.11"
+        ],
+        "location": "Górnicza",
+        "subgroup": "II",
+        "cell_text": "Poniedziałek 14.15 – 15.15 23.11; Gr. Górnicza II",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia Mali Artyści - rozwijanie kompetencji w zakresie świadomości i kulturalnej",
+        "teacher": "B. Kasza",
+        "group_column": "MOTYLKI",
+        "weekday": "Poniedziałek",
+        "start": "14:15",
+        "end": "15:15",
+        "dates": [
+          "09.11"
+        ],
+        "location": "Miki",
+        "subgroup": null,
+        "cell_text": "Poniedziałek 14.15 – 15.15 09.11; Gr. Miki",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia Mali Artyści - rozwijanie kompetencji w zakresie świadomości i kulturalnej",
+        "teacher": "B. Kasza",
+        "group_column": "WILCZKI",
+        "weekday": "Poniedziałek",
+        "start": "14:15",
+        "end": "15:15",
+        "dates": [
+          "09.11"
+        ],
+        "location": "Miki",
+        "subgroup": null,
+        "cell_text": "Poniedziałek 14.15– 15.15 09.11; Gr. Miki",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
+        "teacher": "J. Skoczowska",
+        "group_column": "SÓWKI",
+        "weekday": "Czwartek",
+        "start": "12:45",
+        "end": "13:45",
+        "dates": [
+          "12.11"
+        ],
+        "location": "Górnicza",
+        "subgroup": "I",
+        "cell_text": "Czwartek 12.45 – 13.45 12.11; Gr. Górnicza I",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
+        "teacher": "J. Skoczowska",
+        "group_column": "ŻABKI",
+        "weekday": "Czwartek",
+        "start": "12:45",
+        "end": "13:45",
+        "dates": [
+          "19.11"
+        ],
+        "location": "Górnicza",
+        "subgroup": "II",
+        "cell_text": "Czwartek 12.45 – 13.45 19.11; Gr. Górnicza II",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
+        "teacher": "J. Skoczowska",
+        "group_column": "MOTYLKI",
+        "weekday": "Czwartek",
+        "start": "12:45",
+        "end": "13:45",
+        "dates": [
+          "05.11"
+        ],
+        "location": "Miki",
+        "subgroup": null,
+        "cell_text": "Czwartek 12.45 – 13.45 05.11; Gr. Miki",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
+        "teacher": "J. Skoczowska",
+        "group_column": "WILCZKI",
+        "weekday": "Czwartek",
+        "start": "12:45",
+        "end": "13:45",
+        "dates": [
+          "05.11"
+        ],
+        "location": "Miki",
+        "subgroup": null,
+        "cell_text": "Czwartek 12.45 – 13.45 05.11; Gr. Miki",
+        "uncertain": false,
+        "note": null
+      }
+    ],
+    "issues": [
+      "Pierwszy wiersz („Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania”, bez prowadzącego) ma wszystkie komórki grup puste – pominięty.",
+      "Kolumna KOTKI nie zawiera żadnych zajęć.",
+      "Tabela ma drugi wiersz nagłówka z wiekiem i lokalizacją grup (np. „3- LATKI GÓRNICZA”, „6-LATKI MIKI”); jako group_column użyto nazw grup z pierwszego wiersza nagłówka.",
+      "Grupa SÓWKI ma w różnych wierszach różne podgrupy (Gr. Górnicza II u p. K. Wilczek, Gr. Górnicza I u p. B. Kasza i p. J. Skoczowska) – przepisano zgodnie z tabelą.",
+      "Nazwa zajęć „…w zakresie świadomości i kulturalnej” wygląda na niepełną (prawdopodobnie brakuje słowa) – przepisano dosłownie.",
+      "Pod tabelą znajduje się dopisek „Zdjęcie objęte prawem autorskim. Zakaz kopiowania.” – nie jest częścią harmonogramu."
+    ]
+  }
+}

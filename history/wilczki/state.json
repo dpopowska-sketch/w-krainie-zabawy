@@ -228,5 +228,195 @@
     "status": "scheduled",
     "verification": "verified",
     "month": "2026-10"
+  },
+  "1aa17f42b742": {
+    "activity": "Zajęcia korekcyjno-kompensacyjne",
+    "teacher": "J. Olszówka",
+    "date": "2026-11-03",
+    "start": "09:45",
+    "end": "10:45",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
+  "5b38b4d8a735": {
+    "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+    "teacher": "J. Bieniek",
+    "date": "2026-11-04",
+    "start": "07:30",
+    "end": "08:30",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
+  "21460a2c997b": {
+    "activity": "TUS - zajęcia rozwijające kompetencje emocjonalno-społeczne",
+    "teacher": "J. Olszówka",
+    "date": "2026-11-04",
+    "start": "09:45",
+    "end": "10:45",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
+  "f320327a346b": {
+    "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+    "teacher": "J. Bieniek",
+    "date": "2026-11-05",
+    "start": "07:30",
+    "end": "08:30",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
+  "d369f17d5fe8": {
+    "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
+    "teacher": "J. Skoczowska",
+    "date": "2026-11-05",
+    "start": "12:45",
+    "end": "13:45",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
+  "75ad7dba491c": {
+    "activity": "Zajęcia sprawnościowo – zdrowotne",
+    "teacher": "K. Zborowska",
+    "date": "2026-11-06",
+    "start": "12:45",
+    "end": "13:45",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
+  "7a046ec0d7db": {
+    "activity": "Zajęcia Mali Artyści - rozwijanie kompetencji w zakresie świadomości i kulturalnej",
+    "teacher": "B. Kasza",
+    "date": "2026-11-09",
+    "start": "14:15",
+    "end": "15:15",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
+  "ef39d0523a05": {
+    "activity": "Zajęcia korekcyjno-kompensacyjne",
+    "teacher": "J. Olszówka",
+    "date": "2026-11-10",
+    "start": "09:45",
+    "end": "10:45",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
+  "7ce944a68008": {
+    "activity": "Zajęcia sprawnościowo – zdrowotne",
+    "teacher": "K. Zborowska",
+    "date": "2026-11-13",
+    "start": "12:45",
+    "end": "13:45",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
+  "e630fb8a644c": {
+    "activity": "Zajęcia korekcyjno-kompensacyjne",
+    "teacher": "J. Olszówka",
+    "date": "2026-11-17",
+    "start": "09:45",
+    "end": "10:45",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
+  "fc259daa726a": {
+    "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+    "teacher": "J. Bieniek",
+    "date": "2026-11-18",
+    "start": "07:30",
+    "end": "08:30",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
+  "e77470fc3051": {
+    "activity": "TUS - zajęcia rozwijające kompetencje emocjonalno-społeczne",
+    "teacher": "J. Olszówka",
+    "date": "2026-11-18",
+    "start": "09:45",
+    "end": "10:45",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
+  "2ce8f2ad5296": {
+    "activity": "Zajęcia sprawnościowo – zdrowotne",
+    "teacher": "K. Zborowska",
+    "date": "2026-11-20",
+    "start": "12:45",
+    "end": "13:45",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
+  "03199534f86f": {
+    "activity": "Zajęcia z preorientacji zawodowej",
+    "teacher": "M. Marchewka",
+    "date": "2026-11-23",
+    "start": "12:45",
+    "end": "14:45",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
+  "3d1ef26a4301": {
+    "activity": "Zajęcia ruchowe połączone z elementami sensoplastyki",
+    "teacher": "B. Smolnik",
+    "date": "2026-11-24",
+    "start": "07:00",
+    "end": "08:00",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
+  "dc3e48252906": {
+    "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+    "teacher": "J. Bieniek",
+    "date": "2026-11-25",
+    "start": "07:30",
+    "end": "08:30",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
+  "609f1d972d31": {
+    "activity": "TUS - zajęcia rozwijające kompetencje emocjonalno-społeczne",
+    "teacher": "J. Olszówka",
+    "date": "2026-11-25",
+    "start": "09:45",
+    "end": "10:45",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
+  "051a76375d7d": {
+    "activity": "Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania",
+    "teacher": "J. Bieniek",
+    "date": "2026-11-26",
+    "start": "07:30",
+    "end": "08:30",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
+  "f664878d63f2": {
+    "activity": "Zajęcia sprawnościowo – zdrowotne",
+    "teacher": "K. Zborowska",
+    "date": "2026-11-27",
+    "start": "12:45",
+    "end": "13:45",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
   }
 }
