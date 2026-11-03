@@ -12,6 +12,7 @@ on:
 permissions:
   contents: write # zapis danych w repozytorium
   pages: write # publikacja strony
+  issues: write # powiadomienia o pozycjach do rozstrzygnięcia
   id-token: write
 
 concurrency:
@@ -44,6 +45,7 @@ jobs:
         continue-on-error: true
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # zgłoszenia (issues) → mail od GitHuba
         run: npm run sync
 
       - name: Zapis zmian w repozytorium

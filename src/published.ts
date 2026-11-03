@@ -29,6 +29,8 @@ export interface PublishedActivity {
 
 export interface Notice {
   id: string;
+  /** review = nie udało się przypisać do terminu; info = tylko informacja (np. zaktualizowana tabela). */
+  kind: "review" | "info";
   text: string;
   groups: string[] | "all";
   /** Daty z ogłoszenia (YYYY-MM-DD) – komunikat pokazujemy w miesiącach, których dotyczy. Puste = zawsze. */

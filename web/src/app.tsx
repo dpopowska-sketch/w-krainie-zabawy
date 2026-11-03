@@ -464,6 +464,14 @@ function SelectionEditor(props: {
 }
 
 function NoticeBox({ notice }: { notice: Notice }) {
+  if (notice.kind === "info") {
+    return (
+      <div class="notice notice-info" role="note">
+        <strong>Komunikat przedszkola:</strong> {notice.text}
+        <span class="muted"> Harmonogram poniżej uwzględnia aktualną tabelę.</span>
+      </div>
+    );
+  }
   return (
     <div class="notice" role="note">
       <strong>Komunikat przedszkola:</strong> {notice.text}

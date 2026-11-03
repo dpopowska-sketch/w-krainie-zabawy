@@ -2,7 +2,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { loadGroups } from "../src/config.js";
-import { resolveChange, resolveGroupRef } from "../src/resolve.js";
+import { activityGroups, resolveChange, resolveGroupRef } from "../src/resolve.js";
 import { loadConsensus } from "../src/schedule.js";
 import type { AnnouncedChange } from "../src/schema.js";
 
@@ -71,6 +71,20 @@ test("przeniesienie zajęć na inny dzień", () => {
   assert.equal(e.target.group, "sowki");
   assert.equal(e.date, "2026-10-16");
   assert.equal(e.start, "12:45");
+});
+
+test("zaktualizowana tabela → informacja, nie weryfikacja", () => {
+  const r = resolveChange(change({ type: "table_updated", activity_ref: "Słowiki" }), occurrences, config);
+  assert.equal(r.status, "info");
+});
+
+test("grupy z zajęć: Słowiki → grupy, które je mają; nieznane lub niejednoznaczne → null", () => {
+  const expected = [...new Set(occurrences.filter((o) => o.activity.startsWith("Słowiki")).map((o) => o.group))].sort();
+  assert.ok(expected.includes("wilczki"));
+  assert.deepEqual(activityGroups("Słowiki", occurrences, config)?.sort(), expected);
+  assert.equal(activityGroups("Pływanie", occurrences, config), null);
+  assert.equal(activityGroups("kompetencje", occurrences, config), null);
+  assert.equal(activityGroups(null, occurrences, config), null);
 });
 
 test("zmiana dotyczy tylko wskazanej grupy", () => {

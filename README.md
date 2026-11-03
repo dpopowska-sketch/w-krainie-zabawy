@@ -68,6 +68,18 @@ Zmiany danych są zapisywane w repozytorium od razu; sam czas sprawdzenia – ra
 Gdy strona przedszkola jest niedostępna albo odczyt się nie powiedzie, dane nie są
 usuwane ani nadpisywane – błąd trafia do `data/status.json`.
 
+## Powiadomienia
+
+Gdy pojawi się pozycja do rozstrzygnięcia dotycząca grup z `publicGroups` (komunikat bez dopasowania,
+termin do weryfikacji albo błąd synchronizacji), synchronizacja zakłada zgłoszenie (issue) w repozytorium
+z etykietą `do-rozstrzygnięcia` – GitHub wysyła o nim mail. Zgłoszenie zawiera gotowy wpis do
+`review/decisions.yaml` i zamyka się samo, gdy pozycja przestanie wymagać decyzji. Wysłane zgłoszenia
+są zapisywane w `review/notified.json` (bez powtórek). Działa tylko w GitHub Actions (`GITHUB_TOKEN`).
+
+Komunikaty o zajęciach bez podanej grupy (np. „Słowiki”) trafiają do grup, które mają te zajęcia
+w harmonogramie. Komunikat „zaktualizowano tabelę” jest tylko informacją – nowa tabela jest odczytywana
+automatycznie.
+
 ## Testy i ocena dokładności
 
 ```bash

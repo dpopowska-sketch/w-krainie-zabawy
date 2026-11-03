@@ -10,7 +10,7 @@ import { DATA_DIR, ROOT, SOURCE_PAGE_URL, isMain, loadGroups, readJson, writeJso
 import { resolveAll, type ChangeEntry } from "./announcements.js";
 import { updateHistory } from "./history.js";
 import { fold, type IssueCode } from "./normalize.js";
-import { resolveGroupRef } from "./resolve.js";
+import { activityGroups, resolveGroupRef } from "./resolve.js";
 import { loadConsensus, type ScheduledOccurrence } from "./schedule.js";
 import type { Notice, PublishedActivity, PublishedSchedule, Source, Status } from "./published.js";
 import type { AnnouncementRecord } from "./schema.js";
@@ -77,7 +77,7 @@ function fromSchedule(o: ScheduledOccurrence, extraIssues: IssueCode[] = []): Pu
   };
 }
 
-function applyAnnouncements(activities: Map<string, PublishedActivity>, entries: ChangeEntry[], notices: Notice[]) {
+function applyAnnouncements(activities: Map<string, PublishedActivity>, entries: ChangeEntry[], notices: Notice[], schedule: ScheduledOccurrence[]) {
   const config = loadGroups();
   for (const entry of entries) {
     if (!entry.isScheduleChange) continue;
@@ -93,12 +93,17 @@ function applyAnnouncements(activities: Map<string, PublishedActivity>, entries:
     };
 
     const reviewReasons: string[] = [];
+    const infoReasons: string[] = [];
     const noticeGroups = new Set<string>();
     const noticeDates = new Set<string>();
     for (const { change, resolution } of entry.changes) {
-      if (resolution.status === "needs_review") {
-        reviewReasons.push(resolution.reason);
-        for (const ref of change.group_refs) for (const g of resolveGroupRef(ref, config) ?? []) noticeGroups.add(g);
+      if (resolution.status !== "applied") {
+        (resolution.status === "info" ? infoReasons : reviewReasons).push(resolution.reason);
+        // Grupy podane wprost, a gdy ich brak – grupy, które mają wskazane zajęcia (inaczej komunikat trafia do wszystkich).
+        const groups = change.group_refs.length
+          ? change.group_refs.flatMap((ref) => resolveGroupRef(ref, config) ?? [])
+          : (activityGroups(change.activity_ref, schedule, config) ?? []);
+        for (const g of groups) noticeGroups.add(g);
         for (const d of [...change.dates, ...(change.new_date ? [change.new_date] : [])]) noticeDates.add(d);
         continue;
       }
@@ -146,13 +151,14 @@ function applyAnnouncements(activities: Map<string, PublishedActivity>, entries:
         touch(target);
       }
     }
-    if (reviewReasons.length) {
+    if (reviewReasons.length || infoReasons.length) {
       notices.push({
         id: entry.textSha256.slice(0, 12),
+        kind: reviewReasons.length ? "review" : "info",
         text: entry.text.replace(/^[–-]\s*/, ""),
         groups: noticeGroups.size ? [...noticeGroups] : "all",
         dates: [...noticeDates].sort(),
-        reason: reviewReasons.join("; "),
+        reason: (reviewReasons.length ? reviewReasons : infoReasons).join("; "),
         firstSeen: entry.firstSeen,
         removedAt: entry.removedAt,
       });
@@ -231,10 +237,12 @@ function writePending(schedule: PublishedSchedule, problems: string[]) {
       "",
     );
   }
-  lines.push(`## Komunikaty bez dopasowania (${schedule.notices.length})`, "");
+  // Komunikaty informacyjne (np. „zaktualizowano tabelę”) nie wymagają decyzji.
+  const unmatched = schedule.notices.filter((n) => n.kind === "review");
+  lines.push(`## Komunikaty bez dopasowania (${unmatched.length})`, "");
   lines.push("Pokazywane rodzicom jako tekst ogłoszenia, bez zmiany statusu terminów.", "");
-  if (schedule.notices.length === 0) lines.push("Brak.", "");
-  for (const n of schedule.notices) {
+  if (unmatched.length === 0) lines.push("Brak.", "");
+  for (const n of unmatched) {
     lines.push(
       `### „${n.text}”`,
       "",
@@ -273,7 +281,7 @@ export function build(): { schedule: PublishedSchedule; published: PublishedSche
   const entries = resolveAll(records, index, occurrences);
 
   const notices: Notice[] = [];
-  applyAnnouncements(activities, entries, notices);
+  applyAnnouncements(activities, entries, notices, occurrences);
   const problems = applyDecisions(activities, notices, loadDecisions());
 
   const order = (a: PublishedActivity) => `${a.date} ${a.start ?? "99:99"} ${config.groups.findIndex((g) => g.id === a.group)}`;
@@ -322,6 +330,6 @@ if (isMain(import.meta.url)) {
     `Terminów: ${schedule.activities.length} (zaplanowane ${count("scheduled")}, odwołane ${count("cancelled")}, ` +
       `przeniesione ${count("rescheduled")}, dodatkowe ${count("additional")})`,
   );
-  console.log(`Do weryfikacji: ${schedule.activities.filter((a) => a.verification === "needs_review").length}, komunikatów bez dopasowania: ${schedule.notices.length}`);
+  console.log(`Do weryfikacji: ${schedule.activities.filter((a) => a.verification === "needs_review").length}, komunikatów bez dopasowania: ${schedule.notices.filter((n) => n.kind === "review").length}`);
   for (const p of problems) console.log(`UWAGA: ${p}`);
 }

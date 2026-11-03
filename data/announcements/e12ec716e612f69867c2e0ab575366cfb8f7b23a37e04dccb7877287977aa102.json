@@ -2,25 +2,25 @@
   "text": "02.11.2026 r. – zaktualizowanie w tabeli terminów zajęć „Słowiki”;",
   "textSha256": "e12ec716e612f69867c2e0ab575366cfb8f7b23a37e04dccb7877287977aa102",
   "model": "claude-opus-5-5",
-  "promptVersion": "2026-10-28.1",
-  "createdAt": "2026-11-03T05:04:33.857Z",
+  "promptVersion": "2026-11-04.1",
+  "createdAt": "2026-11-03T23:25:34.732Z",
   "usage": {
-    "input_tokens": 2216,
-    "output_tokens": 496
+    "input_tokens": 2392,
+    "output_tokens": 122
   },
   "output": {
     "is_schedule_change": true,
     "changes": [
       {
-        "type": "other",
+        "type": "table_updated",
         "dates": [],
         "activity_ref": "Słowiki",
         "group_refs": [],
         "new_date": null,
         "new_start": null,
         "new_end": null,
-        "uncertain": true,
-        "note": "Wpis informuje, że 02.11.2026 zaktualizowano w tabeli terminy zajęć „Słowiki”, ale nie podaje, jakie terminy się zmieniły. Data 02.11.2026 to najpewniej data aktualizacji tabeli, a nie data zajęć. Może to być też jedynie wpis w historii zmian strony, a nie ogłoszenie konkretnej zmiany w zajęciach."
+        "uncertain": false,
+        "note": "Data 02.11.2026 to data aktualizacji tabeli, nie data zajęć."
       }
     ]
   }

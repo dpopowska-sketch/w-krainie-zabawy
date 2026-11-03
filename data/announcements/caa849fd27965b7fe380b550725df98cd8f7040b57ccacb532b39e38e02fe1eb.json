@@ -2,10 +2,10 @@
   "text": "Zmiany terminów zajęć:",
   "textSha256": "caa849fd27965b7fe380b550725df98cd8f7040b57ccacb532b39e38e02fe1eb",
   "model": "claude-opus-5-5",
-  "promptVersion": "2026-10-28.1",
-  "createdAt": "2026-10-28T22:53:45.922Z",
+  "promptVersion": "2026-11-04.1",
+  "createdAt": "2026-11-03T23:25:32.704Z",
   "usage": {
-    "input_tokens": 2191,
+    "input_tokens": 2367,
     "output_tokens": 21
   },
   "output": {

@@ -556,10 +556,16 @@
   "notices": [
     {
       "id": "e12ec716e612",
+      "kind": "info",
       "text": "02.11.2026 r. – zaktualizowanie w tabeli terminów zajęć „Słowiki”;",
-      "groups": "all",
+      "groups": [
+        "sowki",
+        "zabki",
+        "motylki",
+        "wilczki"
+      ],
       "dates": [],
-      "reason": "Nierozpoznany rodzaj zmiany",
+      "reason": "Przedszkole zaktualizowało tabelę terminów",
       "firstSeen": "2026-11-03T05:04:33.857Z",
       "removedAt": null
     }

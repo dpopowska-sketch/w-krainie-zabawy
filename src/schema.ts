@@ -37,8 +37,11 @@ export type PageExtraction = z.infer<typeof PageExtraction>;
  */
 export const AnnouncedChange = z.object({
   type: z
-    .enum(["cancelled", "rescheduled", "additional", "time_changed", "other"])
-    .describe("cancelled = odwołane; rescheduled = przeniesione na inny dzień; additional = dodatkowe zajęcia; time_changed = zmiana godziny tego samego dnia"),
+    .enum(["cancelled", "rescheduled", "additional", "time_changed", "table_updated", "other"])
+    .describe(
+      "cancelled = odwołane; rescheduled = przeniesione na inny dzień; additional = dodatkowe zajęcia; time_changed = zmiana godziny tego samego dnia; " +
+        "table_updated = tylko informacja, że zaktualizowano tabelę/harmonogram, bez podania konkretnych terminów",
+    ),
   dates: z.array(z.string()).describe("Daty, których dotyczy zmiana (dla przeniesienia: data PIERWOTNA), format YYYY-MM-DD"),
   activity_ref: z.string().nullable().describe("Nazwa lub skrót zajęć dokładnie jak w ogłoszeniu, np. 'kk', 'Słowiki'"),
   group_refs: z

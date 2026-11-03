@@ -14,7 +14,8 @@ export type Effect =
 
 export type Resolution =
   | { status: "applied"; effects: Effect[]; activity: string; groups: string[] | "all" }
-  | { status: "needs_review"; reason: string; candidates?: string[] };
+  | { status: "needs_review"; reason: string; candidates?: string[] }
+  | { status: "info"; reason: string };
 
 const STOPWORDS = new Set(["zajecia", "zajec", "z", "dla", "i", "w", "oraz", "grupa", "grupy", "gr"]);
 
@@ -59,7 +60,20 @@ export function resolveGroupRef(ref: string, config: GroupsConfig): string[] | n
   return byPrefix.length === 1 ? [byPrefix[0]!.id] : null;
 }
 
+/**
+ * Grupy, które mają w harmonogramie zajęcia wskazane w ogłoszeniu („Słowiki” → Wilczki, Sówki, …).
+ * null, gdy nazwa nie wskazuje dokładnie jednych zajęć.
+ */
+export function activityGroups(ref: string | null, schedule: ScheduledOccurrence[], config: GroupsConfig): string[] | null {
+  if (!ref) return null;
+  const activities = matchActivities(ref, [...new Set(schedule.map((o) => o.activity))], config);
+  if (activities.length !== 1) return null;
+  return [...new Set(schedule.filter((o) => o.activity === activities[0]).map((o) => o.group))];
+}
+
 export function resolveChange(change: AnnouncedChange, schedule: ScheduledOccurrence[], config: GroupsConfig): Resolution {
+  // Nowa tabela jest odczytywana osobno (zmieniony plik = nowy odczyt), więc samo ogłoszenie niczego nie zmienia.
+  if (change.type === "table_updated") return { status: "info", reason: "Przedszkole zaktualizowało tabelę terminów" };
   if (change.type === "other") return { status: "needs_review", reason: "Nierozpoznany rodzaj zmiany" };
   if (change.uncertain) return { status: "needs_review", reason: `Ogłoszenie niejednoznaczne: ${change.note ?? ""}`.trim() };
   if (change.dates.length === 0) return { status: "needs_review", reason: "Ogłoszenie nie podaje daty" };

@@ -407,6 +407,9 @@ summary:focus-visible {
   padding: 12px 14px;
   margin-bottom: 16px;
 }
+.notice-info {
+  border-left-color: var(--review);
+}
 .notice .muted {
   display: block;
   font-size: 0.82rem;
