@@ -1,6 +1,7 @@
 import type { ComponentChildren } from "preact";
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import type { Notice, PublishedActivity, PublishedSchedule, Status, SyncStatus } from "../../src/published";
+import { calendarEvent, googleCalendarUrl, icsDataUrl, icsFileName, type CalendarEvent } from "./calendar";
 import {
   WEEKDAYS_SHORT,
   calendarGrid,
@@ -369,9 +370,9 @@ function GroupSchedule(props: {
           {filtering ? "W tym miesiącu nie ma terminów wybranych zajęć." : "Brak opublikowanych zajęć tej grupy w tym miesiącu."}
         </p>
       ) : props.view === "list" ? (
-        <DayList key={`${group}-${prefix}`} byDay={byDay} collapsePast />
+        <DayList key={`${group}-${prefix}`} byDay={byDay} groupName={groupName} collapsePast />
       ) : (
-        <Calendar month={month} byDay={byDay} selected={props.selectedDay} onSelect={props.setSelectedDay} />
+        <Calendar month={month} byDay={byDay} groupName={groupName} selected={props.selectedDay} onSelect={props.setSelectedDay} />
       )}
     </section>
   );
@@ -484,7 +485,7 @@ function NoticeBox({ notice }: { notice: Notice }) {
  * Lista dni. Z collapsePast minione dni są schowane pod przyciskiem, żeby lista zaczynała się
  * od dzisiaj (albo najbliższych zajęć).
  */
-function DayList({ byDay, collapsePast = false }: { byDay: Map<string, DayItem[]>; collapsePast?: boolean }) {
+function DayList({ byDay, groupName, collapsePast = false }: { byDay: Map<string, DayItem[]>; groupName: string; collapsePast?: boolean }) {
   const today = todayIso();
   const [showPast, setShowPast] = useState(false);
   const entries = [...byDay.entries()];
@@ -507,7 +508,7 @@ function DayList({ byDay, collapsePast = false }: { byDay: Map<string, DayItem[]
             {day === today && <span class="today-badge">dziś</span>}
           </h3>
           <ul class="cards">
-            {items.map((item) => <ActivityCard item={item} />)}
+            {items.map((item) => <ActivityCard item={item} groupName={groupName} />)}
           </ul>
         </li>
       ))}
@@ -516,15 +517,34 @@ function DayList({ byDay, collapsePast = false }: { byDay: Map<string, DayItem[]
   );
 }
 
-function ActivityCard({ item }: { item: DayItem }) {
+function ActivityCard({ item, groupName }: { item: DayItem; groupName: string }) {
   const a = item.activity;
   const status: Status | "moved-away" = item.movedAway ? "moved-away" : a.status;
   const review = a.verification === "needs_review";
+  const [calendarOpen, setCalendarOpen] = useState(false);
+  // Do kalendarza tylko terminy, które się odbędą: bez odwołanych, „śladów” po przeniesieniu i minionych.
+  const event =
+    !item.movedAway && a.status !== "cancelled" && a.date >= todayIso()
+      ? calendarEvent(a, groupName, location.origin + location.pathname)
+      : null;
   return (
     <li class={`card status-${status}${review ? " review" : ""}`}>
       <div class="card-time">
-        {item.movedAway ? formatTimeRange(a.previous!.start, a.previous!.end) : formatTimeRange(a.start, a.end)}
+        <span>{item.movedAway ? formatTimeRange(a.previous!.start, a.previous!.end) : formatTimeRange(a.start, a.end)}</span>
+        {event && (
+          <button
+            type="button"
+            class="cal-btn"
+            aria-label="Dodaj do kalendarza"
+            title="Dodaj do kalendarza"
+            aria-expanded={calendarOpen}
+            onClick={() => setCalendarOpen(!calendarOpen)}
+          >
+            <CalendarIcon />
+          </button>
+        )}
       </div>
+      {event && calendarOpen && <CalendarMenu event={event} review={review} onDone={() => setCalendarOpen(false)} />}
       <div class="card-body">
         <div class="card-title">
           <span class="activity">{a.activity}</span>
@@ -554,6 +574,33 @@ function ActivityCard({ item }: { item: DayItem }) {
         <Details activity={a} />
       </div>
     </li>
+  );
+}
+
+function CalendarIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+      <rect x="3" y="5" width="18" height="16" rx="2" />
+      <path d="M3 10h18M8 3v4M16 3v4M12 13v5M9.5 15.5h5" />
+    </svg>
+  );
+}
+
+/** Dwie drogi, bo Kalendarz Google na Androidzie nie otwiera plików .ics, a iPhone otwiera je od razu. */
+function CalendarMenu({ event, review, onDone }: { event: CalendarEvent; review: boolean; onDone: () => void }) {
+  return (
+    <div class="cal-menu">
+      {review && <p class="cal-warning">Termin niepotwierdzony – sprawdź go przed zajęciami.</p>}
+      <div class="cal-links">
+        <a class="btn btn-small" href={googleCalendarUrl(event)} target="_blank" rel="noopener" onClick={onDone}>
+          Kalendarz Google
+        </a>
+        <a class="btn btn-small" href={icsDataUrl(event)} download={icsFileName(event)} onClick={onDone}>
+          Apple, Outlook i inne
+        </a>
+      </div>
+      <p class="muted">Zmiany wprowadzone później przez przedszkole nie zaktualizują się w kalendarzu.</p>
+    </div>
   );
 }
 
@@ -609,7 +656,13 @@ function Details({ activity: a }: { activity: PublishedActivity }) {
   );
 }
 
-function Calendar(props: { month: Month; byDay: Map<string, DayItem[]>; selected: string | null; onSelect: (d: string | null) => void }) {
+function Calendar(props: {
+  month: Month;
+  byDay: Map<string, DayItem[]>;
+  groupName: string;
+  selected: string | null;
+  onSelect: (d: string | null) => void;
+}) {
   const today = todayIso();
   const cells = calendarGrid(props.month);
   const selectedItems = props.selected ? props.byDay.get(props.selected) : undefined;
@@ -653,7 +706,7 @@ function Calendar(props: { month: Month; byDay: Map<string, DayItem[]>; selected
         ))}
       </p>
       {selectedItems ? (
-        <DayList byDay={new Map([[props.selected!, selectedItems]])} />
+        <DayList byDay={new Map([[props.selected!, selectedItems]])} groupName={props.groupName} />
       ) : (
         <p class="message muted">Wybierz dzień, aby zobaczyć zajęcia.</p>
       )}

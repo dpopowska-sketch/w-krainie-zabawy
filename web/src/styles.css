@@ -507,6 +507,59 @@ summary:focus-visible {
   font-weight: 600;
   color: var(--rescheduled);
 }
+/* ── Dodaj do kalendarza ── */
+.card-time {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.cal-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px; /* wygodne pole dotyku na telefonie */
+  height: 44px;
+  margin: -8px -10px -8px 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--navy);
+  cursor: pointer;
+}
+.cal-btn[aria-expanded="true"] {
+  color: var(--red);
+}
+@media (hover: hover) {
+  .cal-btn:hover {
+    color: var(--red);
+  }
+}
+.cal-menu {
+  margin: 6px 14px 4px;
+  padding: 10px 12px;
+  background: var(--bg-soft);
+  font-size: 0.88rem;
+}
+.cal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.cal-links .btn {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+.cal-menu p {
+  margin: 8px 0 0;
+}
+.cal-menu .cal-warning {
+  margin: 0 0 8px;
+  color: var(--review);
+  font-weight: 600;
+}
+
 /* Minione dni: wyszarzony nagłówek dnia; karty bez wyblaknięcia, żeby nie przypominały odwołanych */
 .day.past h3 {
   color: var(--muted);
