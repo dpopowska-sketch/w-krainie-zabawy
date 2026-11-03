@@ -1,11 +1,12 @@
-// Testy „Moich zajęć” (web/src/selection.ts) na opublikowanym harmonogramie Wilczków.
+// Testy „Moich zajęć” (web/src/selection.ts) na harmonogramie Wilczków z października 2026.
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { readJson } from "../src/config.js";
 import type { PublishedActivity, PublishedSchedule } from "../src/published.js";
 import { activityKey, activityTypes, isSelected, sameKind, selectionFromCodes, shortCode, unseenTypes } from "../web/src/selection.js";
 
-const schedule = readJson<PublishedSchedule>("data/published/schedule.json");
+// Stały zestaw danych (Wilczki, październik 2026) – testy nie zależą od bieżącego miesiąca.
+const schedule = readJson<PublishedSchedule>("test/fixtures/schedule-wilczki-2026-10.json");
 const wilczki = schedule.activities.filter((a) => a.group === "wilczki");
 const types = activityTypes(wilczki);
 const find = (fragment: string) => types.find((t) => t.name.toLowerCase().includes(fragment))!;

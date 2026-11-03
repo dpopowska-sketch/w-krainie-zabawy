@@ -1,6 +1,6 @@
 /*
  * Motyw na wzór szablonu Natone (html.design, CC 3.0 – dopisek w stopce):
- * białe tło, czcionka Poppins, czerwone przyciski z ostrymi rogami (#be2623),
+ * białe tło, czcionka Poppins, granatowe przyciski z ostrymi rogami (#0e3746),
  * morski granat (#0e3746) na banerze, paskach kart i nagłówkach, ciemna stopka (#091f27).
  * Statusy zajęć mają zaokrąglone etykiety, żeby nie myliły się z (kanciastymi) przyciskami.
  */
@@ -11,8 +11,10 @@
   --heading: #0e3746;
   --muted: #5f6b70;
   --border: #dde3e6;
+  /* Czerwień tylko dla błędów; przyciski granatowe, drobne akcenty w kolorze słoneczka. */
   --red: #be2623;
-  --red-dark: #9c1e1c;
+  --accent: #f2b200;
+  --accent-dark: #d89a00;
   --navy: #0e3746;
   --navy-deep: #091f27;
   --shadow: 0 0 15px 0 rgba(0, 0, 0, 0.12);
@@ -42,7 +44,7 @@ body {
 }
 
 a {
-  color: var(--red);
+  color: var(--navy);
 }
 
 button {
@@ -143,7 +145,7 @@ summary:focus-visible {
   width: 42px;
   height: 3px;
   margin-top: 6px;
-  background: var(--red);
+  background: var(--accent);
 }
 
 /* ── Przyciski: kanciaste jak btn1 / btn2 w Natone ── */
@@ -168,20 +170,20 @@ summary:focus-visible {
 .chip[aria-pressed="true"],
 .segmented button[aria-pressed="true"],
 .btn-primary {
-  background: var(--red);
-  border-color: var(--red);
+  background: var(--navy);
+  border-color: var(--navy);
   color: #fff;
 }
 @media (hover: hover) {
   .btn:hover,
   .chip:hover {
-    border-color: var(--red);
-    color: var(--red);
+    border-color: var(--navy);
+    color: var(--navy);
   }
   .chip[aria-pressed="true"]:hover,
   .btn-primary:hover {
     background: transparent;
-    color: var(--red);
+    color: var(--navy);
   }
 }
 
@@ -231,7 +233,7 @@ summary:focus-visible {
 }
 
 /* ── Moje zajęcia ── */
-/* Granat i zakładki zamiast czerwieni, żeby nie myliły się z przełącznikiem „Lista / Kalendarz”. */
+/* „Moje zajęcia” jako zakładki, żeby nie myliły się z przełącznikiem „Lista / Kalendarz”. */
 .btn-navy {
   background: var(--navy);
   border-color: var(--navy);
@@ -362,7 +364,7 @@ summary:focus-visible {
   height: 22px;
   margin: 2px 0 0;
   flex: none;
-  accent-color: var(--red);
+  accent-color: var(--navy);
 }
 .editor-list .muted {
   display: block;
@@ -403,7 +405,7 @@ summary:focus-visible {
 }
 .notice {
   background: var(--bg-soft);
-  border-left: 4px solid var(--red);
+  border-left: 4px solid var(--accent);
   padding: 12px 14px;
   margin-bottom: 16px;
 }
@@ -440,11 +442,11 @@ summary:focus-visible {
   text-transform: uppercase;
 }
 .day.today h3 {
-  color: var(--red);
+  color: var(--navy);
 }
 .today-badge {
-  background: var(--red);
-  color: #fff;
+  background: var(--accent);
+  color: var(--navy-deep);
   border-radius: 999px;
   padding: 1px 9px;
   font-size: 0.7rem;
@@ -486,7 +488,7 @@ summary:focus-visible {
   padding: 10px 14px 0;
   font-weight: 600;
   font-size: 1.05rem;
-  color: var(--red);
+  color: var(--navy);
   font-variant-numeric: tabular-nums;
 }
 .card-meta,
@@ -569,7 +571,7 @@ summary:focus-visible {
   padding: 4px 0;
 }
 .details summary:hover {
-  color: var(--red);
+  color: var(--navy);
 }
 .details p {
   margin: 6px 0;
@@ -618,7 +620,7 @@ summary:focus-visible {
 }
 @media (hover: hover) {
   .cal-cell.has:hover {
-    border-color: var(--red);
+    border-color: var(--navy);
   }
 }
 .cal-cell.empty {
@@ -637,7 +639,7 @@ summary:focus-visible {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 .cal-cell.today {
-  outline: 2px solid var(--red);
+  outline: 2px solid var(--accent-dark);
   outline-offset: -2px;
 }
 .cal-cell.selected {
