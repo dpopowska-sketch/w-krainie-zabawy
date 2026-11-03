@@ -46,7 +46,9 @@
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
-      "warnings": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
       "sources": [
         {
           "type": "schedule",
@@ -96,7 +98,9 @@
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
-      "warnings": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
       "sources": [
         {
           "type": "schedule",
@@ -146,7 +150,9 @@
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
-      "warnings": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
       "sources": [
         {
           "type": "schedule",
@@ -156,6 +162,33 @@
         }
       ],
       "updatedAt": "2026-11-01T14:47:37.729Z"
+    },
+    {
+      "id": "4f7f9f596387",
+      "group": "wilczki",
+      "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
+      "teacher": "J. Skoczowska",
+      "date": "2026-11-06",
+      "start": "12:45",
+      "end": "13:45",
+      "location": "Miki",
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/59f6107a28468bd28e6e8874f93db7d4-0.jpg",
+          "cellText": "Piątek 12.45 – 13.45 06.11; 13.11; Gr. Miki",
+          "firstSeen": "2026-11-03T05:02:55.903Z"
+        }
+      ],
+      "updatedAt": "2026-11-03T05:02:55.903Z"
     },
     {
       "id": "7a046ec0d7db",
@@ -171,7 +204,9 @@
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
-      "warnings": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
       "sources": [
         {
           "type": "schedule",
@@ -221,7 +256,9 @@
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
-      "warnings": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
       "sources": [
         {
           "type": "schedule",
@@ -231,6 +268,33 @@
         }
       ],
       "updatedAt": "2026-11-01T14:47:37.729Z"
+    },
+    {
+      "id": "c0b0d76c30c2",
+      "group": "wilczki",
+      "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
+      "teacher": "J. Skoczowska",
+      "date": "2026-11-13",
+      "start": "12:45",
+      "end": "13:45",
+      "location": "Miki",
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/59f6107a28468bd28e6e8874f93db7d4-0.jpg",
+          "cellText": "Piątek 12.45 – 13.45 06.11; 13.11; Gr. Miki",
+          "firstSeen": "2026-11-03T05:02:55.903Z"
+        }
+      ],
+      "updatedAt": "2026-11-03T05:02:55.903Z"
     },
     {
       "id": "e630fb8a644c",
@@ -271,7 +335,9 @@
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
-      "warnings": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
       "sources": [
         {
           "type": "schedule",
@@ -396,7 +462,9 @@
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
-      "warnings": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
       "sources": [
         {
           "type": "schedule",
@@ -446,7 +514,9 @@
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
-      "warnings": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
       "sources": [
         {
           "type": "schedule",
@@ -483,5 +553,15 @@
       "updatedAt": "2026-11-01T14:47:37.729Z"
     }
   ],
-  "notices": []
+  "notices": [
+    {
+      "id": "e12ec716e612",
+      "text": "02.11.2026 r. – zaktualizowanie w tabeli terminów zajęć „Słowiki”;",
+      "groups": "all",
+      "dates": [],
+      "reason": "Nierozpoznany rodzaj zmiany",
+      "firstSeen": "2026-11-03T05:04:33.857Z",
+      "removedAt": null
+    }
+  ]
 }

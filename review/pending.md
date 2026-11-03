@@ -73,7 +73,7 @@ Decyzje wpisuj w `review/decisions.yaml` (instrukcja na górze tamtego pliku).
     action: confirm   # albo: hide / edit (z polem set)
 ```
 
-## Komunikaty bez dopasowania (1)
+## Komunikaty bez dopasowania (2)
 
 Pokazywane rodzicom jako tekst ogłoszenia, bez zmiany statusu terminów.
 
@@ -84,5 +84,15 @@ Pokazywane rodzicom jako tekst ogłoszenia, bez zmiany statusu terminów.
 
 ```yaml
   - notice: 8fb045778dce
+    action: dismiss   # ukryj komunikat
+```
+
+### „02.11.2026 r. – zaktualizowanie w tabeli terminów zajęć „Słowiki”;”
+
+- Grupy: wszystkie
+- Powód: Nierozpoznany rodzaj zmiany
+
+```yaml
+  - notice: e12ec716e612
     action: dismiss   # ukryj komunikat
 ```

@@ -2,8 +2,8 @@
   "page": {
     "id": 12985,
     "link": "https://przedszkole-zspzernica.pilchowice.pl/harmonogram-zajec-w-krainie-zabawy/",
-    "modifiedGmt": "2026-11-01T10:47:48",
-    "contentSha256": "2403edd075c678fe86004948d8fdeea856b18969542154f8d3fb45e1a8f14027"
+    "modifiedGmt": "2026-11-02T16:28:26",
+    "contentSha256": "0429e8da405cfb978ece1eb06e883b3dd592d0c11ca5f37e11c9efd814c6dfb7"
   },
   "documents": [
     {
@@ -59,7 +59,7 @@
       "file": "sources/672630b5a35b59fde04153bcc49cd5890f7e0d6b9c261e93d4120655f88d48b1.jpg",
       "lastModifiedHeader": "Sun, 01 Nov 2026 10:45:31 GMT",
       "firstSeen": "2026-11-01T14:47:37.729Z",
-      "removedAt": null,
+      "removedAt": "2026-11-03T05:02:55.903Z",
       "history": []
     },
     {
@@ -87,6 +87,20 @@
       "file": "sources/66c53c8a612db46ee1b4310c095e70518824900101640fb2aa6ce663860926ff.jpg",
       "lastModifiedHeader": "Sun, 01 Nov 2026 10:45:34 GMT",
       "firstSeen": "2026-11-01T14:47:37.729Z",
+      "removedAt": null,
+      "history": []
+    },
+    {
+      "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/59f6107a28468bd28e6e8874f93db7d4-0.jpg",
+      "pageUrls": [
+        "media:17070"
+      ],
+      "sha256": "336de9d21f8e1785338d9abf1d1236fff1c77cc5c00b512d1697efdc722cae52",
+      "bytes": 305862,
+      "contentType": "image/jpeg",
+      "file": "sources/336de9d21f8e1785338d9abf1d1236fff1c77cc5c00b512d1697efdc722cae52.jpg",
+      "lastModifiedHeader": "Mon, 02 Nov 2026 16:22:54 GMT",
+      "firstSeen": "2026-11-03T05:02:55.903Z",
       "removedAt": null,
       "history": []
     }

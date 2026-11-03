@@ -289,6 +289,16 @@
     "verification": "verified",
     "month": "2026-11"
   },
+  "4f7f9f596387": {
+    "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
+    "teacher": "J. Skoczowska",
+    "date": "2026-11-06",
+    "start": "12:45",
+    "end": "13:45",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
   "7a046ec0d7db": {
     "activity": "Zajęcia Mali Artyści - rozwijanie kompetencji w zakresie świadomości i kulturalnej",
     "teacher": "B. Kasza",
@@ -312,6 +322,16 @@
   "7ce944a68008": {
     "activity": "Zajęcia sprawnościowo – zdrowotne",
     "teacher": "K. Zborowska",
+    "date": "2026-11-13",
+    "start": "12:45",
+    "end": "13:45",
+    "status": "scheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
+  "c0b0d76c30c2": {
+    "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
+    "teacher": "J. Skoczowska",
     "date": "2026-11-13",
     "start": "12:45",
     "end": "13:45",

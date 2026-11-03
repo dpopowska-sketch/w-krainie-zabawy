@@ -437,5 +437,25 @@
     "date": "2026-11-27",
     "start": "12:45",
     "status": "scheduled"
+  },
+  {
+    "id": "4f7f9f596387",
+    "month": "2026-11",
+    "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
+    "at": "2026-11-03T05:02:55.903Z",
+    "kind": "added",
+    "date": "2026-11-06",
+    "start": "12:45",
+    "status": "scheduled"
+  },
+  {
+    "id": "c0b0d76c30c2",
+    "month": "2026-11",
+    "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
+    "at": "2026-11-03T05:02:55.903Z",
+    "kind": "added",
+    "date": "2026-11-13",
+    "start": "12:45",
+    "status": "scheduled"
   }
 ]
