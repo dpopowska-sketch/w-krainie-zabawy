@@ -32,9 +32,13 @@ npm run web:build         # wersja do publikacji → dist/
 ```
 
 Vite + Preact w `web/`. Dane: `data/published/schedule.json` i `data/status.json`
-(kopiowane do `web/public/data/` przy uruchomieniu). Wybrana grupa i widok są zapamiętywane
-na urządzeniu; grupa, miesiąc i widok są też w adresie (`#grupa=sowki&miesiac=2026-10&widok=lista`),
-więc link można wysłać innemu rodzicowi.
+(kopiowane do `web/public/data/` przy uruchomieniu). Strona nazywa się „Plan przedszkolaka”
+i ma dwa wyglądy do wyboru przez rodzica (sekcja „Wygląd strony”): Nowoczesny minimalistyczny
+(domyślny) i Miękki i przyjazny – atrybut `data-theme` na `<html>`, zapamiętany w `localStorage`
+pod kluczem `wygladStrony` (ustawiany przed pierwszym renderem w `web/index.html`). Kolory,
+krótkie nazwy i ikony rodzajów zajęć: `web/src/kinds.tsx` + klasy `kind-*` w `web/src/styles.css`.
+Wybrany widok jest zapamiętywany na urządzeniu; grupa i widok są też w adresie
+(`#grupa=wilczki&widok=lista`), więc link można wysłać innemu rodzicowi.
 
 ## Widoczne grupy i historia zmian
 
