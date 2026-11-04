@@ -55,7 +55,7 @@ Decyzje wpisuj w `review/decisions.yaml` (instrukcja na górze tamtego pliku).
 - Status: zaplanowane, prowadzi B. Kasza
 - Powód: Fragment tabeli był nieczytelny lub niejednoznaczny
 - Powód: Dzień tygodnia w tabeli nie pasuje do daty
-- Tabela: „Poniedziałek44 14.15 – 15.15 16.11; Gr. Górnicza I” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-0.jpg))
+- Tabela: „Poniedziałek44 14.15 – 15.15 16.11; Gr. Górnicza I” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/59f6107a28468bd28e6e8874f93db7d4-0.jpg))
 
 ```yaml
   - id: a79983dd75ed

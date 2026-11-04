@@ -52,12 +52,12 @@
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-0.jpg",
-          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11; Czwartek 7.30 – 8.30 5.11; 26.11;",
-          "firstSeen": "2026-11-01T14:47:37.729Z"
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/59f6107a28468bd28e6e8874f93db7d4-0.jpg",
+          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11;",
+          "firstSeen": "2026-11-03T05:02:55.903Z"
         }
       ],
-      "updatedAt": "2026-11-01T14:47:37.729Z"
+      "updatedAt": "2026-11-03T05:02:55.903Z"
     },
     {
       "id": "21460a2c997b",
@@ -104,12 +104,12 @@
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-0.jpg",
-          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11; Czwartek 7.30 – 8.30 5.11; 26.11;",
-          "firstSeen": "2026-11-01T14:47:37.729Z"
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/59f6107a28468bd28e6e8874f93db7d4-0.jpg",
+          "cellText": "Czwartek 7.30 – 8.30 5.11; 26.11;",
+          "firstSeen": "2026-11-03T05:02:55.903Z"
         }
       ],
-      "updatedAt": "2026-11-01T14:47:37.729Z"
+      "updatedAt": "2026-11-03T05:02:55.903Z"
     },
     {
       "id": "d369f17d5fe8",
@@ -121,7 +121,7 @@
       "end": "13:45",
       "location": "Miki",
       "subgroup": null,
-      "status": "scheduled",
+      "status": "cancelled",
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
@@ -134,7 +134,11 @@
           "firstSeen": "2026-11-01T14:47:37.729Z"
         }
       ],
-      "updatedAt": "2026-11-01T14:47:37.729Z"
+      "updatedAt": "2026-11-03T05:02:55.903Z",
+      "scheduleChange": {
+        "kind": "removed",
+        "at": "2026-11-03T05:02:55.903Z"
+      }
     },
     {
       "id": "75ad7dba491c",
@@ -188,7 +192,11 @@
           "firstSeen": "2026-11-03T05:02:55.903Z"
         }
       ],
-      "updatedAt": "2026-11-03T05:02:55.903Z"
+      "updatedAt": "2026-11-03T05:02:55.903Z",
+      "scheduleChange": {
+        "kind": "added",
+        "at": "2026-11-03T05:02:55.903Z"
+      }
     },
     {
       "id": "7a046ec0d7db",
@@ -210,12 +218,12 @@
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-0.jpg",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/59f6107a28468bd28e6e8874f93db7d4-0.jpg",
           "cellText": "Poniedziałek 14.15– 15.15 09.11; Gr. Miki",
-          "firstSeen": "2026-11-01T14:47:37.729Z"
+          "firstSeen": "2026-11-03T05:02:55.903Z"
         }
       ],
-      "updatedAt": "2026-11-01T14:47:37.729Z"
+      "updatedAt": "2026-11-03T05:02:55.903Z"
     },
     {
       "id": "ef39d0523a05",
@@ -294,7 +302,11 @@
           "firstSeen": "2026-11-03T05:02:55.903Z"
         }
       ],
-      "updatedAt": "2026-11-03T05:02:55.903Z"
+      "updatedAt": "2026-11-03T05:02:55.903Z",
+      "scheduleChange": {
+        "kind": "added",
+        "at": "2026-11-03T05:02:55.903Z"
+      }
     },
     {
       "id": "e630fb8a644c",
@@ -341,12 +353,12 @@
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-0.jpg",
-          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11; Czwartek 7.30 – 8.30 5.11; 26.11;",
-          "firstSeen": "2026-11-01T14:47:37.729Z"
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/59f6107a28468bd28e6e8874f93db7d4-0.jpg",
+          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11;",
+          "firstSeen": "2026-11-03T05:02:55.903Z"
         }
       ],
-      "updatedAt": "2026-11-01T14:47:37.729Z"
+      "updatedAt": "2026-11-03T05:02:55.903Z"
     },
     {
       "id": "e77470fc3051",
@@ -468,12 +480,12 @@
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-0.jpg",
-          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11; Czwartek 7.30 – 8.30 5.11; 26.11;",
-          "firstSeen": "2026-11-01T14:47:37.729Z"
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/59f6107a28468bd28e6e8874f93db7d4-0.jpg",
+          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11;",
+          "firstSeen": "2026-11-03T05:02:55.903Z"
         }
       ],
-      "updatedAt": "2026-11-01T14:47:37.729Z"
+      "updatedAt": "2026-11-03T05:02:55.903Z"
     },
     {
       "id": "609f1d972d31",
@@ -520,12 +532,12 @@
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-0.jpg",
-          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11; Czwartek 7.30 – 8.30 5.11; 26.11;",
-          "firstSeen": "2026-11-01T14:47:37.729Z"
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/59f6107a28468bd28e6e8874f93db7d4-0.jpg",
+          "cellText": "Czwartek 7.30 – 8.30 5.11; 26.11;",
+          "firstSeen": "2026-11-03T05:02:55.903Z"
         }
       ],
-      "updatedAt": "2026-11-01T14:47:37.729Z"
+      "updatedAt": "2026-11-03T05:02:55.903Z"
     },
     {
       "id": "f664878d63f2",

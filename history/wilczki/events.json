@@ -457,5 +457,22 @@
     "date": "2026-11-13",
     "start": "12:45",
     "status": "scheduled"
+  },
+  {
+    "id": "d369f17d5fe8",
+    "month": "2026-11",
+    "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
+    "date": "2026-11-05",
+    "start": "12:45",
+    "at": "2026-11-04T00:13:55.236Z",
+    "kind": "changed",
+    "changes": {
+      "status": [
+        "zaplanowane",
+        "odwołane"
+      ]
+    },
+    "status": "cancelled",
+    "announcements": []
   }
 ]
