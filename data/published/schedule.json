@@ -141,6 +141,31 @@
       }
     },
     {
+      "id": "e2c115f98871",
+      "group": "wilczki",
+      "activity": "Zajęcia Przedszkolak Mały projektant i technolog",
+      "teacher": "K. Wilczek",
+      "date": "2026-11-05",
+      "start": "14:30",
+      "end": "15:30",
+      "location": null,
+      "subgroup": null,
+      "status": "additional",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "announcement",
+          "text": "dodano zajęcia 05.11.2026 r., 14.30 – 15.30 – Przedszkolak Mały projektant i technolog – grupa Miki",
+          "firstSeen": "2026-11-04T15:00:06.484Z",
+          "removedAt": null
+        }
+      ],
+      "updatedAt": "2026-11-04T15:00:06.484Z"
+    },
+    {
       "id": "75ad7dba491c",
       "group": "wilczki",
       "activity": "Zajęcia sprawnościowo – zdrowotne",

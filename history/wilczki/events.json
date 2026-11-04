@@ -474,5 +474,18 @@
     },
     "status": "cancelled",
     "announcements": []
+  },
+  {
+    "id": "e2c115f98871",
+    "month": "2026-11",
+    "activity": "Zajęcia Przedszkolak Mały projektant i technolog",
+    "at": "2026-11-04T15:00:06.484Z",
+    "kind": "added",
+    "date": "2026-11-05",
+    "start": "14:30",
+    "status": "additional",
+    "announcements": [
+      "dodano zajęcia 05.11.2026 r., 14.30 – 15.30 – Przedszkolak Mały projektant i technolog – grupa Miki"
+    ]
   }
 ]
