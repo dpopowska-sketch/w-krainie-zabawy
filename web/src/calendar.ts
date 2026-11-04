@@ -127,12 +127,25 @@ function fold(line: string): string {
 }
 
 export function icsText(e: CalendarEvent, now = new Date()): string {
+  return icsCalendarText([e], now);
+}
+
+/** Jeden plik z wieloma wydarzeniami („Dodaj wszystkie do kalendarza”). */
+export function icsCalendarText(events: CalendarEvent[], now = new Date()): string {
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
     "PRODID:-//W krainie zabawy//Harmonogram//PL",
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
+    ...events.flatMap((e) => veventLines(e, now)),
+    "END:VCALENDAR",
+  ];
+  return lines.map(fold).join("\r\n") + "\r\n";
+}
+
+function veventLines(e: CalendarEvent, now: Date): string[] {
+  return [
     "BEGIN:VEVENT",
     `UID:${e.uid}`,
     `DTSTAMP:${compactUtc(now)}`,
@@ -143,14 +156,16 @@ export function icsText(e: CalendarEvent, now = new Date()): string {
     `DESCRIPTION:${escapeIcs(e.description)}`,
     `LOCATION:${escapeIcs(e.location)}`,
     "END:VEVENT",
-    "END:VCALENDAR",
   ];
-  return lines.map(fold).join("\r\n") + "\r\n";
 }
 
 /** Data URL zamiast Bloba – Safari na iPhonie pewniej otwiera go jako wydarzenie. */
 export function icsDataUrl(e: CalendarEvent): string {
   return `data:text/calendar;charset=utf-8,${encodeURIComponent(icsText(e))}`;
+}
+
+export function icsCalendarDataUrl(events: CalendarEvent[]): string {
+  return `data:text/calendar;charset=utf-8,${encodeURIComponent(icsCalendarText(events))}`;
 }
 
 /** Nazwa pobieranego pliku, np. „slowiki-2026-11-05.ics”. */

@@ -57,6 +57,57 @@ export function formatTimeRange(start: string | null, end: string | null): strin
   return end ? `${formatTime(start)}–${formatTime(end)}` : formatTime(start);
 }
 
+/** „czwartek” */
+export function weekdayLong(iso: string): string {
+  return new Intl.DateTimeFormat("pl-PL", { weekday: "long", timeZone: "UTC" }).format(utcNoon(iso));
+}
+
+/** „2026-11-05” → „5.11” */
+export function dayMonth(iso: string): string {
+  const [, m, d] = iso.split("-").map(Number);
+  return `${d}.${String(m).padStart(2, "0")}`;
+}
+
+/** Numer tygodnia ISO (poniedziałek–niedziela). */
+export function isoWeek(iso: string): number {
+  // Tydzień należy do roku swojego czwartku; tydzień 1 zawiera 4 stycznia.
+  const thursday = utcNoon(iso);
+  thursday.setUTCDate(thursday.getUTCDate() - ((thursday.getUTCDay() + 6) % 7) + 3);
+  const jan4 = new Date(Date.UTC(thursday.getUTCFullYear(), 0, 4, 12));
+  const firstThursday = new Date(jan4);
+  firstThursday.setUTCDate(jan4.getUTCDate() - ((jan4.getUTCDay() + 6) % 7) + 3);
+  return 1 + Math.round((thursday.getTime() - firstThursday.getTime()) / (7 * 864e5));
+}
+
+/** Poniedziałek tygodnia, w którym jest dany dzień. */
+export function mondayOf(iso: string): string {
+  const d = utcNoon(iso);
+  d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 6) % 7));
+  return d.toISOString().slice(0, 10);
+}
+
+/** „2–8 listopada”, „30 listopada – 6 grudnia” (tydzień od poniedziałku). */
+export function weekRangeLabel(monday: string): string {
+  const end = utcNoon(monday);
+  end.setUTCDate(end.getUTCDate() + 6);
+  const fmt = (d: Date, withMonth: boolean) =>
+    new Intl.DateTimeFormat("pl-PL", withMonth ? { day: "numeric", month: "long", timeZone: "UTC" } : { day: "numeric", timeZone: "UTC" }).format(d);
+  const start = utcNoon(monday);
+  return start.getUTCMonth() === end.getUTCMonth() ? `${fmt(start, false)}–${fmt(end, true)}` : `${fmt(start, true)} – ${fmt(end, true)}`;
+}
+
+/** Czas sprawdzenia: „dziś, 01:33”, „wczoraj, 06:02” albo „2.11, 06:02” (czas polski). */
+export function formatCheck(timestamp: string): string {
+  const day = warsawDate(timestamp);
+  const time = new Intl.DateTimeFormat("pl-PL", { hour: "2-digit", minute: "2-digit", timeZone: TZ }).format(new Date(timestamp));
+  const today = todayIso();
+  const yesterday = utcNoon(today);
+  yesterday.setUTCDate(yesterday.getUTCDate() - 1);
+  if (day === today) return `dziś, ${time}`;
+  if (day === yesterday.toISOString().slice(0, 10)) return `wczoraj, ${time}`;
+  return `${dayMonth(day)}, ${time}`;
+}
+
 /** Kolejne dni od from do to włącznie (YYYY-MM-DD). */
 export function daysBetween(from: string, to: string): string[] {
   const days: string[] = [];
