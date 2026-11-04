@@ -3,6 +3,12 @@
 Plik generowany automatycznie przy każdej synchronizacji – nie edytuj go.
 Decyzje wpisuj w `review/decisions.yaml` (instrukcja na górze tamtego pliku).
 
+## Wydarzenia przedszkolne (0)
+
+Niepublikowane do czasu decyzji.
+
+Brak.
+
 ## Terminy (6)
 
 ### 2026-10-06 07:30–08:30 · Motylki · Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania

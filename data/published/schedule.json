@@ -581,5 +581,111 @@
       "firstSeen": "2026-11-03T05:04:33.857Z",
       "removedAt": null
     }
+  ],
+  "events": [
+    {
+      "id": "3a20bda24349",
+      "group": "wilczki",
+      "date": "2026-11-05",
+      "endDate": null,
+      "start": null,
+      "end": null,
+      "title": "Dzień Postaci z Bajek",
+      "details": "dzieci przychodzą od rana przebrane za postacie bajkowe.",
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-11.txt"
+    },
+    {
+      "id": "2d6e0c06a123",
+      "group": "wilczki",
+      "date": "2026-11-09",
+      "endDate": null,
+      "start": null,
+      "end": null,
+      "title": "Wyjście do biblioteki",
+      "details": "zajęcia patryjotyczne.",
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-11.txt"
+    },
+    {
+      "id": "452821782dc0",
+      "group": "wilczki",
+      "date": "2026-11-10",
+      "endDate": null,
+      "start": null,
+      "end": null,
+      "title": "Akcja Szkoła do hymnu",
+      "details": "w tym dniu proszę by dzieci były elegancko ubranę.",
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-11.txt"
+    },
+    {
+      "id": "87085192a6df",
+      "group": "wilczki",
+      "date": "2026-11-16",
+      "endDate": null,
+      "start": null,
+      "end": null,
+      "title": "Dzień Tolerancji",
+      "details": "zajęcia z psychologiem.",
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-11.txt"
+    },
+    {
+      "id": "6eb30edc140b",
+      "group": "wilczki",
+      "date": "2026-11-18",
+      "endDate": null,
+      "start": null,
+      "end": null,
+      "title": "Zebranie z rodzicami",
+      "details": "godzinę oraz salę podam bliżej terminu.",
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-11.txt"
+    },
+    {
+      "id": "5c389bcb810f",
+      "group": "wilczki",
+      "date": "2026-11-20",
+      "endDate": null,
+      "start": null,
+      "end": null,
+      "title": "Dzień Praw Dziecka",
+      "details": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-11.txt"
+    },
+    {
+      "id": "37d28de29c3a",
+      "group": "wilczki",
+      "date": "2026-11-25",
+      "endDate": null,
+      "start": null,
+      "end": null,
+      "title": "Dzień Pluszowego Misia",
+      "details": "dzieci mogą przynieść swoje ulubione misie i/ lub przebrać się za misie.",
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-11.txt"
+    },
+    {
+      "id": "7e58c2ffe271",
+      "group": "wilczki",
+      "date": "2026-11-30",
+      "endDate": null,
+      "start": null,
+      "end": null,
+      "title": "Andrzejki",
+      "details": "dzieci mogą przebrać się za czarodziejów i wróżki.",
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-11.txt"
+    }
   ]
 }
