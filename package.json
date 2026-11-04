@@ -11,6 +11,7 @@
     "discover": "tsx src/discover.ts",
     "extract": "tsx src/extract.ts",
     "announcements": "tsx src/announcements.ts",
+    "events": "tsx src/events.ts",
     "evaluate": "tsx src/evaluate.ts",
     "evaluate:announcements": "tsx src/evaluate-announcements.ts",
     "typecheck": "tsc --noEmit && tsc --noEmit -p web",

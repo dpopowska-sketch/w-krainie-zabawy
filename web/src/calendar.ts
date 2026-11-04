@@ -1,7 +1,7 @@
 // „Dodaj do kalendarza”: link do Kalendarza Google i plik .ics (Apple, Outlook i inne).
 // Godziny w danych to czas polski – do pliku .ics trafiają w UTC, więc zgadzają się
 // niezależnie od strefy ustawionej w telefonie.
-import type { PublishedActivity } from "../../src/published.js";
+import type { PublishedActivity, SchoolEvent } from "../../src/published.js";
 
 const TZ = "Europe/Warsaw";
 const PLACE = "Słoneczne Przedszkole w Żernicy";
@@ -16,6 +16,8 @@ export interface CalendarEvent {
   date: string;
   start: string;
   end: string;
+  /** Wydarzenie całodniowe (bez godziny) – od date do endDate włącznie; start/end są wtedy pomijane. */
+  allDay?: { endDate: string };
 }
 
 /** Przesunięcie czasu polskiego względem UTC (w minutach) w danej chwili. */
@@ -74,6 +76,21 @@ export function calendarEvent(a: PublishedActivity, groupName: string, pageUrl: 
   };
 }
 
+/** Wydarzenie przedszkolne; bez godziny → całodniowe (także wielodniowe). */
+export function schoolCalendarEvent(e: SchoolEvent, groupName: string, pageUrl: string): CalendarEvent {
+  const description = [e.details, `Grupa: ${groupName}`, `Aktualny harmonogram: ${pageUrl}`].filter(Boolean).join("\n");
+  const base = { uid: `${e.id}@w-krainie-zabawy`, title: `${e.title} (${groupName})`, description, location: PLACE, date: e.date };
+  if (!e.start) return { ...base, start: "00:00", end: "00:00", allDay: { endDate: e.endDate ?? e.date } };
+  return { ...base, start: e.start, end: e.end ?? addMinutes(e.start, DEFAULT_MINUTES) };
+}
+
+/** „2026-11-05” → „20261106” (dzień później – koniec całodniowego wydarzenia jest wyłączny). */
+function dayAfterCompact(date: string): string {
+  const d = new Date(`${date}T12:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + 1);
+  return d.toISOString().slice(0, 10).replaceAll("-", "");
+}
+
 /** „2026-10-20”, „12:45” → „20261020T124500” */
 function compactLocal(date: string, time: string): string {
   return `${date.replaceAll("-", "")}T${time.replace(":", "")}00`;
@@ -88,7 +105,9 @@ export function googleCalendarUrl(e: CalendarEvent): string {
   const params = new URLSearchParams({
     action: "TEMPLATE",
     text: e.title,
-    dates: `${compactLocal(e.date, e.start)}/${compactLocal(e.date, e.end)}`,
+    dates: e.allDay
+      ? `${e.date.replaceAll("-", "")}/${dayAfterCompact(e.allDay.endDate)}`
+      : `${compactLocal(e.date, e.start)}/${compactLocal(e.date, e.end)}`,
     ctz: TZ,
     details: e.description,
     location: e.location,
@@ -117,8 +136,9 @@ export function icsText(e: CalendarEvent, now = new Date()): string {
     "BEGIN:VEVENT",
     `UID:${e.uid}`,
     `DTSTAMP:${compactUtc(now)}`,
-    `DTSTART:${compactUtc(warsawToUtc(e.date, e.start))}`,
-    `DTEND:${compactUtc(warsawToUtc(e.date, e.end))}`,
+    ...(e.allDay
+      ? [`DTSTART;VALUE=DATE:${e.date.replaceAll("-", "")}`, `DTEND;VALUE=DATE:${dayAfterCompact(e.allDay.endDate)}`]
+      : [`DTSTART:${compactUtc(warsawToUtc(e.date, e.start))}`, `DTEND:${compactUtc(warsawToUtc(e.date, e.end))}`]),
     `SUMMARY:${escapeIcs(e.title)}`,
     `DESCRIPTION:${escapeIcs(e.description)}`,
     `LOCATION:${escapeIcs(e.location)}`,

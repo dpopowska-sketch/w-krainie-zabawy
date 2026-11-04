@@ -1,0 +1,96 @@
+{
+  "file": "events/wilczki/2026-11.txt",
+  "textSha256": "c07694695248a21800b405da511d7fa0b3038440505f1f1129f90f3d6ca80a73",
+  "model": "claude-opus-5-5",
+  "promptVersion": "2026-11-04.1",
+  "createdAt": "2026-11-04T00:26:21.704Z",
+  "usage": {
+    "input_tokens": 2362,
+    "output_tokens": 1251
+  },
+  "output": {
+    "events": [
+      {
+        "date": "2026-11-05",
+        "end_date": null,
+        "start": null,
+        "end": null,
+        "title": "Dzień Postaci z Bajek",
+        "details": "dzieci przychodzą od rana przebrane za postacie bajkowe.",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "date": "2026-11-09",
+        "end_date": null,
+        "start": null,
+        "end": null,
+        "title": "Wyjście do biblioteki",
+        "details": "zajęcia patryjotyczne.",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "date": "2026-11-10",
+        "end_date": null,
+        "start": null,
+        "end": null,
+        "title": "Akcja Szkoła do hymnu",
+        "details": "w tym dniu proszę by dzieci były elegancko ubranę.",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "date": "2026-11-16",
+        "end_date": null,
+        "start": null,
+        "end": null,
+        "title": "Dzień Tolerancji",
+        "details": "zajęcia z psychologiem.",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "date": "2026-11-18",
+        "end_date": null,
+        "start": null,
+        "end": null,
+        "title": "Zebranie z rodzicami",
+        "details": "godzinę oraz salę podam bliżej terminu.",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "date": "2026-11-20",
+        "end_date": null,
+        "start": null,
+        "end": null,
+        "title": "Dzień Praw Dziecka",
+        "details": null,
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "date": "2026-11-25",
+        "end_date": null,
+        "start": null,
+        "end": null,
+        "title": "Dzień Pluszowego Misia",
+        "details": "dzieci mogą przynieść swoje ulubione misie i/ lub przebrać się za misie.",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "date": "2026-11-30",
+        "end_date": null,
+        "start": null,
+        "end": null,
+        "title": "Andrzejki",
+        "details": "dzieci mogą przebrać się za czarodziejów i wróżki.",
+        "uncertain": false,
+        "note": null
+      }
+    ],
+    "skipped": []
+  }
+}

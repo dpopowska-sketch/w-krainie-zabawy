@@ -1,11 +1,12 @@
 import type { ComponentChildren } from "preact";
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
-import type { Notice, PublishedActivity, PublishedSchedule, Status, SyncStatus } from "../../src/published";
-import { calendarEvent, googleCalendarUrl, icsDataUrl, icsFileName, type CalendarEvent } from "./calendar";
+import type { Notice, PublishedActivity, PublishedSchedule, SchoolEvent, Status, SyncStatus } from "../../src/published";
+import { calendarEvent, googleCalendarUrl, icsDataUrl, icsFileName, schoolCalendarEvent, type CalendarEvent } from "./calendar";
 import {
   WEEKDAYS_SHORT,
   calendarGrid,
   currentMonth,
+  daysBetween,
   formatDay,
   formatMonth,
   formatShortDay,
@@ -36,6 +37,9 @@ interface DayItem {
   activity: PublishedActivity;
   movedAway: boolean;
 }
+
+/** Wpis dnia: zajęcia projektu albo wydarzenie przedszkolne grupy. */
+type DayEntry = DayItem | { event: SchoolEvent };
 
 /** Zmiany wykryte po podmianie pliku tabeli na stronie przedszkola. */
 const SCHEDULE_CHANGE: Record<NonNullable<PublishedActivity["scheduleChange"]>["kind"], string> = {
@@ -309,8 +313,13 @@ function GroupSchedule(props: {
   const unseen = selection ? unseenTypes(selection, types) : [];
 
   const byDay = useMemo(() => {
-    const map = new Map<string, DayItem[]>();
-    const add = (day: string, item: DayItem) => map.set(day, [...(map.get(day) ?? []), item]);
+    const map = new Map<string, DayEntry[]>();
+    const add = (day: string, item: DayEntry) => map.set(day, [...(map.get(day) ?? []), item]);
+    // Wydarzenia przedszkolne zawsze – niezależnie od wyboru w „Moich zajęciach”; wielodniowe w każdym dniu.
+    for (const e of schedule.events ?? []) {
+      if (e.group !== group) continue;
+      for (const day of daysBetween(e.date, e.endDate ?? e.date)) if (day.startsWith(prefix)) add(day, { event: e });
+    }
     for (const a of groupActivities) {
       if (filtering && !isSelected(selection!, a)) continue;
       if (a.date.startsWith(prefix)) add(a.date, { activity: a, movedAway: false });
@@ -319,10 +328,11 @@ function GroupSchedule(props: {
         add(a.previous.date, { activity: a, movedAway: true });
       }
     }
-    const startOf = (i: DayItem) => (i.movedAway ? i.activity.previous?.start : i.activity.start) ?? "99:99";
+    // Wydarzenia na początku dnia, potem zajęcia według godziny.
+    const startOf = (i: DayEntry) => ("event" in i ? "" : ((i.movedAway ? i.activity.previous?.start : i.activity.start) ?? "99:99"));
     for (const items of map.values()) items.sort((x, y) => startOf(x).localeCompare(startOf(y)));
     return new Map([...map.entries()].sort(([a], [b]) => a.localeCompare(b)));
-  }, [groupActivities, filtering, selection, prefix]);
+  }, [groupActivities, filtering, selection, prefix, schedule, group]);
 
   const groupName = schedule.groups.find((g) => g.id === group)?.name ?? group;
   // Komunikaty o minionych dniach chowamy, tak jak minione dni na liście.
@@ -493,7 +503,7 @@ function NoticeBox({ notice }: { notice: Notice }) {
  * Lista dni. Z collapsePast minione dni są schowane pod przyciskiem, żeby lista zaczynała się
  * od dzisiaj (albo najbliższych zajęć).
  */
-function DayList({ byDay, groupName, collapsePast = false }: { byDay: Map<string, DayItem[]>; groupName: string; collapsePast?: boolean }) {
+function DayList({ byDay, groupName, collapsePast = false }: { byDay: Map<string, DayEntry[]>; groupName: string; collapsePast?: boolean }) {
   const today = todayIso();
   const [showPast, setShowPast] = useState(false);
   const entries = [...byDay.entries()];
@@ -516,7 +526,9 @@ function DayList({ byDay, groupName, collapsePast = false }: { byDay: Map<string
             {day === today && <span class="today-badge">dziś</span>}
           </h3>
           <ul class="cards">
-            {items.map((item) => <ActivityCard item={item} groupName={groupName} />)}
+            {items.map((item) =>
+              "event" in item ? <EventCard event={item.event} groupName={groupName} /> : <ActivityCard item={item} groupName={groupName} />,
+            )}
           </ul>
         </li>
       ))}
@@ -613,7 +625,7 @@ function CalendarMenu({ event, review, onDone }: { event: CalendarEvent; review:
   );
 }
 
-type MarkStatus = Status;
+type MarkStatus = Status | "event";
 
 /** Znaczniki w kalendarzu: różny kształt i kolor, żeby statusy dało się odróżnić bez wczytywania się w kolory. */
 const MARK: Record<MarkStatus, { symbol: string; label: string }> = {
@@ -621,7 +633,43 @@ const MARK: Record<MarkStatus, { symbol: string; label: string }> = {
   cancelled: { symbol: "✕", label: "odwołane" },
   rescheduled: { symbol: "↻", label: "przeniesione" },
   additional: { symbol: "+", label: "dodatkowe" },
+  event: { symbol: "★", label: "wydarzenie w przedszkolu" },
 };
+
+/** Wydarzenie przedszkolne – inny wygląd niż zajęcia projektu, bez statusów. */
+function EventCard({ event: e, groupName }: { event: SchoolEvent; groupName: string }) {
+  const [calendarOpen, setCalendarOpen] = useState(false);
+  const event = (e.endDate ?? e.date) >= todayIso() ? schoolCalendarEvent(e, groupName, location.origin + location.pathname) : null;
+  const when = [
+    e.endDate && `${formatShortDay(e.date)} – ${formatShortDay(e.endDate)}`,
+    e.start && formatTimeRange(e.start, e.end),
+  ].filter(Boolean);
+  return (
+    <li class="card event-card">
+      <div class="event-head">
+        <span class="event-label">
+          <span aria-hidden="true">★</span> Wydarzenie w przedszkolu
+        </span>
+        {event && (
+          <button
+            type="button"
+            class="cal-btn"
+            aria-label="Dodaj do kalendarza"
+            title="Dodaj do kalendarza"
+            aria-expanded={calendarOpen}
+            onClick={() => setCalendarOpen(!calendarOpen)}
+          >
+            <CalendarIcon />
+          </button>
+        )}
+      </div>
+      <div class="event-title">{e.title}</div>
+      {when.length > 0 && <div class="event-when">{when.join(", ")}</div>}
+      {e.details && <div class="event-details">{e.details}</div>}
+      {event && calendarOpen && <CalendarMenu event={event} review={false} onDone={() => setCalendarOpen(false)} />}
+    </li>
+  );
+}
 
 function Mark({ status }: { status: MarkStatus }) {
   return <span class={`mark mark-${status}`}>{MARK[status].symbol}</span>;
@@ -672,7 +720,7 @@ function Details({ activity: a }: { activity: PublishedActivity }) {
 
 function Calendar(props: {
   month: Month;
-  byDay: Map<string, DayItem[]>;
+  byDay: Map<string, DayEntry[]>;
   groupName: string;
   selected: string | null;
   onSelect: (d: string | null) => void;
@@ -687,7 +735,7 @@ function Calendar(props: {
         {cells.map((day) => {
           if (!day) return <div class="cal-cell empty" />;
           const items = props.byDay.get(day) ?? [];
-          const statuses = items.map((i): MarkStatus => (i.movedAway ? "rescheduled" : i.activity.status));
+          const statuses = items.map((i): MarkStatus => ("event" in i ? "event" : i.movedAway ? "rescheduled" : i.activity.status));
           const counts = (Object.keys(MARK) as MarkStatus[])
             .map((s) => [MARK[s].label, statuses.filter((x) => x === s).length] as const)
             .filter(([, n]) => n > 0)

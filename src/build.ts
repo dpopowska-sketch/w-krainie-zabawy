@@ -10,24 +10,27 @@ import { DATA_DIR, ROOT, SOURCE_PAGE_URL, isMain, loadGroups, readJson, writeJso
 import { resolveAll, type ChangeEntry } from "./announcements.js";
 import { updateHistory } from "./history.js";
 import type { SourceDocument } from "./discover.js";
+import { loadEvents } from "./events.js";
 import { fold, sameActivity, type IssueCode } from "./normalize.js";
 import { activityGroups, resolveGroupRef } from "./resolve.js";
 import { allDocuments, loadConsensus, sameOccurrence, type ScheduledOccurrence } from "./schedule.js";
-import type { Notice, PublishedActivity, PublishedSchedule, Source, Status } from "./published.js";
+import type { Notice, PublishedActivity, PublishedSchedule, SchoolEvent, Source, Status } from "./published.js";
 import type { AnnouncementRecord } from "./schema.js";
 
-export type { Notice, PublishedActivity, PublishedSchedule, Source, Status };
+export type { Notice, PublishedActivity, PublishedSchedule, SchoolEvent, Source, Status };
 
 export const PUBLISHED_PATH = path.join(DATA_DIR, "published", "schedule.json");
 const DECISIONS_PATH = path.join(ROOT, "review", "decisions.yaml");
 const PENDING_PATH = path.join(ROOT, "review", "pending.md");
 const ANNOUNCEMENTS_DIR = path.join(DATA_DIR, "announcements");
 
-type Decision =
+export type Decision =
   | { id: string; action: "confirm"; note?: string }
   | { id: string; action: "hide"; note?: string }
   | { id: string; action: "edit"; set: Partial<Pick<PublishedActivity, "date" | "start" | "end" | "teacher" | "activity" | "status">>; note?: string }
-  | { notice: string; action: "dismiss"; note?: string };
+  | { notice: string; action: "dismiss"; note?: string }
+  | { event: string; action: "confirm" | "hide"; note?: string }
+  | { event: string; action: "edit"; set: Partial<Pick<SchoolEvent, "date" | "endDate" | "start" | "end" | "title" | "details">>; note?: string };
 
 const REVIEW_ISSUES: Partial<Record<IssueCode, string>> = {
   weekday_mismatch: "Dzień tygodnia w tabeli nie pasuje do daty",
@@ -257,9 +260,25 @@ function loadDecisions(): Decision[] {
   return parsed?.decisions ?? [];
 }
 
-function applyDecisions(activities: Map<string, PublishedActivity>, notices: Notice[], decisions: Decision[]): string[] {
+export function applyDecisions(activities: Map<string, PublishedActivity>, notices: Notice[], events: SchoolEvent[], decisions: Decision[]): string[] {
   const problems: string[] = [];
   for (const d of decisions) {
+    if ("event" in d) {
+      const idx = events.findIndex((e) => e.id === String(d.event));
+      if (idx < 0) {
+        problems.push(`Decyzja dotyczy nieistniejącego wydarzenia: ${d.event}`);
+        continue;
+      }
+      if (d.action === "hide") {
+        events.splice(idx, 1);
+        continue;
+      }
+      const e = events[idx]!;
+      if (d.action === "edit") Object.assign(e, d.set);
+      e.verification = "verified";
+      e.reviewReasons = [];
+      continue;
+    }
     if ("notice" in d) {
       const idx = notices.findIndex((n) => n.id.startsWith(String(d.notice)));
       if (idx < 0) problems.push(`Decyzja dotyczy nieistniejącego komunikatu: ${d.notice}`);
@@ -290,7 +309,7 @@ function applyDecisions(activities: Map<string, PublishedActivity>, notices: Not
 
 const STATUS_PL: Record<Status, string> = { scheduled: "zaplanowane", cancelled: "odwołane", rescheduled: "przeniesione", additional: "dodatkowe" };
 
-function writePending(schedule: PublishedSchedule, problems: string[]) {
+function writePending(schedule: PublishedSchedule, problems: string[], skippedEventText: { file: string; text: string }[] = []) {
   const name = (id: string) => schedule.groups.find((g) => g.id === id)?.name ?? id;
   const review = schedule.activities.filter((a) => a.verification === "needs_review");
   const lines = [
@@ -301,7 +320,30 @@ function writePending(schedule: PublishedSchedule, problems: string[]) {
     "",
   ];
   if (problems.length) {
-    lines.push("## Problemy z decyzjami", "", ...problems.map((p) => `- ${p}`), "");
+    lines.push("## Problemy", "", ...problems.map((p) => `- ${p}`), "");
+  }
+  const reviewEvents = (schedule.events ?? []).filter((e) => e.verification === "needs_review");
+  lines.push(`## Wydarzenia przedszkolne (${reviewEvents.length})`, "");
+  lines.push("Niepublikowane do czasu decyzji.", "");
+  if (reviewEvents.length === 0) lines.push("Brak.", "");
+  for (const e of reviewEvents) {
+    lines.push(
+      `### ${e.date}${e.endDate ? `–${e.endDate}` : ""}${e.start ? ` ${e.start}` : ""} · ${name(e.group)} · ${e.title}`,
+      "",
+      ...(e.details ? [`- Opis: ${e.details}`] : []),
+      ...e.reviewReasons.map((r) => `- Powód: ${r}`),
+      `- Plik: \`${e.source}\``,
+      "",
+      "```yaml",
+      `  - event: ${e.id}`,
+      "    action: confirm   # albo: hide / edit (z polem set: date, endDate, start, end, title, details)",
+      "```",
+      "",
+    );
+  }
+  if (skippedEventText.length) {
+    lines.push("Pominięte zdania z wiadomości (nie są wydarzeniami – sprawdź, czy nic nie umknęło):", "");
+    lines.push(...skippedEventText.map((s) => `- „${s.text}” (\`${s.file}\`)`), "");
   }
   lines.push(`## Terminy (${review.length})`, "");
   if (review.length === 0) lines.push("Brak.", "");
@@ -372,7 +414,9 @@ export function build(): { schedule: PublishedSchedule; published: PublishedSche
 
   const notices: Notice[] = [];
   applyAnnouncements(activities, entries, notices, occurrences);
-  const problems = applyDecisions(activities, notices, loadDecisions());
+  const loaded = loadEvents();
+  const events = loaded.events;
+  const problems = [...loaded.problems, ...applyDecisions(activities, notices, events, loadDecisions())];
 
   const order = (a: PublishedActivity) => `${a.date} ${a.start ?? "99:99"} ${config.groups.findIndex((g) => g.id === a.group)}`;
   // Pełny stan wszystkich grup i miesięcy – do weryfikacji i historii (nie publikujemy go).
@@ -381,8 +425,9 @@ export function build(): { schedule: PublishedSchedule; published: PublishedSche
     groups: config.groups.map((g) => ({ id: g.id, name: g.name })),
     activities: [...activities.values()].sort((a, b) => order(a).localeCompare(order(b))),
     notices,
+    events: events.sort((a, b) => `${a.date} ${a.start ?? ""}`.localeCompare(`${b.date} ${b.start ?? ""}`)),
   };
-  writePending(schedule, problems);
+  writePending(schedule, problems, loaded.skipped);
   const historyEvents = updateHistory(schedule.activities);
 
   const published = publicView(schedule, config.publicGroups, currentMonthKey());
@@ -407,6 +452,10 @@ function publicView(full: PublishedSchedule, groups: string[], month: string): P
     activities: full.activities.filter((a) => groups.includes(a.group) && (inMonth(a.date) || (a.previous !== null && inMonth(a.previous.date)))),
     notices: full.notices.filter(
       (n) => (n.groups === "all" || n.groups.some((g) => groups.includes(g))) && (n.dates.length === 0 || n.dates.some(inMonth)),
+    ),
+    // Wydarzenia przedszkolne: tylko potwierdzone, w tym miesiącu (także wielodniowe zachodzące na miesiąc).
+    events: (full.events ?? []).filter(
+      (e) => e.verification === "verified" && groups.includes(e.group) && e.date.slice(0, 7) <= month && (e.endDate ?? e.date).slice(0, 7) >= month,
     ),
   };
 }

@@ -61,6 +61,38 @@ export const AnnouncementParse = z.object({
 });
 export type AnnouncementParse = z.infer<typeof AnnouncementParse>;
 
+/**
+ * Odczyt wiadomości z wydarzeniami grupy (wklejonej przez właścicielkę, pisanej ręcznie).
+ * Model przepisuje wydarzenia – nie poprawia tekstu i niczego nie dopisuje.
+ */
+export const ParsedEvent = z.object({
+  date: z.string().describe("Dzień wydarzenia (dla zakresu: pierwszy dzień), YYYY-MM-DD"),
+  end_date: z.string().nullable().describe("Ostatni dzień, jeśli wydarzenie trwa kilka dni, YYYY-MM-DD; inaczej null"),
+  start: z.string().nullable().describe("Godzina rozpoczęcia HH:MM, jeśli podano; inaczej null"),
+  end: z.string().nullable().describe("Godzina zakończenia HH:MM, jeśli podano; inaczej null"),
+  title: z.string().describe("Krótka nazwa wydarzenia przepisana z tekstu, np. 'Dzień Postaci z Bajek'"),
+  details: z.string().nullable().describe("Pozostała część opisu dosłownie, bez nazwy; null, jeśli nic nie zostaje"),
+  uncertain: z.boolean().describe("true, jeśli datę lub treść da się zrozumieć na więcej niż jeden sposób"),
+  note: z.string().nullable().describe("Krótki opis wątpliwości, jeśli uncertain=true"),
+});
+export type ParsedEvent = z.infer<typeof ParsedEvent>;
+
+export const EventsParse = z.object({
+  events: z.array(ParsedEvent),
+  skipped: z.array(z.string()).describe("Zdania, które nie są wydarzeniami (powitanie, podpis, prośby ogólne), dosłownie"),
+});
+export type EventsParse = z.infer<typeof EventsParse>;
+
+export interface EventsRecord {
+  file: string;
+  textSha256: string;
+  model: string;
+  promptVersion: string;
+  createdAt: string;
+  usage: { input_tokens: number; output_tokens: number };
+  output: EventsParse;
+}
+
 export interface AnnouncementRecord {
   text: string;
   textSha256: string;

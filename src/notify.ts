@@ -82,6 +82,25 @@ export function collectItems(
     });
   }
 
+  for (const e of schedule.events ?? []) {
+    if (e.verification !== "needs_review" || !publicGroups.includes(e.group) || (e.endDate ?? e.date) < today) continue;
+    items.push({
+      key: `event:${e.id}`,
+      title: `Do rozstrzygnięcia: wydarzenie ${e.date} · ${name(e.group)} · ${e.title.slice(0, 60)}`,
+      body: [
+        `**Wydarzenie przedszkolne:** ${e.date}${e.endDate ? `–${e.endDate}` : ""}${e.start ? ` ${e.start}` : ""} · ${name(e.group)} · ${e.title}`,
+        "",
+        ...(e.details ? [`- Opis: ${e.details}`] : []),
+        ...e.reviewReasons.map((r) => `- Powód: ${r}`),
+        `- Plik: \`${e.source}\``,
+        "",
+        "Do czasu decyzji wydarzenie nie jest pokazywane na stronie.",
+        "",
+        ...decisionHint(repo, [`  - event: ${e.id}`, "    action: confirm   # albo: hide / edit (z polem set)"]),
+      ].join("\n"),
+    });
+  }
+
   // Jedno zgłoszenie na cały okres błędów – zamyka się po pierwszej udanej synchronizacji.
   if (errors.length) {
     items.push({

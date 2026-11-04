@@ -8,6 +8,7 @@ import { interpretNewLines } from "./announcements.js";
 import { PUBLISHED_PATH, build } from "./build.js";
 import { DATA_DIR, loadGroups, readJsonIfExists, writeJson } from "./config.js";
 import { discover } from "./discover.js";
+import { interpretEvents } from "./events.js";
 import { extractAll } from "./extract.js";
 import { collectItems, notify } from "./notify.js";
 import type { SyncStatus } from "./published.js";
@@ -47,6 +48,10 @@ export async function sync(): Promise<SyncStatus> {
   } catch (err) {
     errors.push(`Interpretacja ogłoszeń nie powiodła się: ${err instanceof Error ? err.message : String(err)}`);
   }
+
+  const events = await interpretEvents();
+  errors.push(...events.errors);
+  cost += events.cost;
 
   const { schedule, problems } = build();
   errors.push(...problems);

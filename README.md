@@ -68,6 +68,19 @@ Zmiany danych są zapisywane w repozytorium od razu; sam czas sprawdzenia – ra
 Gdy strona przedszkola jest niedostępna albo odczyt się nie powiedzie, dane nie są
 usuwane ani nadpisywane – błąd trafia do `data/status.json`.
 
+## Wydarzenia przedszkolne
+
+Wydarzenia grupy z comiesięcznej wiadomości od wychowawczyni (np. Dzień Postaci z Bajek, zebranie)
+są pokazywane na liście i w kalendarzu obok zajęć – innym kolorem, z gwiazdką i zawsze, niezależnie
+od wyboru w „Moich zajęciach”.
+
+Dodawanie: na GitHubie **Add file → Create new file**, nazwa `events/<grupa>/RRRR-MM.txt`
+(np. `events/wilczki/2026-12.txt`), wklej treść wiadomości bez zmian i zapisz. Format jest dowolny –
+wiadomość odczytuje Claude (`npm run events`, także w każdej synchronizacji; tylko nowe lub zmienione
+pliki). Kod sprawdza daty; wątpliwe wydarzenia nie są publikowane i trafiają do `review/pending.md`
+oraz powiadomień (decyzja `- event: <id>` w `review/decisions.yaml`). Pominięte zdania (powitanie,
+podpis) też są wypisane w `review/pending.md`.
+
 ## Powiadomienia
 
 Gdy pojawi się pozycja do rozstrzygnięcia dotycząca grup z `publicGroups` (komunikat bez dopasowania,

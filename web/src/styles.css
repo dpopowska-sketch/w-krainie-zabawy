@@ -25,6 +25,9 @@
   --additional-soft: #e6f4ec;
   --review: #1f5fa8;
   --review-soft: #e8f0fa;
+  /* Wydarzenia przedszkolne – ciepły, „słoneczny” odcień, różny od kolorów statusów zajęć */
+  --event: #8a5a00;
+  --event-soft: #fff6d6;
   color-scheme: light;
   font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   line-height: 1.55;
@@ -507,6 +510,47 @@ summary:focus-visible {
   font-weight: 600;
   color: var(--rescheduled);
 }
+/* ── Wydarzenie przedszkolne: ciepłe tło i gwiazdka zamiast granatowego paska zajęć ── */
+.event-card {
+  background: var(--event-soft);
+  border-left: 5px solid var(--event);
+  box-shadow: none;
+  padding: 10px 14px 12px;
+  gap: 2px;
+}
+.event-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 28px;
+}
+.event-label {
+  color: var(--event);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.event-title {
+  font-weight: 600;
+  font-size: 1.02rem;
+  color: var(--heading);
+  line-height: 1.35;
+}
+.event-when {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--event);
+}
+.event-details {
+  font-size: 0.9rem;
+  color: var(--text);
+}
+.event-card .cal-menu {
+  margin: 8px 0 0;
+  background: #fff;
+}
+
 /* ── Dodaj do kalendarza ── */
 .card-time {
   display: flex;
@@ -728,6 +772,22 @@ summary:focus-visible {
   border-radius: 50%;
   background: var(--navy);
 }
+/* Na telefonie trzy znaczniki (np. wydarzenie + dwoje zajęć) muszą zmieścić się w jednym rzędzie kratki. */
+@media (max-width: 480px) {
+  .marks {
+    gap: 1px;
+  }
+  .mark {
+    width: 12px;
+    height: 12px;
+    font-size: 9px;
+  }
+  .mark-scheduled {
+    width: 8px;
+    height: 8px;
+    margin: 2px;
+  }
+}
 .mark-cancelled {
   background: #c0392b;
 }
@@ -737,6 +797,10 @@ summary:focus-visible {
 .mark-additional {
   background: #1e8a54;
   font-size: 13px;
+}
+.mark-event {
+  background: var(--event);
+  font-size: 11px;
 }
 .cal-cell.selected .mark-scheduled {
   background: #fff;

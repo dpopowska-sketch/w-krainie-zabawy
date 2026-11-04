@@ -45,11 +45,30 @@ export interface Notice {
   removedAt: string | null;
 }
 
+/** Wydarzenie przedszkolne grupy (z wiadomości od wychowawczyni), niezależne od zajęć projektu. */
+export interface SchoolEvent {
+  id: string;
+  group: string;
+  date: string;
+  /** Ostatni dzień wydarzenia wielodniowego; null = jeden dzień. */
+  endDate: string | null;
+  start: string | null;
+  end: string | null;
+  title: string;
+  details: string | null;
+  verification: "verified" | "needs_review";
+  reviewReasons: string[];
+  /** Plik z wiadomością, np. events/wilczki/2026-11.txt. */
+  source: string;
+}
+
 export interface PublishedSchedule {
   sourcePage: string;
   groups: { id: string; name: string }[];
   activities: PublishedActivity[];
   notices: Notice[];
+  /** Opcjonalne – starsze dane (np. w testach) go nie mają. */
+  events?: SchoolEvent[];
 }
 
 export interface SyncStatus {

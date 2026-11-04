@@ -57,6 +57,13 @@ export function formatTimeRange(start: string | null, end: string | null): strin
   return end ? `${formatTime(start)}–${formatTime(end)}` : formatTime(start);
 }
 
+/** Kolejne dni od from do to włącznie (YYYY-MM-DD). */
+export function daysBetween(from: string, to: string): string[] {
+  const days: string[] = [];
+  for (let d = utcNoon(from); d <= utcNoon(to) && days.length < 62; d.setUTCDate(d.getUTCDate() + 1)) days.push(d.toISOString().slice(0, 10));
+  return days;
+}
+
 /** Znacznik czasu → dzień w czasie polskim, YYYY-MM-DD. */
 export function warsawDate(timestamp: string): string {
   return new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(timestamp));

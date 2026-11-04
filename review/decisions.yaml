@@ -22,5 +22,14 @@
 #
 #   - notice: <identyfikator komunikatu>
 #     action: dismiss          # ukryj komunikat bez dopasowania
+#
+#   - event: <identyfikator wydarzenia przedszkolnego>
+#     action: confirm          # opublikuj mimo wątpliwości (albo: hide – nie pokazuj)
+#
+#   - event: <identyfikator wydarzenia przedszkolnego>
+#     action: edit             # popraw i opublikuj
+#     set:
+#       date: "2026-11-12"
+#       title: "Zebranie z rodzicami"
 
 decisions: []
