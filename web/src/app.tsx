@@ -721,8 +721,8 @@ function Greeting(props: { byDay: Map<string, DayEntry[]>; groupName: string; gr
     count === 0
       ? "Dzień dobry! Dziś nie ma zajęć dodatkowych."
       : count === 1
-        ? "Dzień dobry! Dziś czekają jedne zajęcia."
-        : `Dzień dobry! Dziś ${plural(count, "czekają", "czekają", "czeka")} ${count} ${plural(count, "zajęcia", "zajęcia", "zajęć")}.`;
+        ? "Dzień dobry! Dziś dzieci czekają jedne zajęcia."
+        : `Dzień dobry! Dziś dzieci ${plural(count, "czekają", "czekają", "czeka")} ${count} ${plural(count, "zajęcia", "zajęcia", "zajęć")}.`;
 
   return (
     <section class="panel greeting" aria-labelledby="greeting-title">
