@@ -8,6 +8,8 @@ import type { ExtractionRecord } from "./schema.js";
 
 export interface ScheduledOccurrence extends Occurrence {
   sourceUrl: string;
+  /** Wersja pliku (ten sam adres może mieć kilka wersji, gdy przedszkole podmieni plik). */
+  sourceSha256: string;
   /** Kiedy plik źródłowy (w tej wersji) pojawił się na stronie. */
   sourceFirstSeen: string;
   cellText: string | null;
@@ -18,16 +20,20 @@ export interface RunResult {
   records: ExtractionRecord[];
   missingFiles: number;
   period: { year: number; month: number } | null;
-  cells: (EntryResult & { sourceUrl: string; entry: CellEntry })[];
+  cells: (EntryResult & { sourceUrl: string; sourceSha256: string; entry: CellEntry })[];
   occurrences: ScheduledOccurrence[];
 }
 
 /**
  * Wszystkie dokumenty, także usunięte ze strony – ich terminy są historią i zostają.
- * Gdy plik pod tym samym adresem się zmienił, liczy się tylko najnowsza wersja.
+ * Poprzednie wersje pliku pod tym samym adresem występują jako osobne, usunięte dokumenty
+ * (usunięte w chwili podmiany), żeby dało się pokazać, co zmieniło się w tabeli.
  */
 export function allDocuments(): SourceDocument[] {
-  return readJson<Manifest>(MANIFEST_PATH).documents;
+  return readJson<Manifest>(MANIFEST_PATH).documents.flatMap((doc) => [
+    doc,
+    ...doc.history.map((v) => ({ ...doc, sha256: v.sha256, file: v.file, firstSeen: v.firstSeen, removedAt: v.replacedAt, history: [] })),
+  ]);
 }
 
 /**
@@ -93,13 +99,19 @@ export function loadRun(run: string, docs = allDocuments()): RunResult {
         };
         const result = expandEntry(entry, batchPeriod.year, batchPeriod.month, config);
         if (batchPeriod.inferred) for (const o of result.occurrences) o.issues.push("month_inferred");
-        cells.push({ ...result, sourceUrl: rec.documentUrl, entry });
+        cells.push({ ...result, sourceUrl: rec.documentUrl, sourceSha256: rec.documentSha256, entry });
       }
     }
   }
-  const firstSeen = new Map(docs.map((d) => [d.url, d.firstSeen]));
+  const firstSeen = new Map(docs.map((d) => [d.sha256, d.firstSeen]));
   const occurrences = cells.flatMap((c) =>
-    c.occurrences.map((o) => ({ ...o, sourceUrl: c.sourceUrl, sourceFirstSeen: firstSeen.get(c.sourceUrl) ?? "", cellText: c.entry.cellText ?? null })),
+    c.occurrences.map((o) => ({
+      ...o,
+      sourceUrl: c.sourceUrl,
+      sourceSha256: c.sourceSha256,
+      sourceFirstSeen: firstSeen.get(c.sourceSha256) ?? "",
+      cellText: c.entry.cellText ?? null,
+    })),
   );
   markTimeConflicts(occurrences);
   return { run, records, missingFiles, period, cells, occurrences };

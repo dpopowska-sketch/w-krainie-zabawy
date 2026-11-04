@@ -57,6 +57,11 @@ export function formatTimeRange(start: string | null, end: string | null): strin
   return end ? `${formatTime(start)}–${formatTime(end)}` : formatTime(start);
 }
 
+/** Znacznik czasu → dzień w czasie polskim, YYYY-MM-DD. */
+export function warsawDate(timestamp: string): string {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(timestamp));
+}
+
 /** „29 października 2026, 8:16” (czas polski) */
 export function formatTimestamp(iso: string): string {
   return new Intl.DateTimeFormat("pl-PL", { dateStyle: "long", timeStyle: "short", timeZone: TZ }).format(new Date(iso));

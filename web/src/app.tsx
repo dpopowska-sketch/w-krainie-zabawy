@@ -13,6 +13,7 @@ import {
   formatTimestamp,
   monthKey,
   todayIso,
+  warsawDate,
   type Month,
 } from "./dates";
 import {
@@ -35,6 +36,13 @@ interface DayItem {
   activity: PublishedActivity;
   movedAway: boolean;
 }
+
+/** Zmiany wykryte po podmianie pliku tabeli na stronie przedszkola. */
+const SCHEDULE_CHANGE: Record<NonNullable<PublishedActivity["scheduleChange"]>["kind"], string> = {
+  removed: "Usunięte z harmonogramu przy aktualizacji tabeli",
+  moved: "Zmienione przy aktualizacji tabeli",
+  added: "Dodane przy aktualizacji tabeli",
+};
 
 const STORAGE_GROUP = "wkz.group";
 const STORAGE_VIEW = "wkz.view";
@@ -553,6 +561,7 @@ function ActivityCard({ item, groupName }: { item: DayItem; groupName: string })
           ) : (
             STATUS_LABEL[a.status] && <span class={`badge badge-${a.status}`}>{STATUS_LABEL[a.status]}</span>
           )}
+          {!item.movedAway && a.scheduleChange?.kind === "added" && <span class="badge badge-additional">Nowy termin</span>}
           {review && <span class="badge badge-review">Niezweryfikowane</span>}
         </div>
         <div class="card-meta">
@@ -623,6 +632,11 @@ function Details({ activity: a }: { activity: PublishedActivity }) {
   return (
     <details class="details">
       <summary>Szczegóły i źródło</summary>
+      {a.scheduleChange && (
+        <p>
+          {SCHEDULE_CHANGE[a.scheduleChange.kind]} ({formatShortDay(warsawDate(a.scheduleChange.at))})
+        </p>
+      )}
       {a.verification === "needs_review" && (
         <div class="review-box">
           <p>

@@ -9,9 +9,10 @@ import YAML from "yaml";
 import { DATA_DIR, ROOT, SOURCE_PAGE_URL, isMain, loadGroups, readJson, writeJson } from "./config.js";
 import { resolveAll, type ChangeEntry } from "./announcements.js";
 import { updateHistory } from "./history.js";
-import { fold, type IssueCode } from "./normalize.js";
+import type { SourceDocument } from "./discover.js";
+import { fold, sameActivity, type IssueCode } from "./normalize.js";
 import { activityGroups, resolveGroupRef } from "./resolve.js";
-import { loadConsensus, type ScheduledOccurrence } from "./schedule.js";
+import { allDocuments, loadConsensus, sameOccurrence, type ScheduledOccurrence } from "./schedule.js";
 import type { Notice, PublishedActivity, PublishedSchedule, Source, Status } from "./published.js";
 import type { AnnouncementRecord } from "./schema.js";
 
@@ -75,6 +76,90 @@ function fromSchedule(o: ScheduledOccurrence, extraIssues: IssueCode[] = []): Pu
     sources: [{ type: "schedule", url: o.sourceUrl, cellText: o.cellText, firstSeen: o.sourceFirstSeen }],
     updatedAt: o.sourceFirstSeen,
   };
+}
+
+/**
+ * Podmieniona tabela: plik zniknął ze strony, a w tym samym miesiącu jest nowszy plik.
+ * Terminy ze starej wersji, których nowa nie zawiera, nie mogą zostać po cichu – pokazujemy zmianę:
+ * - ten sam dzień, inna godzina albo jeden termin zamiast jednego → przeniesione (z „Wcześniej: …”),
+ * - w innym wypadku stary termin → odwołany, nowe → „Nowy termin”,
+ * - nowa wersja w ogóle nie ma tych zajęć dla grupy → do weryfikacji (może nie podmieniono tej strony tabeli).
+ * Pliki usunięte po zakończeniu miesiąca (bez nowszej wersji) zostają historią bez zmian.
+ */
+export function applyTableReplacements(activities: Map<string, PublishedActivity>, occurrences: ScheduledOccurrence[], docs: SourceDocument[]) {
+  const docOf = new Map(docs.map((d) => [d.sha256, d]));
+  const seen = (o: ScheduledOccurrence) => docOf.get(o.sourceSha256)?.firstSeen ?? "";
+  const isCurrent = (o: ScheduledOccurrence) => !docOf.get(o.sourceSha256)?.removedAt;
+  const month = (o: ScheduledOccurrence) => o.date.slice(0, 7);
+  const sameRow = (a: ScheduledOccurrence, b: ScheduledOccurrence) => a.group === b.group && sameActivity(a.activity, b.activity);
+  const idOf = (o: ScheduledOccurrence) => activityId(o.group, o.date, o.start, o.activity);
+
+  const current = occurrences.filter(isCurrent);
+  // Terminy z usuniętych plików, dla których jest nowszy, aktualny plik z tym samym miesiącem.
+  const stale = occurrences.filter((o) => !isCurrent(o) && current.some((c) => month(c) === month(o) && seen(c) > seen(o)));
+
+  const handled = new Set<ScheduledOccurrence>();
+  for (const s of stale) {
+    if (handled.has(s)) continue;
+    // Wszystkie zmiany tych samych zajęć grupy w tym miesiącu rozpatrujemy razem.
+    const oldRow = stale.filter((o) => month(o) === month(s) && sameRow(o, s));
+    oldRow.forEach((o) => handled.add(o));
+    const newRow = current.filter((c) => month(c) === month(s) && sameRow(c, s));
+    const removed = oldRow.filter((o) => !newRow.some((c) => sameOccurrence(c, o)));
+    // Nowe są tylko terminy z plików wgranych później niż stara wersja (niezmienione strony tabeli się nie liczą).
+    const added = newRow.filter((c) => seen(c) > seen(s) && !oldRow.some((o) => sameOccurrence(c, o)));
+    const at = docOf.get(s.sourceSha256)!.removedAt!;
+
+    if (newRow.length === 0) {
+      for (const o of removed) {
+        const a = activities.get(idOf(o));
+        if (!a) continue;
+        a.verification = "needs_review";
+        a.reviewReasons.push("Plik tabeli z tym terminem usunięto ze strony, a nowa wersja nie zawiera tych zajęć dla grupy");
+      }
+      continue;
+    }
+
+    const pairs: [ScheduledOccurrence, ScheduledOccurrence][] = [];
+    const unpairedOld = [...removed];
+    const unpairedNew = [...added];
+    // Ten sam dzień, inna godzina.
+    for (const o of [...unpairedOld]) {
+      const c = unpairedNew.find((n) => n.date === o.date);
+      if (!c) continue;
+      pairs.push([o, c]);
+      unpairedOld.splice(unpairedOld.indexOf(o), 1);
+      unpairedNew.splice(unpairedNew.indexOf(c), 1);
+    }
+    // Jeden termin zamiast jednego – przeniesienie na inny dzień.
+    if (unpairedOld.length === 1 && unpairedNew.length === 1) {
+      pairs.push([unpairedOld[0]!, unpairedNew[0]!]);
+      unpairedOld.length = 0;
+      unpairedNew.length = 0;
+    }
+
+    for (const [o, c] of pairs) {
+      const before = activities.get(idOf(o));
+      const after = activities.get(idOf(c));
+      if (!before || !after) continue;
+      after.previous = { date: o.date, start: o.start, end: o.end };
+      after.status = "rescheduled";
+      after.scheduleChange = { kind: "moved", at };
+      after.sources.unshift(...before.sources);
+      activities.delete(before.id);
+    }
+    for (const o of unpairedOld) {
+      const a = activities.get(idOf(o));
+      if (!a) continue;
+      a.status = "cancelled";
+      a.scheduleChange = { kind: "removed", at };
+      if (at > a.updatedAt) a.updatedAt = at;
+    }
+    for (const c of unpairedNew) {
+      const a = activities.get(idOf(c));
+      if (a) a.scheduleChange = { kind: "added", at };
+    }
+  }
 }
 
 function applyAnnouncements(activities: Map<string, PublishedActivity>, entries: ChangeEntry[], notices: Notice[], schedule: ScheduledOccurrence[]) {
@@ -263,9 +348,13 @@ function writePending(schedule: PublishedSchedule, problems: string[]) {
 export function build(): { schedule: PublishedSchedule; published: PublishedSchedule; problems: string[]; historyEvents: number } {
   const config = loadGroups();
   const { occurrences, disagreements } = loadConsensus();
+  const docs = allDocuments();
+  // Ten sam termin w starej i nowej wersji tabeli – źródłem karty ma być aktualny plik.
+  const removedAt = new Map(docs.map((d) => [d.sha256, d.removedAt]));
+  const currentFirst = [...occurrences].sort((a, b) => Number(!!removedAt.get(a.sourceSha256)) - Number(!!removedAt.get(b.sourceSha256)));
 
   const activities = new Map<string, PublishedActivity>();
-  for (const o of occurrences) {
+  for (const o of currentFirst) {
     const a = fromSchedule(o);
     if (!activities.has(a.id)) activities.set(a.id, a);
   }
@@ -274,6 +363,7 @@ export function build(): { schedule: PublishedSchedule; published: PublishedSche
     const a = fromSchedule(o, ["runs_disagree"]);
     if (!activities.has(a.id)) activities.set(a.id, a);
   }
+  applyTableReplacements(activities, occurrences, docs);
 
   const indexPath = path.join(ANNOUNCEMENTS_DIR, "index.json");
   const index = fs.existsSync(indexPath) ? readJson<Record<string, { text: string; firstSeen: string; removedAt: string | null }>>(indexPath) : {};

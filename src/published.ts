@@ -20,6 +20,11 @@ export interface PublishedActivity {
   subgroup: string | null;
   status: Status;
   previous: { date: string; start: string | null; end: string | null } | null;
+  /**
+   * Zmiana wykryta po podmianie pliku tabeli na stronie (bez ogłoszenia):
+   * moved = przeniesione, removed = usunięte z tabeli (status cancelled), added = nowy termin.
+   */
+  scheduleChange?: { kind: "moved" | "removed" | "added"; at: string };
   verification: "verified" | "needs_review";
   reviewReasons: string[];
   warnings: string[];
