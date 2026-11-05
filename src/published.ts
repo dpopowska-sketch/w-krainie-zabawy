@@ -40,6 +40,8 @@ export interface Notice {
   groups: string[] | "all";
   /** Daty z ogłoszenia (YYYY-MM-DD) – komunikat pokazujemy w miesiącach, których dotyczy. Puste = zawsze. */
   dates: string[];
+  /** Zajęcia z harmonogramu, których dotyczy komunikat (pełne nazwy); puste, gdy nie wiadomo. */
+  activities?: string[];
   reason: string;
   firstSeen: string;
   removedAt: string | null;

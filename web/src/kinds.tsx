@@ -186,10 +186,12 @@ export function CancelIcon({ size = 18 }: { size?: number }) {
   );
 }
 
-export function ChevronIcon({ dir }: { dir: "left" | "right" }) {
+const CHEVRON = { left: "M15 6l-6 6 6 6", right: "M9 6l6 6-6 6", up: "M6 15l6-6 6 6", down: "M6 9l6 6 6-6" };
+
+export function ChevronIcon({ dir }: { dir: keyof typeof CHEVRON }) {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-      <path d={dir === "left" ? "M15 6l-6 6 6 6" : "M9 6l6 6-6 6"} />
+      <path d={CHEVRON[dir]} />
     </svg>
   );
 }

@@ -12,7 +12,7 @@ import { updateHistory } from "./history.js";
 import type { SourceDocument } from "./discover.js";
 import { loadEvents } from "./events.js";
 import { fold, sameActivity, type IssueCode } from "./normalize.js";
-import { activityGroups, resolveGroupRef } from "./resolve.js";
+import { activityGroups, matchActivities, resolveGroupRef } from "./resolve.js";
 import { allDocuments, loadConsensus, sameOccurrence, type ScheduledOccurrence } from "./schedule.js";
 import type { Notice, PublishedActivity, PublishedSchedule, SchoolEvent, Source, Status } from "./published.js";
 import type { AnnouncementRecord } from "./schema.js";
@@ -191,6 +191,7 @@ function applyAnnouncements(
     const infoReasons: string[] = [];
     const noticeGroups = new Set<string>();
     const noticeDates = new Set<string>();
+    const noticeActivities = new Set<string>();
     for (const { change, resolution } of entry.changes) {
       if (resolution.status !== "applied") {
         (resolution.status === "info" ? infoReasons : reviewReasons).push(resolution.reason);
@@ -200,6 +201,9 @@ function applyAnnouncements(
           : (activityGroups(change.activity_ref, schedule, config) ?? []);
         for (const g of groups) noticeGroups.add(g);
         for (const d of [...change.dates, ...(change.new_date ? [change.new_date] : [])]) noticeDates.add(d);
+        // Nazwy zajęć z harmonogramu (strona skraca komunikat i oznacza karty tych zajęć).
+        const matched = change.activity_ref ? matchActivities(change.activity_ref, [...new Set(schedule.map((o) => o.activity))], config) : [];
+        if (matched.length === 1) noticeActivities.add(matched[0]!);
         continue;
       }
       for (const effect of resolution.effects) {
@@ -253,6 +257,7 @@ function applyAnnouncements(
         text: entry.text.replace(/^[–-]\s*/, ""),
         groups: noticeGroups.size ? [...noticeGroups] : "all",
         dates: [...noticeDates].sort(),
+        activities: [...noticeActivities],
         reason: (reviewReasons.length ? reviewReasons : infoReasons).join("; "),
         firstSeen: entry.firstSeen,
         removedAt: entry.removedAt,
