@@ -1,0 +1,745 @@
+/*
+ * Przełącznik modułów w nagłówku i moduł „Co dziś dobrego?” (jadłospis).
+ * Tokeny i wygląd jak w styles.css; makiety: płótno „Plan przedszkolaka – koncepcje wizualne”, wiersz 4.
+ */
+
+/* ═══ Moduły: Plan zajęć | Co dziś dobrego? ═══ */
+.module-nav {
+  display: flex;
+  align-self: stretch;
+  gap: 4px;
+  margin: -14px 0 -15px 16px;
+}
+.module-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 12px;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-size: 15px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.module-nav a:hover {
+  color: var(--text);
+}
+.module-nav a[aria-current="page"] {
+  color: var(--text);
+  font-weight: 600;
+  border-bottom-color: var(--accent);
+}
+.module-nav svg {
+  display: none;
+}
+:root[data-theme="przyjazny"] .module-nav {
+  align-self: center;
+  margin: 0 0 0 12px;
+  padding: 4px;
+  background: #f3f6f5;
+  border-radius: 999px;
+}
+:root[data-theme="przyjazny"] .module-nav a {
+  padding: 0 18px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--text-2);
+  font-weight: 600;
+}
+:root[data-theme="przyjazny"] .module-nav a[aria-current="page"] {
+  background: #1f2d33;
+  color: #fff;
+  font-weight: 700;
+}
+:root[data-theme="przyjazny"] .module-nav svg {
+  display: block;
+}
+
+/* Przełącznik zajmuje miejsce w nagłówku – link „O harmonogramie” zamienia się w ikonę, żeby nagłówek był w jednym wierszu. */
+@media (max-width: 1360px) {
+  :root[data-theme="nowoczesny"] .header-about {
+    display: none;
+  }
+  :root[data-theme="nowoczesny"] .header-info {
+    display: inline-flex;
+  }
+}
+
+/* ═══ Dzień i tydzień ═══ */
+.menu-head {
+  gap: 18px;
+}
+.menu-day-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.menu-day-title {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1 1 320px;
+  min-width: 0;
+}
+.menu-day-title h1 {
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+.menu-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.menu-label-today {
+  color: var(--accent);
+}
+.menu-day-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.menu-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-btn);
+  background: var(--surface);
+  color: var(--text);
+}
+.menu-nav-btn:hover {
+  border-color: var(--faint);
+}
+.menu-today {
+  min-height: 44px;
+}
+.menu-today:disabled {
+  background: var(--bg);
+  color: var(--faint);
+  cursor: default;
+}
+
+.menu-week {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.menu-week-arrow {
+  width: 48px;
+  height: auto;
+  min-height: 44px;
+  border: 0;
+  border-radius: 0;
+  color: var(--muted);
+}
+.menu-week-arrow:first-child {
+  border-right: 1px solid var(--line);
+}
+.menu-week-arrow:last-child {
+  border-left: 1px solid var(--line);
+}
+.menu-week-days {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.menu-wd {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0;
+  min-height: 76px;
+  padding: 10px 14px;
+  border: 0;
+  background: var(--surface);
+  text-align: left;
+}
+.menu-wd + .menu-wd {
+  border-left: 1px solid var(--line-soft);
+}
+.menu-wd-name {
+  font-size: 12px;
+  color: var(--muted);
+}
+.menu-wd-num {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.menu-wd-today .menu-wd-num {
+  color: var(--accent);
+}
+.menu-wd-dish {
+  max-width: 100%;
+  font-size: 13px;
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.menu-wd-empty,
+.menu-wd-empty .menu-wd-num {
+  color: var(--faint);
+}
+.menu-wd[aria-pressed="true"] {
+  background: var(--accent-tint);
+  box-shadow: inset 0 -3px 0 var(--accent);
+}
+
+/* ═══ Alergeny ═══ */
+.menu-allergens-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  font-size: 14px;
+}
+.menu-allergens-label {
+  font-weight: 600;
+}
+.menu-allergens-link {
+  margin-left: auto;
+  padding: 8px 0;
+  font-weight: 500;
+  text-decoration: none;
+}
+.al-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.al-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 13px;
+  color: var(--text-2);
+  white-space: nowrap;
+  cursor: help;
+}
+.al-num {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--text);
+}
+.meal .al-chip {
+  height: 24px;
+  padding: 0 8px;
+  gap: 5px;
+  font-size: 12px;
+}
+
+/* ═══ Posiłki ═══ */
+.menu-meals {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  gap: 16px;
+  align-items: start;
+}
+.meal-sniadanie { --m-bg: #fff0c9; --m-fg: #8a6100; }
+.meal-obiad { --m-bg: #ddf1e6; --m-fg: #237049; }
+.meal-podwieczorek { --m-bg: #fbe3ec; --m-fg: #a23b63; }
+.panel.meal {
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+}
+.meal-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.meal-head h2 {
+  font-size: 16px;
+  font-weight: 600;
+}
+.meal-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  background: var(--m-bg);
+  color: var(--m-fg);
+}
+.meal-tile svg {
+  width: 18px;
+  height: 18px;
+}
+.meal-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.meal-item:last-child {
+  border-bottom: 0;
+}
+.meal-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.meal-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.meal-amount {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.meal-none,
+.meal-note,
+.meal-unassigned {
+  padding: 10px 16px;
+  font-size: 13px;
+}
+.meal-note {
+  color: var(--text-2);
+  border-top: 1px solid var(--line-soft);
+}
+.meal-unassigned {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-top: 1px solid var(--line-soft);
+}
+.menu-disclaimer {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* ═══ Stany bez jadłospisu ═══ */
+.menu-empty {
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 28px 20px;
+}
+.menu-empty h2 {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.menu-empty p {
+  max-width: 520px;
+  font-size: 14px;
+}
+.link-btn.menu-empty-link {
+  min-height: 44px;
+  font-size: 15px;
+}
+
+/* ═══ Słownik alergenów i źródło ═══ */
+.menu-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+}
+.menu-allergens {
+  flex: 2 1 520px;
+  gap: 12px;
+}
+.menu-source {
+  flex: 1 1 280px;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.menu-allergens h2,
+.menu-source h2 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+.menu-allergens > .muted {
+  font-size: 14px;
+}
+.al-dict {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.al-dict li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 14px;
+  color: var(--text-2);
+}
+.al-dict .al-num {
+  color: var(--faint);
+}
+.al-dict .al-on,
+.al-dict .al-on .al-num {
+  font-weight: 600;
+  color: var(--text);
+}
+.menu-al-note {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.menu-doc-link,
+.menu-source a {
+  align-self: flex-start;
+  padding: 4px 0;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+/* ═══ Ciepły i przyjazny ═══ */
+:root[data-theme="przyjazny"] .menu-day-title h1 {
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+:root[data-theme="przyjazny"] .menu-label {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+:root[data-theme="przyjazny"] .menu-nav-btn {
+  border: 0;
+  border-radius: 50%;
+  background: #f3f6f5;
+}
+:root[data-theme="przyjazny"] .menu-today:disabled {
+  background: #f3f6f5;
+  color: var(--faint);
+}
+:root[data-theme="przyjazny"] .menu-week {
+  gap: 10px;
+  align-items: center;
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
+}
+:root[data-theme="przyjazny"] .menu-week-arrow {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+}
+:root[data-theme="przyjazny"] .menu-week-days {
+  gap: 8px;
+}
+:root[data-theme="przyjazny"] .menu-wd {
+  min-height: 84px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 18px;
+  background: #f3f6f5;
+  color: var(--text);
+}
+:root[data-theme="przyjazny"] .menu-wd-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: inherit;
+  opacity: 0.8;
+}
+:root[data-theme="przyjazny"] .menu-wd-num {
+  font-family: var(--font-head);
+  font-size: 22px;
+  font-weight: 700;
+}
+:root[data-theme="przyjazny"] .menu-wd-dish {
+  color: inherit;
+}
+:root[data-theme="przyjazny"] .menu-wd-empty {
+  color: var(--faint);
+}
+:root[data-theme="przyjazny"] .menu-wd[aria-pressed="true"],
+:root[data-theme="przyjazny"] .menu-wd[aria-pressed="true"] .menu-wd-num {
+  background: #1f2d33;
+  color: #fff;
+  box-shadow: none;
+}
+:root[data-theme="przyjazny"] .menu-allergens-bar {
+  padding: 14px 18px;
+  background: var(--surface);
+  border-radius: 22px;
+  font-size: 15px;
+}
+:root[data-theme="przyjazny"] .menu-allergens-label {
+  font-weight: 700;
+}
+:root[data-theme="przyjazny"] .menu-allergens-link {
+  font-weight: 600;
+}
+:root[data-theme="przyjazny"] .al-chip {
+  height: 30px;
+  padding: 0 12px 0 4px;
+  border: 0;
+  background: #f3f6f5;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+}
+:root[data-theme="przyjazny"] .al-chip .al-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #1f2d33;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+:root[data-theme="przyjazny"] .meal .al-chip {
+  height: 26px;
+  padding: 0 10px 0 3px;
+  font-size: 13px;
+}
+:root[data-theme="przyjazny"] .meal .al-chip .al-num {
+  width: 20px;
+  height: 20px;
+  font-size: 11px;
+}
+:root[data-theme="przyjazny"] .panel.meal {
+  padding: 22px 20px;
+  gap: 6px;
+}
+:root[data-theme="przyjazny"] .meal-head {
+  gap: 12px;
+  padding: 0 0 8px;
+  border: 0;
+}
+:root[data-theme="przyjazny"] .meal-head h2 {
+  font-size: 23px;
+  font-weight: 700;
+}
+:root[data-theme="przyjazny"] .meal-tile {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+}
+:root[data-theme="przyjazny"] .meal-tile svg {
+  width: 24px;
+  height: 24px;
+}
+:root[data-theme="przyjazny"] .meal-item {
+  padding: 10px 0;
+  border-bottom: 0;
+  border-top: 1px solid var(--line-soft);
+}
+:root[data-theme="przyjazny"] .meal-name {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+:root[data-theme="przyjazny"] .meal-amount {
+  font-size: 14px;
+}
+:root[data-theme="przyjazny"] .meal-none,
+:root[data-theme="przyjazny"] .meal-note,
+:root[data-theme="przyjazny"] .meal-unassigned {
+  padding: 10px 0 0;
+}
+:root[data-theme="przyjazny"] .menu-disclaimer {
+  padding: 0 8px;
+  font-size: 14px;
+  color: var(--text-2);
+}
+:root[data-theme="przyjazny"] .menu-empty h2 {
+  font-size: 20px;
+  font-weight: 700;
+}
+:root[data-theme="przyjazny"] .menu-allergens h2 {
+  font-size: 22px;
+  font-weight: 700;
+}
+:root[data-theme="przyjazny"] .menu-source h2 {
+  font-size: 18px;
+  font-weight: 700;
+}
+:root[data-theme="przyjazny"] .menu-source {
+  font-size: 14px;
+  color: var(--text-2);
+}
+:root[data-theme="przyjazny"] .al-dict {
+  gap: 8px 20px;
+}
+:root[data-theme="przyjazny"] .al-dict li {
+  align-items: center;
+  gap: 10px;
+  padding: 2px 0;
+  border: 0;
+  font-size: 15px;
+}
+:root[data-theme="przyjazny"] .al-dict .al-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #f3f6f5;
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 700;
+}
+:root[data-theme="przyjazny"] .al-dict .al-on {
+  font-weight: 700;
+}
+:root[data-theme="przyjazny"] .al-dict .al-on .al-num {
+  background: #1f2d33;
+  color: #fff;
+}
+:root[data-theme="przyjazny"] .menu-doc-link,
+:root[data-theme="przyjazny"] .menu-source a {
+  font-weight: 600;
+}
+
+/* ═══ Telefon ═══ */
+@media (max-width: 720px) {
+  /* Przełącznik modułów pod logo, na całą szerokość. */
+  .header-inner {
+    flex-wrap: wrap;
+  }
+  .brand {
+    flex: 1 1 0;
+  }
+  .header-spacer {
+    display: none;
+  }
+  .module-nav {
+    order: 10;
+    flex: 1 0 100%;
+    margin: 0 -16px -12px;
+    gap: 0;
+  }
+  .module-nav a {
+    flex: 1;
+    justify-content: center;
+    padding: 0 6px;
+    font-size: 14px;
+  }
+  :root[data-theme="przyjazny"] .module-nav {
+    margin: 2px 0 0;
+  }
+  :root[data-theme="przyjazny"] .module-nav a {
+    min-height: 42px;
+    padding: 0 8px;
+    font-size: 14px;
+  }
+  :root[data-theme="przyjazny"] .module-nav svg {
+    display: none;
+  }
+
+  .menu-day-row {
+    gap: 12px;
+  }
+  .menu-day-title {
+    flex-basis: 100%;
+  }
+  .menu-day-title h1,
+  :root[data-theme="przyjazny"] .menu-day-title h1 {
+    font-size: 24px;
+  }
+  :root[data-theme="przyjazny"] .menu-label {
+    font-size: 13px;
+  }
+  .menu-day-nav {
+    width: 100%;
+  }
+  .menu-today {
+    flex: 1;
+  }
+  .menu-week-arrow {
+    width: 36px;
+  }
+  :root[data-theme="przyjazny"] .menu-week {
+    gap: 4px;
+  }
+  :root[data-theme="przyjazny"] .menu-week-arrow {
+    width: 32px;
+    height: 44px;
+    background: transparent;
+  }
+  :root[data-theme="przyjazny"] .menu-week-days {
+    gap: 4px;
+  }
+  .menu-wd,
+  :root[data-theme="przyjazny"] .menu-wd {
+    min-height: 56px;
+    padding: 6px 2px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  :root[data-theme="przyjazny"] .menu-wd {
+    border-radius: 14px;
+  }
+  .menu-wd-num,
+  :root[data-theme="przyjazny"] .menu-wd-num {
+    font-size: 17px;
+  }
+  .menu-wd-dish {
+    display: none;
+  }
+  .menu-allergens-link {
+    margin-left: 0;
+  }
+  :root[data-theme="przyjazny"] .menu-allergens-bar {
+    padding: 14px;
+    border-radius: 20px;
+  }
+  :root[data-theme="przyjazny"] .panel.meal {
+    padding: 16px 14px;
+  }
+  :root[data-theme="przyjazny"] .meal-head h2 {
+    font-size: 21px;
+  }
+  :root[data-theme="przyjazny"] .meal-name {
+    font-size: 15px;
+  }
+  .al-dict {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .menu-allergens,
+  .menu-source {
+    flex-basis: 100%;
+  }
+}

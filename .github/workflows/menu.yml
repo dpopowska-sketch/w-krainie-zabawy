@@ -1,0 +1,101 @@
+name: Jadłospis
+
+on:
+  schedule:
+    # Co godzinę w dni robocze (UTC). Skrypt sam decyduje, czy sprawdzać: pierwsze uruchomienie
+    # w każdym 2-godzinnym oknie 9:00–21:00 czasu polskiego, bez świąt; gdy jadłospis bieżącego
+    # tygodnia już jest – tylko o 9:00 i 15:00 (korekty).
+    - cron: "0 6-19 * * 1-5"
+  workflow_dispatch: # przycisk „Run workflow” – sprawdza od razu, bez względu na godzinę
+
+permissions:
+  contents: write # zapis danych w repozytorium
+  pages: write # publikacja strony
+  issues: write # zgłoszenie, gdy odczyt wymaga sprawdzenia
+  id-token: write
+
+concurrency:
+  group: menu
+  cancel-in-progress: false
+
+jobs:
+  menu:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - run: npm ci
+
+      - name: Sprawdzenie jadłospisu
+        id: menu
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MENU_FORCE: ${{ github.event_name == 'workflow_dispatch' && '1' || '' }}
+        run: npm run menu
+
+      # PDF-y nie są zapisywane (tylko w pamięci), więc commit zawiera wyłącznie dane z data/menu i review/.
+      - name: Zapis zmian w repozytorium
+        id: commit
+        continue-on-error: true
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data/menu review
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Brak zmian."
+            exit 0
+          fi
+          if git diff --cached --quiet -- . ':(exclude)data/menu/status.json'; then
+            # Zmienił się tylko status: zapisujemy, gdy zmieniło się coś poza czasem sprawdzenia, albo raz dziennie.
+            strip='del(.lastChecked, .lastSuccess)'
+            before=$(git show HEAD:data/menu/status.json 2>/dev/null | jq -S "$strip" || echo '{}')
+            after=$(jq -S "$strip" data/menu/status.json)
+            last=$(git show HEAD:data/menu/status.json 2>/dev/null | jq -r '.lastChecked // "" | .[0:10]')
+            if [ "$before" = "$after" ] && [ "$last" = "$(date -u +%F)" ]; then
+              echo "changed=false" >> "$GITHUB_OUTPUT"
+              echo "Tylko czas sprawdzenia, już zapisany dzisiaj."
+              exit 0
+            fi
+          fi
+          git commit -m "Jadłospis $(date -u +'%Y-%m-%d %H:%M') UTC"
+          git pull --rebase
+          git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      # Commit z GITHUB_TOKEN nie uruchamia synchronizacji harmonogramu, więc stronę publikujemy tutaj.
+      - name: Budowanie strony
+        if: steps.commit.outputs.changed == 'true'
+        run: npm run web:build
+
+      - uses: actions/configure-pages@v5
+        if: steps.commit.outputs.changed == 'true'
+
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.commit.outputs.changed == 'true'
+        with:
+          path: dist
+
+      - name: Publikacja strony
+        id: deploy
+        if: steps.commit.outputs.changed == 'true'
+        uses: actions/deploy-pages@v4
+
+      - name: Zgłoszenie błędu
+        if: steps.menu.outcome == 'failure' || steps.commit.outcome == 'failure'
+        run: |
+          echo "::error::Sprawdzenie lub zapis jadłospisu zakończyły się błędem – szczegóły w krokach powyżej i w data/menu/status.json"
+          exit 1

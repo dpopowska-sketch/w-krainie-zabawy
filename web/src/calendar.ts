@@ -130,7 +130,7 @@ export function icsText(e: CalendarEvent, now = new Date()): string {
   return icsCalendarText([e], now);
 }
 
-/** Jeden plik z wieloma wydarzeniami („Dodaj wszystkie do kalendarza”). */
+/** Plik .ics z listą wydarzeń (strona dodaje po jednym). */
 export function icsCalendarText(events: CalendarEvent[], now = new Date()): string {
   const lines = [
     "BEGIN:VCALENDAR",
@@ -162,10 +162,6 @@ function veventLines(e: CalendarEvent, now: Date): string[] {
 /** Data URL zamiast Bloba – Safari na iPhonie pewniej otwiera go jako wydarzenie. */
 export function icsDataUrl(e: CalendarEvent): string {
   return `data:text/calendar;charset=utf-8,${encodeURIComponent(icsText(e))}`;
-}
-
-export function icsCalendarDataUrl(events: CalendarEvent[]): string {
-  return `data:text/calendar;charset=utf-8,${encodeURIComponent(icsCalendarText(events))}`;
 }
 
 /** Nazwa pobieranego pliku, np. „slowiki-2026-11-05.ics”. */

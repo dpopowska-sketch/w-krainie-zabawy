@@ -137,3 +137,22 @@ export function calendarGrid(m: Month): (string | null)[] {
 }
 
 export const WEEKDAYS_SHORT = ["pon", "wt", "śr", "czw", "pt", "sob", "nd"];
+
+/** Dzień przesunięty o podaną liczbę dni (YYYY-MM-DD). */
+export function addDays(iso: string, days: number): string {
+  const d = utcNoon(iso);
+  d.setUTCDate(d.getUTCDate() + days);
+  return d.toISOString().slice(0, 10);
+}
+
+/** 0 = poniedziałek … 6 = niedziela */
+export function weekdayIndex(iso: string): number {
+  return (utcNoon(iso).getUTCDay() + 6) % 7;
+}
+
+/** „Czwartek, 5 listopada 2026” */
+export function formatDayWithYear(iso: string): string {
+  return capitalize(
+    new Intl.DateTimeFormat("pl-PL", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(utcNoon(iso)),
+  ).replace(/\s*r\.$/, "");
+}

@@ -73,6 +73,64 @@ export interface PublishedSchedule {
   events?: SchoolEvent[];
 }
 
+// ── Jadłospis „Co dziś dobrego?” (data/menu/) ──
+
+export type MealKey = "sniadanie" | "obiad" | "podwieczorek";
+
+export interface MenuItem {
+  name: string;
+  /** Gramatura znormalizowana („50 g”, „90/120 g”, „1 szt.”); null, gdy brak w dokumencie. */
+  amount: string | null;
+  /** Numery alergenów (1–14) dokładnie z dokumentu. Pusta lista = brak oznaczenia, a nie „bez alergenów”. */
+  allergens: number[];
+  /** Fragment dokumentu, z którego powstała pozycja (do diagnozy). */
+  raw?: string;
+}
+
+export interface MenuMeal {
+  items: MenuItem[];
+  /** Uwagi przy posiłku przepisane bez interpretacji, np. „PRZEDSZKOLE”. */
+  notes: string[];
+  /** Oznaczenia alergenów, których nie da się przypisać do pozycji – dotyczą całego posiłku. */
+  allergensUnassigned: number[];
+}
+
+export interface MenuDay {
+  date: string;
+  weekday: string;
+  /** Dzień wolny według dokumentu (np. „Dzień wolny od zajęć”). */
+  closed: boolean;
+  closedText?: string | null;
+  meals: Record<MealKey, MenuMeal>;
+}
+
+/** Jeden plik tygodnia: data/menu/<poniedziałek>.json. */
+export interface MenuWeek {
+  weekStart: string;
+  weekEnd: string;
+  title: string;
+  sourceFile: string;
+  sourceUrl: string;
+  sourceSha256: string;
+  updatedAt: string;
+  documentNotes: string[];
+  days: MenuDay[];
+}
+
+export interface MenuIndex {
+  weeks: { weekStart: string; weekEnd: string; file: string }[];
+}
+
+export interface MenuStatus extends SyncStatus {
+  menuPageUrl: string;
+  /** Adres dokumentu szkoły o alergenach (z linku na stronie stołówki). */
+  allergenDocUrl: string | null;
+  /** Bieżący dokument na stronie stołówki – link do PDF pokazujemy tylko dla tego tygodnia. */
+  currentSource: { url: string; sha256: string; weekStart: string | null } | null;
+  /** Na stronie wisi jeszcze jadłospis z poprzedniego tygodnia. */
+  waitingForNew: boolean;
+}
+
 export interface SyncStatus {
   /** Ostatnie sprawdzenie strony (udane lub nie). */
   lastChecked: string | null;

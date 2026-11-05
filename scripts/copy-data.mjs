@@ -9,3 +9,14 @@ for (const [from, to] of [
   if (fs.existsSync(from)) fs.copyFileSync(from, to);
   else console.warn(`Brak ${from} – uruchom najpierw npm run sync`);
 }
+
+// Jadłospis: pliki tygodni, index.json i status.json (bez odczytów modelu z extractions/).
+fs.rmSync("web/public/data/menu", { recursive: true, force: true });
+if (fs.existsSync("data/menu")) {
+  fs.mkdirSync("web/public/data/menu", { recursive: true });
+  for (const file of fs.readdirSync("data/menu")) {
+    if (file.endsWith(".json")) fs.copyFileSync(`data/menu/${file}`, `web/public/data/menu/${file}`);
+  }
+} else {
+  console.warn("Brak data/menu – uruchom najpierw npm run menu");
+}

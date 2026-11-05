@@ -1,0 +1,810 @@
+{
+  "documentUrl": "https://zspzernica.pilchowice.pl/wp-content/uploads/2026/11/Jadlospis-02_11_06_11-26r.pdf",
+  "documentSha256": "57950f0f53bf0c9a31c4a932078c8db57a9702f0725bca32a839ed500c3c6c07",
+  "run": "b",
+  "model": "claude-opus-5-5",
+  "promptVersion": "2026-11-05.1",
+  "createdAt": "2026-11-05T18:39:50.400Z",
+  "usage": {
+    "input_tokens": 6442,
+    "output_tokens": 7788
+  },
+  "output": {
+    "is_menu": true,
+    "title": "JADŁOSPIS 02.11–06.11",
+    "days": [
+      {
+        "weekday": "poniedziałek",
+        "closed_text": null,
+        "sniadanie": {
+          "items": [
+            {
+              "raw": "Pieczywo mieszane, razowe 50g.(1)",
+              "name": "Pieczywo mieszane, razowe",
+              "amount": "50g.",
+              "allergens": [
+                1
+              ]
+            },
+            {
+              "raw": "Masło 10g.(7)",
+              "name": "Masło",
+              "amount": "10g.",
+              "allergens": [
+                7
+              ]
+            },
+            {
+              "raw": "Parówki z szynki 60g.",
+              "name": "Parówki z szynki",
+              "amount": "60g.",
+              "allergens": []
+            },
+            {
+              "raw": "Ogórek kiszony 25g.",
+              "name": "Ogórek kiszony",
+              "amount": "25g.",
+              "allergens": []
+            },
+            {
+              "raw": "Herbata z miodem i cytryną.150ml.",
+              "name": "Herbata z miodem i cytryną",
+              "amount": "150ml.",
+              "allergens": []
+            },
+            {
+              "raw": "Kakao na mleku 150ml.(7)",
+              "name": "Kakao na mleku",
+              "amount": "150ml.",
+              "allergens": [
+                7
+              ]
+            },
+            {
+              "raw": "Jabłko 50g,",
+              "name": "Jabłko",
+              "amount": "50g",
+              "allergens": []
+            },
+            {
+              "raw": "Woda",
+              "name": "Woda",
+              "amount": null,
+              "allergens": []
+            }
+          ],
+          "notes": [],
+          "allergens_unassigned": []
+        },
+        "obiad": {
+          "items": [
+            {
+              "raw": "Zupa krem z brokułów z grzankami na wywarze warzywnym 250ml(9)",
+              "name": "Zupa krem z brokułów z grzankami na wywarze warzywnym",
+              "amount": "250ml",
+              "allergens": [
+                9
+              ]
+            },
+            {
+              "raw": "Roślinny burger 60g(1)",
+              "name": "Roślinny burger",
+              "amount": "60g",
+              "allergens": [
+                1
+              ]
+            },
+            {
+              "raw": "Sałata lodowa z jogurtem 50g",
+              "name": "Sałata lodowa z jogurtem",
+              "amount": "50g",
+              "allergens": []
+            },
+            {
+              "raw": "Frytki 150g",
+              "name": "Frytki",
+              "amount": "150g",
+              "allergens": []
+            },
+            {
+              "raw": "Suszone buraki 18g",
+              "name": "Suszone buraki",
+              "amount": "18g",
+              "allergens": []
+            },
+            {
+              "raw": "Gruszka",
+              "name": "Gruszka",
+              "amount": null,
+              "allergens": []
+            },
+            {
+              "raw": "Woda.",
+              "name": "Woda",
+              "amount": null,
+              "allergens": []
+            }
+          ],
+          "notes": [
+            "PRZEDSZKOLE"
+          ],
+          "allergens_unassigned": []
+        },
+        "podwieczorek": {
+          "items": [
+            {
+              "raw": "Ciastka owsiane z żurawiną 30g",
+              "name": "Ciastka owsiane z żurawiną",
+              "amount": "30g",
+              "allergens": []
+            },
+            {
+              "raw": "Mleko 150ml(7)",
+              "name": "Mleko",
+              "amount": "150ml",
+              "allergens": [
+                7
+              ]
+            },
+            {
+              "raw": "Jabłka 50g",
+              "name": "Jabłka",
+              "amount": "50g",
+              "allergens": []
+            },
+            {
+              "raw": "Woda",
+              "name": "Woda",
+              "amount": null,
+              "allergens": []
+            }
+          ],
+          "notes": [],
+          "allergens_unassigned": []
+        }
+      },
+      {
+        "weekday": "wtorek",
+        "closed_text": null,
+        "sniadanie": {
+          "items": [
+            {
+              "raw": "Pieczywo mieszane , razowe 40g(1)",
+              "name": "Pieczywo mieszane , razowe",
+              "amount": "40g",
+              "allergens": [
+                1
+              ]
+            },
+            {
+              "raw": "Masło 8g",
+              "name": "Masło",
+              "amount": "8g",
+              "allergens": []
+            },
+            {
+              "raw": "sałata zielona",
+              "name": "sałata zielona",
+              "amount": null,
+              "allergens": []
+            },
+            {
+              "raw": "Szynka wieprzowa 15g",
+              "name": "Szynka wieprzowa",
+              "amount": "15g",
+              "allergens": []
+            },
+            {
+              "raw": "Ogórek zielony, rzodkiewka 50g",
+              "name": "Ogórek zielony, rzodkiewka",
+              "amount": "50g",
+              "allergens": []
+            },
+            {
+              "raw": "Płatki kukurydziane z mlekiem owsianym 150ml",
+              "name": "Płatki kukurydziane z mlekiem owsianym",
+              "amount": "150ml",
+              "allergens": []
+            },
+            {
+              "raw": "Herbata z miętą i cytryną 150ml",
+              "name": "Herbata z miętą i cytryną",
+              "amount": "150ml",
+              "allergens": []
+            },
+            {
+              "raw": "Banan 50g",
+              "name": "Banan",
+              "amount": "50g",
+              "allergens": []
+            },
+            {
+              "raw": "Woda",
+              "name": "Woda",
+              "amount": null,
+              "allergens": []
+            }
+          ],
+          "notes": [],
+          "allergens_unassigned": []
+        },
+        "obiad": {
+          "items": [
+            {
+              "raw": "Rosół z makaronem i zieloną pietruszką na wywarze mięsnym 250ml (1,9)",
+              "name": "Rosół z makaronem i zieloną pietruszką na wywarze mięsnym",
+              "amount": "250ml",
+              "allergens": [
+                1,
+                9
+              ]
+            },
+            {
+              "raw": "Zapiekanka ala gołąbki z sosem pomidorowym 100/120g(1,3,7)",
+              "name": "Zapiekanka ala gołąbki z sosem pomidorowym",
+              "amount": "100/120g",
+              "allergens": [
+                1,
+                3,
+                7
+              ]
+            },
+            {
+              "raw": "Ziemniaki 150g",
+              "name": "Ziemniaki",
+              "amount": "150g",
+              "allergens": []
+            },
+            {
+              "raw": "Actimel 100ml",
+              "name": "Actimel",
+              "amount": "100ml",
+              "allergens": []
+            },
+            {
+              "raw": "Jabłko",
+              "name": "Jabłko",
+              "amount": null,
+              "allergens": []
+            },
+            {
+              "raw": "Woda",
+              "name": "Woda",
+              "amount": null,
+              "allergens": []
+            }
+          ],
+          "notes": [],
+          "allergens_unassigned": []
+        },
+        "podwieczorek": {
+          "items": [
+            {
+              "raw": "Koktajl truskawkowy na maślance 150ml.(7)",
+              "name": "Koktajl truskawkowy na maślance",
+              "amount": "150ml.",
+              "allergens": [
+                7
+              ]
+            },
+            {
+              "raw": "Paluchy kukurydziane 10g",
+              "name": "Paluchy kukurydziane",
+              "amount": "10g",
+              "allergens": []
+            },
+            {
+              "raw": "Marchewka słupki 40g",
+              "name": "Marchewka słupki",
+              "amount": "40g",
+              "allergens": []
+            },
+            {
+              "raw": "Woda",
+              "name": "Woda",
+              "amount": null,
+              "allergens": []
+            }
+          ],
+          "notes": [],
+          "allergens_unassigned": []
+        }
+      },
+      {
+        "weekday": "środa",
+        "closed_text": null,
+        "sniadanie": {
+          "items": [
+            {
+              "raw": "Pieczywo mieszane, razowe 50g.(1)",
+              "name": "Pieczywo mieszane, razowe",
+              "amount": "50g.",
+              "allergens": [
+                1
+              ]
+            },
+            {
+              "raw": "Masło 10g.(7)",
+              "name": "Masło",
+              "amount": "10g.",
+              "allergens": [
+                7
+              ]
+            },
+            {
+              "raw": "Sałata zielona",
+              "name": "Sałata zielona",
+              "amount": null,
+              "allergens": []
+            },
+            {
+              "raw": "Szynka drobiowa gotowana 20g.",
+              "name": "Szynka drobiowa gotowana",
+              "amount": "20g.",
+              "allergens": []
+            },
+            {
+              "raw": "Pomidor, papryka czerwona50g.",
+              "name": "Pomidor, papryka czerwona",
+              "amount": "50g.",
+              "allergens": []
+            },
+            {
+              "raw": "Herbata z miodem i z cytryną 150ml.",
+              "name": "Herbata z miodem i z cytryną",
+              "amount": "150ml.",
+              "allergens": []
+            },
+            {
+              "raw": "Kakao na mleku 150ml.(7)",
+              "name": "Kakao na mleku",
+              "amount": "150ml.",
+              "allergens": [
+                7
+              ]
+            },
+            {
+              "raw": "Kiwi 50g",
+              "name": "Kiwi",
+              "amount": "50g",
+              "allergens": []
+            },
+            {
+              "raw": "Woda",
+              "name": "Woda",
+              "amount": null,
+              "allergens": []
+            }
+          ],
+          "notes": [],
+          "allergens_unassigned": []
+        },
+        "obiad": {
+          "items": [
+            {
+              "raw": "Zupa kapuśniak z wędliną i ziemniakami 250ml.(9)",
+              "name": "Zupa kapuśniak z wędliną i ziemniakami",
+              "amount": "250ml.",
+              "allergens": [
+                9
+              ]
+            },
+            {
+              "raw": "Racuchy z kefiru 120g/180g.(1,3,7)",
+              "name": "Racuchy z kefiru",
+              "amount": "120g/180g.",
+              "allergens": [
+                1,
+                3,
+                7
+              ]
+            },
+            {
+              "raw": "Dżem truskawkowy niskosłodzony 30g.",
+              "name": "Dżem truskawkowy niskosłodzony",
+              "amount": "30g.",
+              "allergens": []
+            },
+            {
+              "raw": "Pomidorki koktajlowe 40g",
+              "name": "Pomidorki koktajlowe",
+              "amount": "40g",
+              "allergens": []
+            },
+            {
+              "raw": "Mus owocowy 100ml",
+              "name": "Mus owocowy",
+              "amount": "100ml",
+              "allergens": []
+            },
+            {
+              "raw": "Woda",
+              "name": "Woda",
+              "amount": null,
+              "allergens": []
+            }
+          ],
+          "notes": [],
+          "allergens_unassigned": []
+        },
+        "podwieczorek": {
+          "items": [
+            {
+              "raw": "Pieczywo z kiełkami owsa 30g(1)",
+              "name": "Pieczywo z kiełkami owsa",
+              "amount": "30g",
+              "allergens": [
+                1
+              ]
+            },
+            {
+              "raw": "Masło 8g(7)",
+              "name": "Masło",
+              "amount": "8g",
+              "allergens": [
+                7
+              ]
+            },
+            {
+              "raw": "Filet śledziowy w sosie pomidorowym 15g",
+              "name": "Filet śledziowy w sosie pomidorowym",
+              "amount": "15g",
+              "allergens": []
+            },
+            {
+              "raw": "Mandarynka 50g",
+              "name": "Mandarynka",
+              "amount": "50g",
+              "allergens": []
+            },
+            {
+              "raw": "Herbata owocowa 150ml",
+              "name": "Herbata owocowa",
+              "amount": "150ml",
+              "allergens": []
+            },
+            {
+              "raw": "Woda",
+              "name": "Woda",
+              "amount": null,
+              "allergens": []
+            }
+          ],
+          "notes": [],
+          "allergens_unassigned": []
+        }
+      },
+      {
+        "weekday": "czwartek",
+        "closed_text": null,
+        "sniadanie": {
+          "items": [
+            {
+              "raw": "Pieczywo mieszane, razowe 50g (1)",
+              "name": "Pieczywo mieszane, razowe",
+              "amount": "50g",
+              "allergens": [
+                1
+              ]
+            },
+            {
+              "raw": "Masło 8g (7)",
+              "name": "Masło",
+              "amount": "8g",
+              "allergens": [
+                7
+              ]
+            },
+            {
+              "raw": "Sałata zielona",
+              "name": "Sałata zielona",
+              "amount": null,
+              "allergens": []
+            },
+            {
+              "raw": "Krakowska sucha 15g",
+              "name": "Krakowska sucha",
+              "amount": "15g",
+              "allergens": []
+            },
+            {
+              "raw": "Pomidor, ogórek zielony 25g",
+              "name": "Pomidor, ogórek zielony",
+              "amount": "25g",
+              "allergens": []
+            },
+            {
+              "raw": "Płatki owsiane na mleku 150ml(1,7)",
+              "name": "Płatki owsiane na mleku",
+              "amount": "150ml",
+              "allergens": [
+                1,
+                7
+              ]
+            },
+            {
+              "raw": "Herbata z miętą i z cytryną 150ml",
+              "name": "Herbata z miętą i z cytryną",
+              "amount": "150ml",
+              "allergens": []
+            },
+            {
+              "raw": "Banan 50g",
+              "name": "Banan",
+              "amount": "50g",
+              "allergens": []
+            },
+            {
+              "raw": "Woda",
+              "name": "Woda",
+              "amount": null,
+              "allergens": []
+            }
+          ],
+          "notes": [],
+          "allergens_unassigned": []
+        },
+        "obiad": {
+          "items": [
+            {
+              "raw": "Zupa z włoskiej kapusty na wywarze warzywnym250ml(1,7,9)",
+              "name": "Zupa z włoskiej kapusty na wywarze warzywnym",
+              "amount": "250ml",
+              "allergens": [
+                1,
+                7,
+                9
+              ]
+            },
+            {
+              "raw": "Gulasz z indyka 90/120g(1,7)",
+              "name": "Gulasz z indyka",
+              "amount": "90/120g",
+              "allergens": [
+                1,
+                7
+              ]
+            },
+            {
+              "raw": "Ryż 120g",
+              "name": "Ryż",
+              "amount": "120g",
+              "allergens": []
+            },
+            {
+              "raw": "Fasolka szparagowa na parze z masłem i bułką tartą 70g",
+              "name": "Fasolka szparagowa na parze z masłem i bułką tartą",
+              "amount": "70g",
+              "allergens": []
+            },
+            {
+              "raw": "Muffinka 1szt",
+              "name": "Muffinka",
+              "amount": "1szt",
+              "allergens": []
+            },
+            {
+              "raw": "Mandarynka",
+              "name": "Mandarynka",
+              "amount": null,
+              "allergens": []
+            },
+            {
+              "raw": "Woda",
+              "name": "Woda",
+              "amount": null,
+              "allergens": []
+            }
+          ],
+          "notes": [],
+          "allergens_unassigned": []
+        },
+        "podwieczorek": {
+          "items": [
+            {
+              "raw": "Budyń waniliowy 150g(1,3,7)",
+              "name": "Budyń waniliowy",
+              "amount": "150g",
+              "allergens": [
+                1,
+                3,
+                7
+              ]
+            },
+            {
+              "raw": "Paluchy kukurydziane 10g",
+              "name": "Paluchy kukurydziane",
+              "amount": "10g",
+              "allergens": []
+            },
+            {
+              "raw": "Sos truskawkowy 50g",
+              "name": "Sos truskawkowy",
+              "amount": "50g",
+              "allergens": []
+            },
+            {
+              "raw": "Kalarepa słupki 40g",
+              "name": "Kalarepa słupki",
+              "amount": "40g",
+              "allergens": []
+            },
+            {
+              "raw": "Herbata z cytryną 150ml",
+              "name": "Herbata z cytryną",
+              "amount": "150ml",
+              "allergens": []
+            },
+            {
+              "raw": "Woda",
+              "name": "Woda",
+              "amount": null,
+              "allergens": []
+            }
+          ],
+          "notes": [],
+          "allergens_unassigned": []
+        }
+      },
+      {
+        "weekday": "piątek",
+        "closed_text": null,
+        "sniadanie": {
+          "items": [
+            {
+              "raw": "Pieczywo mieszane, razowe 50g(1)",
+              "name": "Pieczywo mieszane, razowe",
+              "amount": "50g",
+              "allergens": [
+                1
+              ]
+            },
+            {
+              "raw": "Masło 10g",
+              "name": "Masło",
+              "amount": "10g",
+              "allergens": []
+            },
+            {
+              "raw": "sałata zielona",
+              "name": "sałata zielona",
+              "amount": null,
+              "allergens": []
+            },
+            {
+              "raw": "Jajko gotowane 30g(3)",
+              "name": "Jajko gotowane",
+              "amount": "30g",
+              "allergens": [
+                3
+              ]
+            },
+            {
+              "raw": "Papryka czerwona, rzodkiewka 50g",
+              "name": "Papryka czerwona, rzodkiewka",
+              "amount": "50g",
+              "allergens": []
+            },
+            {
+              "raw": "Kakao na mleku 150ml(7)",
+              "name": "Kakao na mleku",
+              "amount": "150ml",
+              "allergens": [
+                7
+              ]
+            },
+            {
+              "raw": "Herbata z miodem i cytryną 150ml",
+              "name": "Herbata z miodem i cytryną",
+              "amount": "150ml",
+              "allergens": []
+            },
+            {
+              "raw": "Jabłko 50g",
+              "name": "Jabłko",
+              "amount": "50g",
+              "allergens": []
+            },
+            {
+              "raw": "Woda",
+              "name": "Woda",
+              "amount": null,
+              "allergens": []
+            }
+          ],
+          "notes": [],
+          "allergens_unassigned": []
+        },
+        "obiad": {
+          "items": [
+            {
+              "raw": "Grochówka z wędliną i ziemniakami 250ml (9)",
+              "name": "Grochówka z wędliną i ziemniakami",
+              "amount": "250ml",
+              "allergens": [
+                9
+              ]
+            },
+            {
+              "raw": "Paluszki z mintaja w panierce, z pieca 80/100g (1,3,4)",
+              "name": "Paluszki z mintaja w panierce, z pieca",
+              "amount": "80/100g",
+              "allergens": [
+                1,
+                3,
+                4
+              ]
+            },
+            {
+              "raw": "Ziemniaki 150g",
+              "name": "Ziemniaki",
+              "amount": "150g",
+              "allergens": []
+            },
+            {
+              "raw": "Kapusta kiszona zasmażana z boczkiem 70g(7)",
+              "name": "Kapusta kiszona zasmażana z boczkiem",
+              "amount": "70g",
+              "allergens": [
+                7
+              ]
+            },
+            {
+              "raw": "Kompot owocowy 150ml",
+              "name": "Kompot owocowy",
+              "amount": "150ml",
+              "allergens": []
+            },
+            {
+              "raw": "Woda",
+              "name": "Woda",
+              "amount": null,
+              "allergens": []
+            }
+          ],
+          "notes": [],
+          "allergens_unassigned": []
+        },
+        "podwieczorek": {
+          "items": [
+            {
+              "raw": "Muffiny bananowe (wyrób własny)40g(1,3,7)",
+              "name": "Muffiny bananowe (wyrób własny)",
+              "amount": "40g",
+              "allergens": [
+                1,
+                3,
+                7
+              ]
+            },
+            {
+              "raw": "Winogrona 50g",
+              "name": "Winogrona",
+              "amount": "50g",
+              "allergens": []
+            },
+            {
+              "raw": "Bawarka150ml",
+              "name": "Bawarka",
+              "amount": "150ml",
+              "allergens": []
+            },
+            {
+              "raw": "Woda",
+              "name": "Woda",
+              "amount": null,
+              "allergens": []
+            }
+          ],
+          "notes": [],
+          "allergens_unassigned": []
+        }
+      }
+    ],
+    "document_notes": [
+      "Zastrzegamy sobie prawo do modyfikacji w jadłospisie."
+    ],
+    "uncertain": false,
+    "note": null
+  }
+}

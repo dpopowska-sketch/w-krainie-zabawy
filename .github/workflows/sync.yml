@@ -97,7 +97,10 @@ jobs:
       # Strona jest publikowana zawsze – także po błędzie synchronizacji
       # (wtedy z ostatnimi sprawdzonymi danymi i ostrzeżeniem dla rodziców).
       - name: Budowanie strony
-        run: npm run web:build
+        run: |
+          # Jadłospis (osobny workflow) mógł w międzyczasie zapisać nowe dane.
+          git pull --ff-only || echo "::warning::Nie udało się pobrać najnowszych danych – strona z danymi z początku uruchomienia."
+          npm run web:build
 
       - uses: actions/configure-pages@v5
 

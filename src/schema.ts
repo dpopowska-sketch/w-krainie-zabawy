@@ -114,3 +114,49 @@ export interface ExtractionRecord {
   usage: { input_tokens: number; output_tokens: number };
   output: PageExtraction;
 }
+
+/**
+ * Odczyt jadłospisu tygodniowego (PDF stołówki). Model przepisuje pozycje i numery alergenów
+ * dokładnie z dokumentu – gramatury normalizuje i daty wylicza kod (src/menu.ts).
+ */
+export const MenuExtractedItem = z.object({
+  raw: z.string().describe("Fragment komórki dla tej pozycji dosłownie, łącznie z gramaturą i nawiasem alergenów, np. 'Masło 10g.(7)'"),
+  name: z.string().describe("Nazwa potrawy bez gramatury i bez nawiasu alergenów, np. 'Pieczywo mieszane, razowe'"),
+  amount: z.string().nullable().describe("Gramatura dokładnie jak w dokumencie, np. '50g.', '90/120g', '1szt'; null, jeśli brak"),
+  allergens: z.array(z.number().int()).describe("Numery z nawiasu bezpośrednio po tej pozycji, np. (1,3,7) → [1,3,7]; pusta lista, jeśli brak nawiasu"),
+});
+
+export const MenuExtractedMeal = z.object({
+  items: z.array(MenuExtractedItem).describe("Pozycje w kolejności z dokumentu, także 'Woda'"),
+  notes: z.array(z.string()).describe("Dopiski przy posiłku, które nie są potrawą, bez nawiasów, np. 'PRZEDSZKOLE'"),
+  allergens_unassigned: z.array(z.number().int()).describe("Numery alergenów, których nie da się przypisać do konkretnej pozycji"),
+});
+
+export const MenuExtraction = z.object({
+  is_menu: z.boolean().describe("Czy dokument jest tygodniowym jadłospisem"),
+  title: z.string().describe("Nagłówek dokumentu dosłownie, np. 'JADŁOSPIS 02.11–06.11'"),
+  days: z.array(
+    z.object({
+      weekday: z.string().describe("Dzień tygodnia z pierwszej kolumny, małymi literami, np. 'poniedziałek'"),
+      closed_text: z.string().nullable().describe("Tekst, jeśli dokument mówi, że tego dnia nie ma posiłków (np. 'Dzień wolny'); inaczej null"),
+      sniadanie: MenuExtractedMeal,
+      obiad: MenuExtractedMeal,
+      podwieczorek: MenuExtractedMeal,
+    }),
+  ),
+  document_notes: z.array(z.string()).describe("Tekst pod tabelą, np. zastrzeżenia, dosłownie"),
+  uncertain: z.boolean().describe("true, jeśli cokolwiek jest nieczytelne albo nie wiadomo, do której pozycji należy tekst lub oznaczenie"),
+  note: z.string().nullable().describe("Opis wątpliwości, jeśli uncertain=true"),
+});
+export type MenuExtraction = z.infer<typeof MenuExtraction>;
+
+export interface MenuExtractionRecord {
+  documentUrl: string;
+  documentSha256: string;
+  run: string;
+  model: string;
+  promptVersion: string;
+  createdAt: string;
+  usage: { input_tokens: number; output_tokens: number };
+  output: MenuExtraction;
+}

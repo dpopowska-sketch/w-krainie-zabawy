@@ -1,10 +1,9 @@
-import type { ComponentChildren } from "preact";
-import { useEffect, useMemo, useState } from "preact/hooks";
+import { createContext, type ComponentChildren } from "preact";
+import { useContext, useEffect, useMemo, useState } from "preact/hooks";
 import type { Notice, PublishedActivity, PublishedSchedule, SchoolEvent, SyncStatus } from "../../src/published";
 import {
   calendarEvent,
   googleCalendarUrl,
-  icsCalendarDataUrl,
   icsDataUrl,
   icsFileName,
   schoolCalendarEvent,
@@ -61,9 +60,32 @@ import {
   type ActivityType,
   type Selection,
 } from "./selection";
+import { MenuNavIcon, MenuPage, PlanNavIcon, isMenuStale, useMenuData } from "./menu";
 import { applyTheme, loadTheme, type Theme } from "./theme";
 
 type View = "list" | "calendar";
+
+/** Moduły strony: plan zajęć (adres #grupa=…&widok=…) i jadłospis (#/jadlospis albo #/jadlospis/RRRR-MM-DD). */
+type Module = "plan" | "menu";
+
+interface Route {
+  module: Module;
+  /** Dzień jadłospisu z adresu; null = dziś. */
+  menuDate: string | null;
+}
+
+function readRoute(): Route {
+  const m = location.hash.match(/^#\/jadlospis(?:\/(\d{4}-\d{2}-\d{2}))?/);
+  return m ? { module: "menu", menuDate: m[1] ?? null } : { module: "plan", menuDate: null };
+}
+
+/** Adres modułu (a nie kotwica w treści, np. #wyglad). */
+function isRouteHash(hash: string): boolean {
+  return hash === "" || hash === "#" || hash.startsWith("#/") || hash.includes("=");
+}
+
+/** Przełącznik modułów w nagłówku: który jest otwarty i link powrotny do planu (z grupą i widokiem). */
+const NavContext = createContext<{ module: Module; planHref: string }>({ module: "plan", planHref: "#" });
 
 /** Wpis na liście dnia: termin albo „ślad” po terminie przeniesionym na inny dzień. */
 interface DayItem {
@@ -160,7 +182,9 @@ export function App() {
   const [theme, setThemeState] = useState<Theme>(loadTheme);
   const initial = readHash();
   // Odczytujemy raz – po pierwszym renderze adres jest nadpisywany (bez „moje”).
-  const [linkCodes] = useState(() => ({ group: initial.group, codes: initial.myCodes }));
+  const [linkCodes, setLinkCodes] = useState(() => ({ group: initial.group, codes: initial.myCodes }));
+  const [route, setRoute] = useState<Route>(readRoute);
+  const menu = useMenuData(route.module === "menu");
   const [view, setViewState] = useState<View>(() => initial.view ?? storedView() ?? DEFAULT_VIEW[loadTheme()]);
   // Publikujemy tylko bieżący miesiąc – bez przeglądania innych.
   const month = currentMonth();
@@ -180,14 +204,62 @@ export function App() {
   const groups = schedule?.groups ?? [];
   const group = groups.find((g) => g.id === initial.group) ?? groups[0] ?? null;
 
+  const planHref = group ? `#${new URLSearchParams({ grupa: group.id, widok: view === "calendar" ? "kalendarz" : "lista" })}` : "#";
+
   useEffect(() => {
-    if (!group) return;
-    const params = new URLSearchParams({ grupa: group.id, widok: view === "calendar" ? "kalendarz" : "lista" });
-    history.replaceState(null, "", `#${params}`);
-  }, [group?.id, view]);
+    if (!group || route.module !== "plan") return;
+    history.replaceState(null, "", planHref);
+  }, [group?.id, view, route.module]);
+
+  useEffect(() => {
+    // Przełączanie modułów linkami w nagłówku i przyciskiem „Wstecz”.
+    const onHash = () => {
+      if (!isRouteHash(location.hash)) return;
+      const next = readRoute();
+      // Wybór zajęć z linku został już zapisany przy pierwszym otwarciu planu – nie nakładamy go ponownie.
+      if (next.module === "menu") setLinkCodes({ group: null, codes: null });
+      setRoute(next);
+      if (next.module === "menu") window.scrollTo(0, 0);
+    };
+    // Kotwice w treści (#wyglad, #alergeny…) przewijają stronę bez zmiany adresu – adres zostaje adresem modułu.
+    const onClick = (e: MouseEvent) => {
+      const link = (e.target as Element | null)?.closest?.("a[href^=\"#\"]");
+      const href = link?.getAttribute("href");
+      if (!href || isRouteHash(href)) return;
+      const target = document.getElementById(href.slice(1));
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+    window.addEventListener("hashchange", onHash);
+    document.addEventListener("click", onClick);
+    return () => {
+      window.removeEventListener("hashchange", onHash);
+      document.removeEventListener("click", onClick);
+    };
+  }, []);
+
+  const nav = { module: route.module, planHref };
+
+  if (route.module === "menu") {
+    const today = todayIso();
+    const setMenuDate = (date: string) => {
+      history.replaceState(null, "", date === today ? "#/jadlospis" : `#/jadlospis/${date}`);
+      setRoute({ module: "menu", menuDate: date === today ? null : date });
+    };
+    return (
+      <NavContext.Provider value={nav}>
+        <Shell module="menu" status={menu.status} stale={isMenuStale(menu.status)}>
+          <MenuPage data={menu} date={route.menuDate ?? today} onDate={setMenuDate} />
+          <ThemePicker theme={theme} onChange={setTheme} />
+        </Shell>
+      </NavContext.Provider>
+    );
+  }
 
   if (error || !schedule || !group) {
     return (
+      <NavContext.Provider value={nav}>
       <Shell status={status} groupName={group?.name ?? "Wilczki"} sourcePage={schedule?.sourcePage}>
         {error ? (
           <div class="alert alert-error" role="alert">
@@ -201,10 +273,12 @@ export function App() {
         )}
         <ThemePicker theme={theme} onChange={setTheme} />
       </Shell>
+      </NavContext.Provider>
     );
   }
 
   return (
+    <NavContext.Provider value={nav}>
     <GroupPage
       key={group.id}
       schedule={schedule}
@@ -217,31 +291,62 @@ export function App() {
       setView={setView}
       linkCodes={linkCodes.codes && (!linkCodes.group || linkCodes.group === group.id) ? linkCodes.codes : null}
     />
+    </NavContext.Provider>
   );
 }
 
 function Shell(props: {
   status: SyncStatus | null;
-  groupName: string;
+  /** Grupa w podtytule – tylko plan zajęć (jadłospis nie zależy od grupy). */
+  groupName?: string;
   sourcePage?: string;
   myCount?: number;
   onMine?: () => void;
+  module?: Module;
+  /** Domyślnie według reguł planu zajęć; jadłospis ma własne. */
+  stale?: boolean;
   children: ComponentChildren;
 }) {
+  const plan = (props.module ?? "plan") === "plan";
   return (
     <>
-      <Header status={props.status} groupName={props.groupName} myCount={props.myCount} onMine={props.onMine} />
+      <Header
+        status={props.status}
+        stale={props.stale ?? isStale(props.status)}
+        subtitle={plan ? `Grupa ${props.groupName ?? "Wilczki"} · Słoneczne Przedszkole w Żernicy` : "Słoneczne Przedszkole w Żernicy"}
+        myCount={props.myCount}
+        onMine={props.onMine}
+      />
       <main class="container">
-        <StaleBanner status={props.status} sourcePage={props.sourcePage} />
+        {plan && <StaleBanner status={props.status} sourcePage={props.sourcePage} />}
         {props.children}
-        <Footer status={props.status} sourcePage={props.sourcePage} />
+        {plan && <Footer status={props.status} sourcePage={props.sourcePage} />}
       </main>
     </>
   );
 }
 
-function Header(props: { status: SyncStatus | null; groupName: string; myCount?: number; onMine?: () => void }) {
-  const stale = isStale(props.status);
+/** Plan zajęć | Co dziś dobrego? – w nagłówku; na telefonie pod logo, na całą szerokość. */
+function ModuleNav() {
+  const { module, planHref } = useContext(NavContext);
+  return (
+    <nav class="module-nav" aria-label="Moduły">
+      <a href={planHref} aria-current={module === "plan" ? "page" : undefined}>
+        <PlanNavIcon />
+        Plan zajęć
+      </a>
+      <a href="#/jadlospis" aria-current={module === "menu" ? "page" : undefined}>
+        <MenuNavIcon />
+        Co dziś dobrego?
+      </a>
+    </nav>
+  );
+}
+
+function Header(props: { status: SyncStatus | null; stale: boolean; subtitle: string; myCount?: number; onMine?: () => void }) {
+  const { module } = useContext(NavContext);
+  const stale = props.stale;
+  const about = module === "menu" ? { href: "#o-jadlospisie", label: "O jadłospisie" } : { href: "#o-harmonogramie", label: "O harmonogramie" };
   const checked = props.status?.lastChecked ? formatCheck(props.status.lastChecked) : null;
   const success = props.status?.lastSuccess ? formatCheck(props.status.lastSuccess) : null;
   return (
@@ -252,8 +357,9 @@ function Header(props: { status: SyncStatus | null; groupName: string; myCount?:
         </span>
         <div class="brand">
           <span class="brand-name">Plan przedszkolaka</span>
-          <span class="brand-sub">Grupa {props.groupName} · Słoneczne Przedszkole w Żernicy</span>
+          <span class="brand-sub">{props.subtitle}</span>
         </div>
+        <ModuleNav />
         <div class="header-spacer" />
         {checked && (
           <span class={`freshness${stale ? " freshness-stale" : ""}`}>
@@ -283,10 +389,10 @@ function Header(props: { status: SyncStatus | null; groupName: string; myCount?:
           <PaletteIcon size={16} />
           Wygląd
         </a>
-        <a href="#o-harmonogramie" class="header-link header-about">
-          O harmonogramie
+        <a href={about.href} class="header-link header-about">
+          {about.label}
         </a>
-        <a href="#o-harmonogramie" class="icon-btn header-info" aria-label="O harmonogramie">
+        <a href={about.href} class="icon-btn header-info" aria-label={about.label}>
           <InfoIcon />
         </a>
         {props.onMine && (
@@ -582,7 +688,7 @@ function GroupPage(props: {
               />
             </div>
           )}
-          {groupEvents.length > 0 && <EventsCard events={groupEvents} groupName={groupName} />}
+          {groupEvents.length > 0 && <EventsCard events={groupEvents} />}
           {types.length > 0 && (
             <MyActivitiesCard
               types={types}
@@ -1129,10 +1235,8 @@ function AddToCalendar({ event, label }: { event: CalendarEvent; label: string }
   );
 }
 
-function EventsCard({ events, groupName }: { events: SchoolEvent[]; groupName: string }) {
+function EventsCard({ events }: { events: SchoolEvent[] }) {
   const today = todayIso();
-  const upcoming = events.filter((e) => (e.endDate ?? e.date) >= today);
-  const all = upcoming.map((e) => schoolCalendarEvent(e, groupName, pageUrl()));
   return (
     <div class="panel events-card">
       <div class="events-head">
@@ -1155,12 +1259,6 @@ function EventsCard({ events, groupName }: { events: SchoolEvent[]; groupName: s
           </li>
         ))}
       </ul>
-      {all.length > 0 && (
-        <a class="btn btn-block" href={icsCalendarDataUrl(all)} download={`wydarzenia-${groupName.toLocaleLowerCase("pl")}-${events[0]!.date.slice(0, 7)}.ics`}>
-          <AddToCalendarIcon size={16} />
-          Dodaj wszystkie do kalendarza
-        </a>
-      )}
       <p class="muted small">Wydarzenia dotyczą wszystkich dzieci w grupie, więc są widoczne zawsze – także w widoku „Moje zajęcia”.</p>
     </div>
   );

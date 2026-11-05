@@ -85,6 +85,29 @@ pliki). Kod sprawdza daty; wątpliwe wydarzenia nie są publikowane i trafiają 
 oraz powiadomień (decyzja `- event: <id>` w `review/decisions.yaml`). Pominięte zdania (powitanie,
 podpis) też są wypisane w `review/pending.md`.
 
+## Jadłospis „Co dziś dobrego?”
+
+Drugi moduł strony (`#/jadlospis`, z datą: `#/jadlospis/2026-11-05`): jadłospis stołówki szkoły
+ze [strony stołówki](https://zspzernica.pilchowice.pl/stolowka/) z oznaczeniami alergenów.
+
+```bash
+npm run menu              # sprawdzenie (tylko w godzinach z harmonogramu; --force = od razu)
+npm run evaluate:menu     # odczyt prawdziwego PDF vs test/golden/jadlospis-2026-11-02.json
+```
+
+- Link do PDF jest szukany po tekście „Jadłospis na bieżący tydzień”. PDF jest tylko w pamięci –
+  w repozytorium zostają hash, adres i odczytane dane (`data/menu/`).
+- Nowy PDF czyta Claude dwa razy (`data/menu/extractions/`); kod normalizuje gramatury, wylicza daty
+  (rok z nazwy pliku) i sprawdza wynik. Publikowany jest tylko zgodny i poprawny odczyt:
+  `data/menu/<poniedziałek>.json` + `index.json`; stan w `data/menu/status.json`.
+- Alergeny są przepisywane tylko z dokumentu – brak numeru nie jest uzupełniany. Słownik 14 alergenów
+  jest stały (`web/src/menu.tsx`).
+- `.github/workflows/menu.yml`: co godzinę w dni robocze; skrypt sprawdza o 9, 11, 13, 15, 17 i 19
+  (czas polski, bez świąt), a gdy jadłospis bieżącego tygodnia już jest – tylko o 9 i 15 (korekty).
+  Po zmianie danych sam publikuje stronę.
+- Nieudany odczyt nie zmienia danych: problem trafia do `review/jadlospis.md` i do zgłoszenia (issue).
+  Ponowny odczyt: usuń `data/menu/extractions/<hash>.*.json`.
+
 ## Powiadomienia
 
 Gdy pojawi się pozycja do rozstrzygnięcia dotycząca grup z `publicGroups` (komunikat bez dopasowania,

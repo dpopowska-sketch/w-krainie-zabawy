@@ -20,5 +20,6 @@ import "@fontsource/figtree/latin-ext-600.css";
 import "@fontsource/figtree/latin-700.css";
 import "@fontsource/figtree/latin-ext-700.css";
 import "./styles.css";
+import "./menu.css";
 
 render(<App />, document.getElementById("app")!);

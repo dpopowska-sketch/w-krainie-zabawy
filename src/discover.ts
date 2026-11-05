@@ -57,7 +57,7 @@ const ATTACHMENT_EXT = /\.(jpe?g|png|pdf)$/i;
 const RESIZED_SUFFIX = /-\d+x\d+(?=\.(jpe?g|png)$)/i;
 const ALLOWED_TYPES = /^(image\/(jpeg|png)|application\/pdf)\b/i;
 
-function sha256(data: Buffer | string): string {
+export function sha256(data: Buffer | string): string {
   return crypto.createHash("sha256").update(data).digest("hex");
 }
 
@@ -138,15 +138,16 @@ function extractTextLines(html: string): string[] {
   return lines;
 }
 
-async function fetchChecked(url: string): Promise<Response> {
-  if (new URL(url).hostname !== SOURCE_HOST) throw new Error(`Niedozwolona domena: ${url}`);
+/** Pobiera tylko z dozwolonej domeny i bez przekierowań. */
+export async function fetchChecked(url: string, host = SOURCE_HOST): Promise<Response> {
+  if (new URL(url).hostname !== host) throw new Error(`Niedozwolona domena: ${url}`);
   const res = await fetch(url, { headers: { "User-Agent": USER_AGENT }, redirect: "error" });
   if (!res.ok) throw new Error(`HTTP ${res.status} dla ${url}`);
   return res;
 }
 
-async function download(url: string): Promise<{ data: Buffer; contentType: string; lastModified: string | null }> {
-  const res = await fetchChecked(url);
+export async function download(url: string, host = SOURCE_HOST): Promise<{ data: Buffer; contentType: string; lastModified: string | null }> {
+  const res = await fetchChecked(url, host);
   const contentType = res.headers.get("content-type") ?? "";
   if (!ALLOWED_TYPES.test(contentType)) throw new Error(`Nieobsługiwany typ pliku ${contentType} dla ${url}`);
   const length = Number(res.headers.get("content-length") ?? 0);

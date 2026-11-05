@@ -15,7 +15,12 @@ export const SOURCE_API_URL =
   `https://${SOURCE_HOST}/wp-json/wp/v2/pages?slug=harmonogram-zajec-w-krainie-zabawy` +
   `&_fields=id,link,modified_gmt,content`;
 
-export const USER_AGENT = "w-krainie-zabawy-bot/0.1 (harmonogram dla rodziców)";
+// Jadłospis „Co dziś dobrego?” – strona stołówki szkoły (inna domena niż harmonogram).
+export const MENU_HOST = "zspzernica.pilchowice.pl";
+export const MENU_PAGE_URL = `https://${MENU_HOST}/stolowka/`;
+export const MENU_DIR = path.join(DATA_DIR, "menu");
+
+export const USER_AGENT ="w-krainie-zabawy-bot/0.1 (harmonogram dla rodziców)";
 export const MAX_DOWNLOAD_BYTES = 25 * 1024 * 1024;
 
 export interface Group {
