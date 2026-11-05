@@ -1,0 +1,38 @@
+{
+  "text": "04.11.2026 r. – zaktualizowano tabelę o zajęcia Przedszkolak mały projektant i technolog oraz o Zajęcia rozwijające kompetencje z wykorzystaniem robotyki i programowania;",
+  "textSha256": "ab961fedea107db5a8a14448742e11c6104fd77c656bb5c8d14054ba0e2557be",
+  "model": "claude-opus-5-5",
+  "promptVersion": "2026-11-04.1",
+  "createdAt": "2026-11-05T05:12:38.991Z",
+  "usage": {
+    "input_tokens": 2435,
+    "output_tokens": 500
+  },
+  "output": {
+    "is_schedule_change": true,
+    "changes": [
+      {
+        "type": "table_updated",
+        "dates": [],
+        "activity_ref": "Przedszkolak mały projektant i technolog",
+        "group_refs": [],
+        "new_date": null,
+        "new_start": null,
+        "new_end": null,
+        "uncertain": false,
+        "note": "Tabelę zaktualizowano 04.11.2026; nie podano konkretnych terminów zajęć."
+      },
+      {
+        "type": "table_updated",
+        "dates": [],
+        "activity_ref": "rozwijające kompetencje z wykorzystaniem robotyki i programowania",
+        "group_refs": [],
+        "new_date": null,
+        "new_start": null,
+        "new_end": null,
+        "uncertain": false,
+        "note": "Tabelę zaktualizowano 04.11.2026; nie podano konkretnych terminów zajęć."
+      }
+    ]
+  }
+}

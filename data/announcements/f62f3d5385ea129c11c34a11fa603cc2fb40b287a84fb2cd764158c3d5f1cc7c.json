@@ -1,0 +1,31 @@
+{
+  "text": "dodano zajęcia 05.11.2026 r., 14.30 – 15.30 – Przedszkolak Mały projektant i technolog – grupa Miki;",
+  "textSha256": "f62f3d5385ea129c11c34a11fa603cc2fb40b287a84fb2cd764158c3d5f1cc7c",
+  "model": "claude-opus-5-5",
+  "promptVersion": "2026-11-04.1",
+  "createdAt": "2026-11-05T05:12:33.390Z",
+  "usage": {
+    "input_tokens": 2409,
+    "output_tokens": 116
+  },
+  "output": {
+    "is_schedule_change": true,
+    "changes": [
+      {
+        "type": "additional",
+        "dates": [
+          "2026-11-05"
+        ],
+        "activity_ref": "Przedszkolak Mały projektant i technolog",
+        "group_refs": [
+          "Miki"
+        ],
+        "new_date": null,
+        "new_start": "14:30",
+        "new_end": "15:30",
+        "uncertain": false,
+        "note": null
+      }
+    ]
+  }
+}

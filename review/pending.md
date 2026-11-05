@@ -9,7 +9,7 @@ Niepublikowane do czasu decyzji.
 
 Brak.
 
-## Terminy (6)
+## Terminy (10)
 
 ### 2026-10-06 07:30–08:30 · Motylki · Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania
 
@@ -45,11 +45,65 @@ Brak.
     action: confirm   # albo: hide / edit (z polem set)
 ```
 
+### 2026-11-05 14:30–15:30 · Motylki · Zajęcia Przedszkolak Mały projektant i technolog
+
+- Status: zaplanowane, prowadzi K. Wilczek
+- Powód: Ogłoszenie o zmianie zostało usunięte ze strony przed terminem zajęć
+- Tabela: „Czwartek 14.30 – 15.30 05.11; Gr. Miki” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-0.jpg))
+- Ogłoszenie: „dodano zajęcia 05.11.2026 r., 14.30 – 15.30 – Przedszkolak Mały projektant i technolog – grupa Miki”
+- Ogłoszenie: „dodano zajęcia 05.11.2026 r., 14.30 – 15.30 – Przedszkolak Mały projektant i technolog – grupa Miki;”
+
+```yaml
+  - id: b54d6ea4992c
+    action: confirm   # albo: hide / edit (z polem set)
+```
+
+### 2026-11-05 14:30–15:30 · Wilczki · Zajęcia Przedszkolak Mały projektant i technolog
+
+- Status: zaplanowane, prowadzi K. Wilczek
+- Powód: Ogłoszenie o zmianie zostało usunięte ze strony przed terminem zajęć
+- Tabela: „Czwartek 14.30 -15.30 05.11; Gr. Miki” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-0.jpg))
+- Ogłoszenie: „dodano zajęcia 05.11.2026 r., 14.30 – 15.30 – Przedszkolak Mały projektant i technolog – grupa Miki”
+- Ogłoszenie: „dodano zajęcia 05.11.2026 r., 14.30 – 15.30 – Przedszkolak Mały projektant i technolog – grupa Miki;”
+
+```yaml
+  - id: e2c115f98871
+    action: confirm   # albo: hide / edit (z polem set)
+```
+
+### 2026-11-10 07:00–08:00 · Słoneczka · Zajęcia Przedszkolak Mały projektant i technolog
+
+- Status: zaplanowane, prowadzi K. Wilczek
+- Powód: Plik tabeli z tym terminem usunięto ze strony, a nowa wersja nie zawiera tych zajęć dla grupy
+- Powód: Plik tabeli z tym terminem usunięto ze strony, a nowa wersja nie zawiera tych zajęć dla grupy
+- Tabela: „Wtorek 7.00 – 8.00 10.11 Gr. Górnicza I” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-0.jpg))
+
+```yaml
+  - id: a467e0e63757
+    action: confirm   # albo: hide / edit (z polem set)
+```
+
+### 2026-11-10 07:00–08:00 · Wiewiórki · Zajęcia Przedszkolak Mały projektant i technolog
+
+- Status: zaplanowane, prowadzi K. Wilczek
+- Powód: Plik tabeli z tym terminem usunięto ze strony, a nowa wersja nie zawiera tych zajęć dla grupy
+- Powód: Plik tabeli z tym terminem usunięto ze strony, a nowa wersja nie zawiera tych zajęć dla grupy
+- Tabela: „Wtorek 7.00 – 8.00 10.11 Gr. Górnicza I” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-0.jpg))
+
+```yaml
+  - id: 300eb9f532ea
+    action: confirm   # albo: hide / edit (z polem set)
+```
+
 ### 2026-11-10 13:55–14:55 · Żabki · Zajęcia logopedyczne
 
 - Status: zaplanowane, prowadzi B. Bogdał
 - Powód: Dzień tygodnia w tabeli nie pasuje do daty
-- Tabela: „Środa 13.55-14.55 04.11; 10.11; 18.11; 25.11 Grupa IV” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-1.jpg))
+- Tabela: „Środa
+13.55-14.55
+04.11; 10.11; 18.11;
+25.11
+Grupa IV” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-1.jpg))
 
 ```yaml
   - id: 1f5b9f04bf1b
@@ -61,7 +115,7 @@ Brak.
 - Status: zaplanowane, prowadzi B. Kasza
 - Powód: Fragment tabeli był nieczytelny lub niejednoznaczny
 - Powód: Dzień tygodnia w tabeli nie pasuje do daty
-- Tabela: „Poniedziałek44 14.15 – 15.15 16.11; Gr. Górnicza I” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/59f6107a28468bd28e6e8874f93db7d4-0.jpg))
+- Tabela: „Poniedziałek44 14.15 – 15.15 16.11; Gr. Górnicza I” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-0.jpg))
 
 ```yaml
   - id: a79983dd75ed
@@ -72,7 +126,9 @@ Brak.
 
 - Status: zaplanowane, prowadzi M. Marchewka
 - Powód: Fragment tabeli był nieczytelny lub niejednoznaczny
-- Tabela: „Poniedziałek 12.45-14.45 23:11;” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-2.jpg))
+- Tabela: „Poniedziałek
+12.45-14.45
+23:11;” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-2.jpg))
 
 ```yaml
   - id: c4712bbd1b5d

@@ -285,13 +285,13 @@
     "date": "2026-11-05",
     "start": "14:30",
     "end": "15:30",
-    "status": "additional",
-    "verification": "verified",
+    "status": "scheduled",
+    "verification": "needs_review",
     "month": "2026-11"
   },
-  "75ad7dba491c": {
-    "activity": "Zajęcia sprawnościowo – zdrowotne",
-    "teacher": "K. Zborowska",
+  "4f7f9f596387": {
+    "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
+    "teacher": "J. Skoczowska",
     "date": "2026-11-06",
     "start": "12:45",
     "end": "13:45",
@@ -299,9 +299,9 @@
     "verification": "verified",
     "month": "2026-11"
   },
-  "4f7f9f596387": {
-    "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
-    "teacher": "J. Skoczowska",
+  "75ad7dba491c": {
+    "activity": "Zajęcia sprawnościowo – zdrowotne",
+    "teacher": "K. Zborowska",
     "date": "2026-11-06",
     "start": "12:45",
     "end": "13:45",
@@ -329,9 +329,9 @@
     "verification": "verified",
     "month": "2026-11"
   },
-  "7ce944a68008": {
-    "activity": "Zajęcia sprawnościowo – zdrowotne",
-    "teacher": "K. Zborowska",
+  "c0b0d76c30c2": {
+    "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
+    "teacher": "J. Skoczowska",
     "date": "2026-11-13",
     "start": "12:45",
     "end": "13:45",
@@ -339,9 +339,9 @@
     "verification": "verified",
     "month": "2026-11"
   },
-  "c0b0d76c30c2": {
-    "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
-    "teacher": "J. Skoczowska",
+  "7ce944a68008": {
+    "activity": "Zajęcia sprawnościowo – zdrowotne",
+    "teacher": "K. Zborowska",
     "date": "2026-11-13",
     "start": "12:45",
     "end": "13:45",

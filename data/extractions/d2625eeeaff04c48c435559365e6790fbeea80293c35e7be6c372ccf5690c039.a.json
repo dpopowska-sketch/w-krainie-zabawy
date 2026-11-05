@@ -1,0 +1,317 @@
+{
+  "documentUrl": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-2.jpg",
+  "documentSha256": "d2625eeeaff04c48c435559365e6790fbeea80293c35e7be6c372ccf5690c039",
+  "run": "a",
+  "model": "claude-opus-5-5",
+  "promptVersion": "2026-10-28.1",
+  "createdAt": "2026-11-05T05:12:02.044Z",
+  "stopReason": "end_turn",
+  "usage": {
+    "input_tokens": 7770,
+    "output_tokens": 3853
+  },
+  "output": {
+    "is_schedule": true,
+    "title": null,
+    "month_label": null,
+    "group_columns": [
+      "KOTKI",
+      "SŁONECZKA",
+      "WIEWIÓRKI",
+      "SÓWKI",
+      "ŻABKI",
+      "MOTYLKI",
+      "WILCZKI"
+    ],
+    "entries": [
+      {
+        "activity_name": "Zajęcia z preorientacji zawodowej",
+        "teacher": "M. Marchewka",
+        "group_column": "SÓWKI",
+        "weekday": "Poniedziałek",
+        "start": "14:00",
+        "end": "15:00",
+        "dates": [
+          "09.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Poniedziałek\n14:00-15:00\n09.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia z preorientacji zawodowej",
+        "teacher": "M. Marchewka",
+        "group_column": "ŻABKI",
+        "weekday": "Poniedziałek",
+        "start": "12:45",
+        "end": "13:45",
+        "dates": [
+          "16.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Poniedziałek\n12.45-13.45\n16.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia z preorientacji zawodowej",
+        "teacher": "M. Marchewka",
+        "group_column": "MOTYLKI",
+        "weekday": "Poniedziałek",
+        "start": "12:45",
+        "end": "14:45",
+        "dates": [
+          "23.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Poniedziałek\n12.45-14.45\n23:11;",
+        "uncertain": true,
+        "note": "Data zapisana jako '23:11' (dwukropek zamiast kropki); zinterpretowano jako 23.11."
+      },
+      {
+        "activity_name": "Zajęcia z preorientacji zawodowej",
+        "teacher": "M. Marchewka",
+        "group_column": "WILCZKI",
+        "weekday": "Poniedziałek",
+        "start": "12:45",
+        "end": "14:45",
+        "dates": [
+          "23.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Poniedziałek\n12.45-14.45\n23.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Warsztaty o charakterze terapeutycznym Tadek Niejadek",
+        "teacher": "J. Szombierska",
+        "group_column": "SŁONECZKA",
+        "weekday": "Poniedziałek",
+        "start": "10:00",
+        "end": "11:00",
+        "dates": [
+          "16.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Poniedziałek\n10.00 – 11.00\n16.11.",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia ruchowe połączone z elementami sensoplastyki",
+        "teacher": "B. Smolnik",
+        "group_column": "KOTKI",
+        "weekday": "Wtorek",
+        "start": "07:00",
+        "end": "08:00",
+        "dates": [
+          "03.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Wtorek\n7.00-8:00\n03.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia ruchowe połączone z elementami sensoplastyki",
+        "teacher": "B. Smolnik",
+        "group_column": "SŁONECZKA",
+        "weekday": "Czwartek",
+        "start": "07:00",
+        "end": "08:00",
+        "dates": [
+          "05.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Czwartek\n7.00-8.00\n05.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia ruchowe połączone z elementami sensoplastyki",
+        "teacher": "B. Smolnik",
+        "group_column": "WIEWIÓRKI",
+        "weekday": "Wtorek",
+        "start": "07:00",
+        "end": "08:00",
+        "dates": [
+          "10.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Wtorek\n7.00-8.00\n10.11;\nCzwartek\n7.00-8.00\n26.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia ruchowe połączone z elementami sensoplastyki",
+        "teacher": "B. Smolnik",
+        "group_column": "WIEWIÓRKI",
+        "weekday": "Czwartek",
+        "start": "07:00",
+        "end": "08:00",
+        "dates": [
+          "26.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Wtorek\n7.00-8.00\n10.11;\nCzwartek\n7.00-8.00\n26.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia ruchowe połączone z elementami sensoplastyki",
+        "teacher": "B. Smolnik",
+        "group_column": "SÓWKI",
+        "weekday": "Czwartek",
+        "start": "07:00",
+        "end": "08:00",
+        "dates": [
+          "12.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Czwartek\n7.00-8.00\n12.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia ruchowe połączone z elementami sensoplastyki",
+        "teacher": "B. Smolnik",
+        "group_column": "ŻABKI",
+        "weekday": "Wtorek",
+        "start": "07:00",
+        "end": "08:00",
+        "dates": [
+          "17.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Wtorek\n7.00-8.00\n17.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia ruchowe połączone z elementami sensoplastyki",
+        "teacher": "B. Smolnik",
+        "group_column": "MOTYLKI",
+        "weekday": "Czwartek",
+        "start": "07:00",
+        "end": "08:00",
+        "dates": [
+          "19.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Czwartek\n7.00-8.00\n19.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia ruchowe połączone z elementami sensoplastyki",
+        "teacher": "B. Smolnik",
+        "group_column": "WILCZKI",
+        "weekday": "Wtorek",
+        "start": "07:00",
+        "end": "08:00",
+        "dates": [
+          "24.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Wtorek\n7.00-8.00\n24.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia sprawnościowo – zdrowotne",
+        "teacher": "K. Zborowska",
+        "group_column": "ŻABKI",
+        "weekday": "Środa",
+        "start": "14:40",
+        "end": "15:40",
+        "dates": [
+          "04.11",
+          "18.11",
+          "25.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Środa\n14.40 - 15.40\n4.11; 18.11;\n25.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia sprawnościowo – zdrowotne",
+        "teacher": "K. Zborowska",
+        "group_column": "WILCZKI",
+        "weekday": "Piątek",
+        "start": "12:45",
+        "end": "13:45",
+        "dates": [
+          "06.11",
+          "13.11",
+          "20.11",
+          "27.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Piątek\n12.45 – 13.45\n6.11; 13.11; 20.11;\n27.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia sprawnościowo – zdrowotne",
+        "teacher": "S. Kot",
+        "group_column": "SÓWKI",
+        "weekday": "Poniedziałek",
+        "start": "12:40",
+        "end": "13:40",
+        "dates": [
+          "09.11",
+          "16.11",
+          "23.11",
+          "30.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Poniedziałek\n12.40 - 13.40\n9.11; 16.11; 23.11;\n30.11;",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "activity_name": "Zajęcia sprawnościowo – zdrowotne",
+        "teacher": "S. Kot",
+        "group_column": "MOTYLKI",
+        "weekday": "Piątek",
+        "start": "12:30",
+        "end": "13:30",
+        "dates": [
+          "06.11",
+          "13.11",
+          "20.11",
+          "27.11"
+        ],
+        "location": null,
+        "subgroup": null,
+        "cell_text": "Piątek\n12.30-13.30\n6.11; 13.11; 20.11;\n27.11;",
+        "uncertain": false,
+        "note": null
+      }
+    ],
+    "issues": [
+      "Brak tytułu i nagłówka z miesiącem; daty wskazują na listopad, ale rok nie jest podany.",
+      "Drugi wiersz nagłówka zawiera wiek i miejsce grup (KOTKI–ŻABKI: GÓRNICZA; MOTYLKI, WILCZKI: MIKI) – nie wpisano jako location, bo w komórkach nie ma dopisków 'Gr. …'.",
+      "Wiersz 'Warsztaty o charakterze terapeutycznym Tadek Niejadek' ma pokolorowane komórki bez tekstu – pominięto je zgodnie z zasadami."
+    ]
+  }
+}

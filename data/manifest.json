@@ -2,8 +2,8 @@
   "page": {
     "id": 12985,
     "link": "https://przedszkole-zspzernica.pilchowice.pl/harmonogram-zajec-w-krainie-zabawy/",
-    "modifiedGmt": "2026-11-04T12:59:09",
-    "contentSha256": "582edb896686b3a4c9ed98fab8f5242c1e29f0010f0897fe32065541cce0ce06"
+    "modifiedGmt": "2026-11-04T15:08:11",
+    "contentSha256": "261bdc01162cdc488d542810491e0f48fd18a01e423d35b28daa3d1837096fb4"
   },
   "documents": [
     {
@@ -73,7 +73,7 @@
       "file": "sources/1de486f100a6516ded4995f118ed946d48a4f344531b5412646c52d05c70a035.jpg",
       "lastModifiedHeader": "Sun, 01 Nov 2026 10:45:32 GMT",
       "firstSeen": "2026-11-01T14:47:37.729Z",
-      "removedAt": null,
+      "removedAt": "2026-11-05T05:08:59.766Z",
       "history": []
     },
     {
@@ -87,7 +87,7 @@
       "file": "sources/66c53c8a612db46ee1b4310c095e70518824900101640fb2aa6ce663860926ff.jpg",
       "lastModifiedHeader": "Sun, 01 Nov 2026 10:45:34 GMT",
       "firstSeen": "2026-11-01T14:47:37.729Z",
-      "removedAt": null,
+      "removedAt": "2026-11-05T05:08:59.766Z",
       "history": []
     },
     {
@@ -101,6 +101,48 @@
       "file": "sources/336de9d21f8e1785338d9abf1d1236fff1c77cc5c00b512d1697efdc722cae52.jpg",
       "lastModifiedHeader": "Mon, 02 Nov 2026 16:22:54 GMT",
       "firstSeen": "2026-11-03T05:02:55.903Z",
+      "removedAt": "2026-11-05T05:08:59.766Z",
+      "history": []
+    },
+    {
+      "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-0.jpg",
+      "pageUrls": [
+        "media:17075"
+      ],
+      "sha256": "9ca08fb480fba74ca83c2f6f14224517d742f2cf1527d49b9658ee02c736fac6",
+      "bytes": 326858,
+      "contentType": "image/jpeg",
+      "file": "sources/9ca08fb480fba74ca83c2f6f14224517d742f2cf1527d49b9658ee02c736fac6.jpg",
+      "lastModifiedHeader": "Wed, 04 Nov 2026 15:03:38 GMT",
+      "firstSeen": "2026-11-05T05:08:59.766Z",
+      "removedAt": null,
+      "history": []
+    },
+    {
+      "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-1.jpg",
+      "pageUrls": [
+        "media:17076"
+      ],
+      "sha256": "d6fbd2b13cb00c8ab4fe5b8f4e0a99822df85c3d6e2c3038401dbbdcf7ef71d3",
+      "bytes": 265269,
+      "contentType": "image/jpeg",
+      "file": "sources/d6fbd2b13cb00c8ab4fe5b8f4e0a99822df85c3d6e2c3038401dbbdcf7ef71d3.jpg",
+      "lastModifiedHeader": "Wed, 04 Nov 2026 15:03:40 GMT",
+      "firstSeen": "2026-11-05T05:08:59.766Z",
+      "removedAt": null,
+      "history": []
+    },
+    {
+      "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-2.jpg",
+      "pageUrls": [
+        "media:17077"
+      ],
+      "sha256": "d2625eeeaff04c48c435559365e6790fbeea80293c35e7be6c372ccf5690c039",
+      "bytes": 238561,
+      "contentType": "image/jpeg",
+      "file": "sources/d2625eeeaff04c48c435559365e6790fbeea80293c35e7be6c372ccf5690c039.jpg",
+      "lastModifiedHeader": "Wed, 04 Nov 2026 15:03:41 GMT",
+      "firstSeen": "2026-11-05T05:08:59.766Z",
       "removedAt": null,
       "history": []
     }

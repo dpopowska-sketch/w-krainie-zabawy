@@ -21,16 +21,18 @@
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
-      "warnings": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-1.jpg",
-          "cellText": "Wtorek 9.45-10.45 03.11; 10.11; 17.11;",
-          "firstSeen": "2026-11-01T14:47:37.729Z"
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-1.jpg",
+          "cellText": "Wtorek\n9.45-10.45\n03.11; 10.11; 17.11;",
+          "firstSeen": "2026-11-05T05:08:59.766Z"
         }
       ],
-      "updatedAt": "2026-11-01T14:47:37.729Z"
+      "updatedAt": "2026-11-05T05:08:59.766Z"
     },
     {
       "id": "5b38b4d8a735",
@@ -52,12 +54,12 @@
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/59f6107a28468bd28e6e8874f93db7d4-0.jpg",
-          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11;",
-          "firstSeen": "2026-11-03T05:02:55.903Z"
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-0.jpg",
+          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11; Czwartek 7.30 – 8.30 5.11; 26.11;",
+          "firstSeen": "2026-11-05T05:08:59.766Z"
         }
       ],
-      "updatedAt": "2026-11-03T05:02:55.903Z"
+      "updatedAt": "2026-11-05T05:08:59.766Z"
     },
     {
       "id": "21460a2c997b",
@@ -73,16 +75,18 @@
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
-      "warnings": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-1.jpg",
-          "cellText": "Środa 9.45-10.45 04.11; 18.11; 25.11;",
-          "firstSeen": "2026-11-01T14:47:37.729Z"
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-1.jpg",
+          "cellText": "Środa\n9.45-10.45\n04.11; 18.11;\n25.11;",
+          "firstSeen": "2026-11-05T05:08:59.766Z"
         }
       ],
-      "updatedAt": "2026-11-01T14:47:37.729Z"
+      "updatedAt": "2026-11-05T05:08:59.766Z"
     },
     {
       "id": "f320327a346b",
@@ -104,12 +108,12 @@
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/59f6107a28468bd28e6e8874f93db7d4-0.jpg",
-          "cellText": "Czwartek 7.30 – 8.30 5.11; 26.11;",
-          "firstSeen": "2026-11-03T05:02:55.903Z"
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-0.jpg",
+          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11; Czwartek 7.30 – 8.30 5.11; 26.11;",
+          "firstSeen": "2026-11-05T05:08:59.766Z"
         }
       ],
-      "updatedAt": "2026-11-03T05:02:55.903Z"
+      "updatedAt": "2026-11-05T05:08:59.766Z"
     },
     {
       "id": "d369f17d5fe8",
@@ -148,49 +152,36 @@
       "date": "2026-11-05",
       "start": "14:30",
       "end": "15:30",
-      "location": null,
+      "location": "Miki",
       "subgroup": null,
-      "status": "additional",
+      "status": "scheduled",
       "previous": null,
-      "verification": "verified",
-      "reviewReasons": [],
+      "verification": "needs_review",
+      "reviewReasons": [
+        "Ogłoszenie o zmianie zostało usunięte ze strony przed terminem zajęć"
+      ],
       "warnings": [],
       "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-0.jpg",
+          "cellText": "Czwartek 14.30 -15.30 05.11; Gr. Miki",
+          "firstSeen": "2026-11-05T05:08:59.766Z"
+        },
         {
           "type": "announcement",
           "text": "dodano zajęcia 05.11.2026 r., 14.30 – 15.30 – Przedszkolak Mały projektant i technolog – grupa Miki",
           "firstSeen": "2026-11-04T15:00:06.484Z",
+          "removedAt": "2026-11-05T05:12:30.848Z"
+        },
+        {
+          "type": "announcement",
+          "text": "dodano zajęcia 05.11.2026 r., 14.30 – 15.30 – Przedszkolak Mały projektant i technolog – grupa Miki;",
+          "firstSeen": "2026-11-05T05:12:33.390Z",
           "removedAt": null
         }
       ],
-      "updatedAt": "2026-11-04T15:00:06.484Z"
-    },
-    {
-      "id": "75ad7dba491c",
-      "group": "wilczki",
-      "activity": "Zajęcia sprawnościowo – zdrowotne",
-      "teacher": "K. Zborowska",
-      "date": "2026-11-06",
-      "start": "12:45",
-      "end": "13:45",
-      "location": null,
-      "subgroup": null,
-      "status": "scheduled",
-      "previous": null,
-      "verification": "verified",
-      "reviewReasons": [],
-      "warnings": [
-        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
-      ],
-      "sources": [
-        {
-          "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-2.jpg",
-          "cellText": "Piątek 12.45 – 13.45 6.11; 13.11; 20.11; 27.11;",
-          "firstSeen": "2026-11-01T14:47:37.729Z"
-        }
-      ],
-      "updatedAt": "2026-11-01T14:47:37.729Z"
+      "updatedAt": "2026-11-05T05:12:33.390Z"
     },
     {
       "id": "4f7f9f596387",
@@ -212,16 +203,39 @@
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/59f6107a28468bd28e6e8874f93db7d4-0.jpg",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-0.jpg",
           "cellText": "Piątek 12.45 – 13.45 06.11; 13.11; Gr. Miki",
-          "firstSeen": "2026-11-03T05:02:55.903Z"
+          "firstSeen": "2026-11-05T05:08:59.766Z"
         }
       ],
-      "updatedAt": "2026-11-03T05:02:55.903Z",
-      "scheduleChange": {
-        "kind": "added",
-        "at": "2026-11-03T05:02:55.903Z"
-      }
+      "updatedAt": "2026-11-05T05:08:59.766Z"
+    },
+    {
+      "id": "75ad7dba491c",
+      "group": "wilczki",
+      "activity": "Zajęcia sprawnościowo – zdrowotne",
+      "teacher": "K. Zborowska",
+      "date": "2026-11-06",
+      "start": "12:45",
+      "end": "13:45",
+      "location": null,
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-2.jpg",
+          "cellText": "Piątek\n12.45 – 13.45\n6.11; 13.11; 20.11;\n27.11;",
+          "firstSeen": "2026-11-05T05:08:59.766Z"
+        }
+      ],
+      "updatedAt": "2026-11-05T05:08:59.766Z"
     },
     {
       "id": "7a046ec0d7db",
@@ -243,12 +257,12 @@
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/59f6107a28468bd28e6e8874f93db7d4-0.jpg",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-0.jpg",
           "cellText": "Poniedziałek 14.15– 15.15 09.11; Gr. Miki",
-          "firstSeen": "2026-11-03T05:02:55.903Z"
+          "firstSeen": "2026-11-05T05:08:59.766Z"
         }
       ],
-      "updatedAt": "2026-11-03T05:02:55.903Z"
+      "updatedAt": "2026-11-05T05:08:59.766Z"
     },
     {
       "id": "ef39d0523a05",
@@ -264,43 +278,18 @@
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
-      "warnings": [],
-      "sources": [
-        {
-          "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-1.jpg",
-          "cellText": "Wtorek 9.45-10.45 03.11; 10.11; 17.11;",
-          "firstSeen": "2026-11-01T14:47:37.729Z"
-        }
-      ],
-      "updatedAt": "2026-11-01T14:47:37.729Z"
-    },
-    {
-      "id": "7ce944a68008",
-      "group": "wilczki",
-      "activity": "Zajęcia sprawnościowo – zdrowotne",
-      "teacher": "K. Zborowska",
-      "date": "2026-11-13",
-      "start": "12:45",
-      "end": "13:45",
-      "location": null,
-      "subgroup": null,
-      "status": "scheduled",
-      "previous": null,
-      "verification": "verified",
-      "reviewReasons": [],
       "warnings": [
         "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
       ],
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-2.jpg",
-          "cellText": "Piątek 12.45 – 13.45 6.11; 13.11; 20.11; 27.11;",
-          "firstSeen": "2026-11-01T14:47:37.729Z"
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-1.jpg",
+          "cellText": "Wtorek\n9.45-10.45\n03.11; 10.11; 17.11;",
+          "firstSeen": "2026-11-05T05:08:59.766Z"
         }
       ],
-      "updatedAt": "2026-11-01T14:47:37.729Z"
+      "updatedAt": "2026-11-05T05:08:59.766Z"
     },
     {
       "id": "c0b0d76c30c2",
@@ -322,16 +311,39 @@
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/59f6107a28468bd28e6e8874f93db7d4-0.jpg",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-0.jpg",
           "cellText": "Piątek 12.45 – 13.45 06.11; 13.11; Gr. Miki",
-          "firstSeen": "2026-11-03T05:02:55.903Z"
+          "firstSeen": "2026-11-05T05:08:59.766Z"
         }
       ],
-      "updatedAt": "2026-11-03T05:02:55.903Z",
-      "scheduleChange": {
-        "kind": "added",
-        "at": "2026-11-03T05:02:55.903Z"
-      }
+      "updatedAt": "2026-11-05T05:08:59.766Z"
+    },
+    {
+      "id": "7ce944a68008",
+      "group": "wilczki",
+      "activity": "Zajęcia sprawnościowo – zdrowotne",
+      "teacher": "K. Zborowska",
+      "date": "2026-11-13",
+      "start": "12:45",
+      "end": "13:45",
+      "location": null,
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
+      "sources": [
+        {
+          "type": "schedule",
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-2.jpg",
+          "cellText": "Piątek\n12.45 – 13.45\n6.11; 13.11; 20.11;\n27.11;",
+          "firstSeen": "2026-11-05T05:08:59.766Z"
+        }
+      ],
+      "updatedAt": "2026-11-05T05:08:59.766Z"
     },
     {
       "id": "e630fb8a644c",
@@ -347,16 +359,18 @@
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
-      "warnings": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-1.jpg",
-          "cellText": "Wtorek 9.45-10.45 03.11; 10.11; 17.11;",
-          "firstSeen": "2026-11-01T14:47:37.729Z"
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-1.jpg",
+          "cellText": "Wtorek\n9.45-10.45\n03.11; 10.11; 17.11;",
+          "firstSeen": "2026-11-05T05:08:59.766Z"
         }
       ],
-      "updatedAt": "2026-11-01T14:47:37.729Z"
+      "updatedAt": "2026-11-05T05:08:59.766Z"
     },
     {
       "id": "fc259daa726a",
@@ -378,12 +392,12 @@
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/59f6107a28468bd28e6e8874f93db7d4-0.jpg",
-          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11;",
-          "firstSeen": "2026-11-03T05:02:55.903Z"
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-0.jpg",
+          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11; Czwartek 7.30 – 8.30 5.11; 26.11;",
+          "firstSeen": "2026-11-05T05:08:59.766Z"
         }
       ],
-      "updatedAt": "2026-11-03T05:02:55.903Z"
+      "updatedAt": "2026-11-05T05:08:59.766Z"
     },
     {
       "id": "e77470fc3051",
@@ -399,16 +413,18 @@
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
-      "warnings": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-1.jpg",
-          "cellText": "Środa 9.45-10.45 04.11; 18.11; 25.11;",
-          "firstSeen": "2026-11-01T14:47:37.729Z"
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-1.jpg",
+          "cellText": "Środa\n9.45-10.45\n04.11; 18.11;\n25.11;",
+          "firstSeen": "2026-11-05T05:08:59.766Z"
         }
       ],
-      "updatedAt": "2026-11-01T14:47:37.729Z"
+      "updatedAt": "2026-11-05T05:08:59.766Z"
     },
     {
       "id": "2ce8f2ad5296",
@@ -424,16 +440,18 @@
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
-      "warnings": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-2.jpg",
-          "cellText": "Piątek 12.45 – 13.45 6.11; 13.11; 20.11; 27.11;",
-          "firstSeen": "2026-11-01T14:47:37.729Z"
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-2.jpg",
+          "cellText": "Piątek\n12.45 – 13.45\n6.11; 13.11; 20.11;\n27.11;",
+          "firstSeen": "2026-11-05T05:08:59.766Z"
         }
       ],
-      "updatedAt": "2026-11-01T14:47:37.729Z"
+      "updatedAt": "2026-11-05T05:08:59.766Z"
     },
     {
       "id": "03199534f86f",
@@ -449,16 +467,18 @@
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
-      "warnings": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-2.jpg",
-          "cellText": "Poniedziałek 12.45-14.45 23.11;",
-          "firstSeen": "2026-11-01T14:47:37.729Z"
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-2.jpg",
+          "cellText": "Poniedziałek\n12.45-14.45\n23.11;",
+          "firstSeen": "2026-11-05T05:08:59.766Z"
         }
       ],
-      "updatedAt": "2026-11-01T14:47:37.729Z"
+      "updatedAt": "2026-11-05T05:08:59.766Z"
     },
     {
       "id": "3d1ef26a4301",
@@ -474,16 +494,18 @@
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
-      "warnings": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-2.jpg",
-          "cellText": "Wtorek 7.00-8.00 24.11;",
-          "firstSeen": "2026-11-01T14:47:37.729Z"
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-2.jpg",
+          "cellText": "Wtorek\n7.00-8.00\n24.11;",
+          "firstSeen": "2026-11-05T05:08:59.766Z"
         }
       ],
-      "updatedAt": "2026-11-01T14:47:37.729Z"
+      "updatedAt": "2026-11-05T05:08:59.766Z"
     },
     {
       "id": "dc3e48252906",
@@ -505,12 +527,12 @@
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/59f6107a28468bd28e6e8874f93db7d4-0.jpg",
-          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11;",
-          "firstSeen": "2026-11-03T05:02:55.903Z"
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-0.jpg",
+          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11; Czwartek 7.30 – 8.30 5.11; 26.11;",
+          "firstSeen": "2026-11-05T05:08:59.766Z"
         }
       ],
-      "updatedAt": "2026-11-03T05:02:55.903Z"
+      "updatedAt": "2026-11-05T05:08:59.766Z"
     },
     {
       "id": "609f1d972d31",
@@ -526,16 +548,18 @@
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
-      "warnings": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-1.jpg",
-          "cellText": "Środa 9.45-10.45 04.11; 18.11; 25.11;",
-          "firstSeen": "2026-11-01T14:47:37.729Z"
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-1.jpg",
+          "cellText": "Środa\n9.45-10.45\n04.11; 18.11;\n25.11;",
+          "firstSeen": "2026-11-05T05:08:59.766Z"
         }
       ],
-      "updatedAt": "2026-11-01T14:47:37.729Z"
+      "updatedAt": "2026-11-05T05:08:59.766Z"
     },
     {
       "id": "051a76375d7d",
@@ -557,12 +581,12 @@
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/59f6107a28468bd28e6e8874f93db7d4-0.jpg",
-          "cellText": "Czwartek 7.30 – 8.30 5.11; 26.11;",
-          "firstSeen": "2026-11-03T05:02:55.903Z"
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-0.jpg",
+          "cellText": "Środa 7.30 – 8.30 04.11; 18.11; 25.11; Czwartek 7.30 – 8.30 5.11; 26.11;",
+          "firstSeen": "2026-11-05T05:08:59.766Z"
         }
       ],
-      "updatedAt": "2026-11-03T05:02:55.903Z"
+      "updatedAt": "2026-11-05T05:08:59.766Z"
     },
     {
       "id": "f664878d63f2",
@@ -578,16 +602,18 @@
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
-      "warnings": [],
+      "warnings": [
+        "W tym samym czasie grupa ma też inne zajęcia (np. dla podgrupy)"
+      ],
       "sources": [
         {
           "type": "schedule",
-          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/34437146afe99d15e199c8df02e860e3-2.jpg",
-          "cellText": "Piątek 12.45 – 13.45 6.11; 13.11; 20.11; 27.11;",
-          "firstSeen": "2026-11-01T14:47:37.729Z"
+          "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-2.jpg",
+          "cellText": "Piątek\n12.45 – 13.45\n6.11; 13.11; 20.11;\n27.11;",
+          "firstSeen": "2026-11-05T05:08:59.766Z"
         }
       ],
-      "updatedAt": "2026-11-01T14:47:37.729Z"
+      "updatedAt": "2026-11-05T05:08:59.766Z"
     }
   ],
   "notices": [
@@ -604,6 +630,24 @@
       "dates": [],
       "reason": "Przedszkole zaktualizowało tabelę terminów",
       "firstSeen": "2026-11-03T05:04:33.857Z",
+      "removedAt": null
+    },
+    {
+      "id": "ab961fedea10",
+      "kind": "info",
+      "text": "04.11.2026 r. – zaktualizowano tabelę o zajęcia Przedszkolak mały projektant i technolog oraz o Zajęcia rozwijające kompetencje z wykorzystaniem robotyki i programowania;",
+      "groups": [
+        "sloneczka",
+        "wiewiorki",
+        "sowki",
+        "zabki",
+        "motylki",
+        "wilczki",
+        "kotki"
+      ],
+      "dates": [],
+      "reason": "Przedszkole zaktualizowało tabelę terminów; Przedszkole zaktualizowało tabelę terminów",
+      "firstSeen": "2026-11-05T05:12:38.991Z",
       "removedAt": null
     }
   ],
