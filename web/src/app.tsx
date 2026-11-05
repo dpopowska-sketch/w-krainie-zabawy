@@ -349,7 +349,7 @@ function Footer({ status, sourcePage }: { status: SyncStatus | null; sourcePage?
 function ThemePicker({ theme, onChange }: { theme: Theme; onChange: (t: Theme) => void }) {
   const options: { value: Theme; name: string; desc: string }[] = [
     { value: "nowoczesny", name: "Nowoczesny minimalistyczny", desc: "Prosty układ, stonowane kolory, oszczędne elementy." },
-    { value: "przyjazny", name: "Miękki i przyjazny", desc: "Pastelowe kolory, zaokrąglone karty, łagodne kształty." },
+    { value: "przyjazny", name: "Ciepły i przyjazny", desc: "Pastelowe kolory, zaokrąglone karty, łagodne kształty." },
   ];
   return (
     <section class="panel theme-picker" id="wyglad" aria-labelledby="wyglad-title">

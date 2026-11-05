@@ -10,7 +10,7 @@ import "@fontsource/geist-sans/latin-500.css";
 import "@fontsource/geist-sans/latin-600.css";
 import "@fontsource/geist-mono/latin-400.css";
 import "@fontsource/geist-mono/latin-ext-400.css";
-// Miękki i przyjazny: Bricolage Grotesque (nagłówki), Figtree (tekst).
+// Ciepły i przyjazny: Bricolage Grotesque (nagłówki), Figtree (tekst).
 import "@fontsource/bricolage-grotesque/latin-700.css";
 import "@fontsource/bricolage-grotesque/latin-ext-700.css";
 import "@fontsource/figtree/latin-400.css";

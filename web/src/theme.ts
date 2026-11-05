@@ -4,7 +4,7 @@
 export type Theme = "nowoczesny" | "przyjazny";
 
 export const THEME_KEY = "wygladStrony";
-export const DEFAULT_THEME: Theme = "nowoczesny";
+export const DEFAULT_THEME: Theme = "przyjazny";
 
 export function isTheme(value: unknown): value is Theme {
   return value === "nowoczesny" || value === "przyjazny";

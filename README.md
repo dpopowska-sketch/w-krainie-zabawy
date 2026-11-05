@@ -33,8 +33,8 @@ npm run web:build         # wersja do publikacji → dist/
 
 Vite + Preact w `web/`. Dane: `data/published/schedule.json` i `data/status.json`
 (kopiowane do `web/public/data/` przy uruchomieniu). Strona nazywa się „Plan przedszkolaka”
-i ma dwa wyglądy do wyboru przez rodzica (sekcja „Wygląd strony”): Nowoczesny minimalistyczny
-(domyślny) i Miękki i przyjazny – atrybut `data-theme` na `<html>`, zapamiętany w `localStorage`
+i ma dwa wyglądy do wyboru przez rodzica (sekcja „Wygląd strony”): Ciepły i przyjazny
+(domyślny) i Nowoczesny minimalistyczny – atrybut `data-theme` na `<html>`, zapamiętany w `localStorage`
 pod kluczem `wygladStrony` (ustawiany przed pierwszym renderem w `web/index.html`). Kolory,
 krótkie nazwy i ikony rodzajów zajęć: `web/src/kinds.tsx` + klasy `kind-*` w `web/src/styles.css`.
 Wybrany widok jest zapamiętywany na urządzeniu; grupa i widok są też w adresie

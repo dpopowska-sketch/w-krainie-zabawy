@@ -2,7 +2,7 @@
  * Plan przedszkolaka – dwa wyglądy tej samej treści (specyfikacja: „Plan przedszkolaka –
  * specyfikacja wyglądu do implementacji”). Wygląd wybiera atrybut data-theme na <html>:
  *   nowoczesny – Nowoczesny minimalistyczny (domyślny): Geist, stonowane kolory, prostokąty 10–14px,
- *   przyjazny  – Miękki i przyjazny: Bricolage Grotesque + Figtree, pastele, „pigułki”, karty 18–28px.
+ *   przyjazny  – Ciepły i przyjazny: Bricolage Grotesque + Figtree, pastele, „pigułki”, karty 18–28px.
  * Komponenty używają tylko zmiennych; kolory rodzajów zajęć są w klasach kind-<klucz>.
  * Telefon: poniżej 720px jedna kolumna.
  */
@@ -1437,7 +1437,7 @@ ul {
   flex: 1 1 260px;
 }
 
-/* ═══ Miękki i przyjazny ═══ */
+/* ═══ Ciepły i przyjazny ═══ */
 :root[data-theme="przyjazny"] .site-header {
   background: transparent;
   border: 0;
@@ -2364,7 +2364,7 @@ ul {
     flex-wrap: wrap;
   }
 
-  /* Miękki i przyjazny na telefonie */
+  /* Ciepły i przyjazny na telefonie */
   :root[data-theme="przyjazny"] .site-header {
     padding: 0;
   }
