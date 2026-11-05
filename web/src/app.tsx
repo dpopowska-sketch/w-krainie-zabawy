@@ -814,7 +814,8 @@ function Greeting(props: { byDay: Map<string, DayEntry[]>; groupName: string; gr
   const todays = activitiesOn(today);
   const count = todays.filter((i) => i.activity.status !== "cancelled").length;
   const next = count ? null : [...props.byDay.keys()].find((d) => d > today && activitiesOn(d).some((i) => i.activity.status !== "cancelled"));
-  const shown = count ? todays : next ? activitiesOn(next) : [];
+  // Odwołanych zajęć nie pokazujemy w powitaniu – są na liście i w kalendarzu.
+  const shown = (count ? todays : next ? activitiesOn(next) : []).filter((i) => i.activity.status !== "cancelled");
   const tomorrowEvent = props.groupEvents.find((e) => e.date <= tomorrow && (e.endDate ?? e.date) >= tomorrow);
 
   const headline =
