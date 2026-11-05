@@ -34,6 +34,7 @@ import {
   AddToCalendarIcon,
   CancelIcon,
   CheckIcon,
+  ChevronIcon,
   FlagIcon,
   InfoIcon,
   KNOWN_KINDS,
@@ -547,9 +548,7 @@ function GroupPage(props: {
           </button>
         </div>
       )}
-      {notices.map((n) => (
-        <NoticeCard notice={n} sourcePage={schedule.sourcePage} />
-      ))}
+      {notices.length > 0 && <NoticesBar notices={notices} sourcePage={schedule.sourcePage} />}
 
       <div class={`layout view-${props.view}`}>
         <section class={`primary${friendly ? " panel" : ""}`} aria-label={`Zajęcia – ${groupName}`}>
@@ -664,22 +663,142 @@ function MonthBar(props: {
   );
 }
 
-function NoticeCard({ notice, sourcePage }: { notice: Notice; sourcePage: string }) {
+const READ_KEY = "przeczytaneKomunikaty";
+
+function loadRead(): string[] {
+  try {
+    const value: unknown = JSON.parse(localStorage.getItem(READ_KEY) ?? "[]");
+    return Array.isArray(value) ? value.filter((v): v is string => typeof v === "string") : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveRead(ids: string[]) {
+  try {
+    localStorage.setItem(READ_KEY, JSON.stringify(ids.slice(-200)));
+  } catch {
+    /* tryb prywatny – licznik wróci po odświeżeniu */
+  }
+}
+
+/** Data komunikatu z początku treści („02.11.2026 r. – …”), a gdy jej brak – kiedy pojawił się na stronie. */
+function noticeDate(n: Notice): string {
+  const m = n.text.match(/^[\s–-]*(\d{1,2})\.(\d{1,2})\.(\d{4})/);
+  return m ? `${m[3]}-${m[2]!.padStart(2, "0")}-${m[1]!.padStart(2, "0")}` : warsawDate(n.firstSeen);
+}
+
+/** Komunikat o aktualizacji tabeli skracamy do nazw zajęć; inne pokazujemy bez zmian. */
+function noticeNames(n: Notice): string[] | null {
+  return n.kind === "info" && n.activities?.length ? n.activities.map(shortName) : null;
+}
+
+function NoticeText({ notice }: { notice: Notice }) {
+  const names = noticeNames(notice);
+  if (!names) return <>{notice.text}</>;
   return (
-    <div class={`notice notice-${notice.kind}`} role="note">
-      <span class="notice-icon">
-        <MegaphoneIcon />
-      </span>
-      <div class="notice-body">
-        <strong>Komunikat przedszkola:</strong> {notice.text}{" "}
-        <span class="muted">
-          {notice.kind === "info" ? "Harmonogram poniżej uwzględnia aktualną tabelę." : "Nie udało się automatycznie przypisać go do konkretnego terminu."}
+    <>
+      Zaktualizowano terminy:{" "}
+      {names.map((name, i) => (
+        <>
+          {i > 0 && ", "}
+          <strong>{name}</strong>
+        </>
+      ))}
+      .
+    </>
+  );
+}
+
+/** Komunikaty przedszkola: jeden zwijany pasek z najnowszym komunikatem i licznikiem nieprzeczytanych. */
+function NoticesBar(props: { notices: Notice[]; sourcePage: string }) {
+  const [open, setOpen] = useState(false);
+  const [read, setRead] = useState(loadRead);
+  // Kropki „nowy” zostają do zwinięcia listy, choć komunikaty są już zapisane jako przeczytane.
+  const [freshOnOpen, setFreshOnOpen] = useState<string[]>([]);
+  const sorted = [...props.notices].sort((a, b) => noticeDate(b).localeCompare(noticeDate(a)) || b.firstSeen.localeCompare(a.firstSeen));
+  const unread = sorted.filter((n) => !read.includes(n.id));
+  const latest = sorted[0]!;
+  const latestNames = noticeNames(latest);
+
+  useEffect(() => {
+    if (!open) {
+      setFreshOnOpen([]);
+      return;
+    }
+    const fresh = props.notices.filter((n) => !read.includes(n.id)).map((n) => n.id);
+    if (!fresh.length) return;
+    setFreshOnOpen(fresh);
+    const next = [...read, ...fresh];
+    saveRead(next);
+    setRead(next);
+  }, [open, props.notices]);
+
+  return (
+    <section class={`notices${open ? " open" : ""}`} id="komunikaty" aria-labelledby="komunikaty-tytul">
+      <div class="notices-head">
+        <span class="notices-icon">
+          <MegaphoneIcon />
         </span>
+        <div class="notices-main">
+          <span class="notices-title-line">
+            <strong id="komunikaty-tytul" class="notices-title">
+              Komunikaty<span class="notices-title-extra"> przedszkola</span>
+            </strong>
+            {!open && unread.length > 0 && (
+              <span class="notices-count">
+                {unread.length} {plural(unread.length, "nowy", "nowe", "nowych")}
+              </span>
+            )}
+          </span>
+          {!open && (
+            <span class="notices-latest">
+              <span class="notices-date">{dayMonth(noticeDate(latest))}</span>
+              <span class="notices-sep"> · </span>
+              {latestNames ? `Zaktualizowano terminy: ${latestNames.join(", ")}` : latest.text}
+            </span>
+          )}
+        </div>
+        <button
+          type="button"
+          class="notices-toggle"
+          aria-expanded={open}
+          aria-controls="komunikaty-lista"
+          aria-label={open ? "Zwiń komunikaty" : "Pokaż wszystkie komunikaty"}
+          onClick={() => setOpen(!open)}
+        >
+          <span class="notices-toggle-label">{open ? "Zwiń" : "Pokaż wszystkie"}</span>
+          <ChevronIcon dir={open ? "up" : "down"} />
+        </button>
       </div>
-      <a href={sourcePage} target="_blank" rel="noopener" class="notice-link">
-        Szczegóły i źródło
-      </a>
-    </div>
+      {open && (
+        <div id="komunikaty-lista" class="notices-body">
+          <ul class="notices-list">
+            {sorted.map((n) => (
+              <li class="notice-item">
+                <span class={`notice-dot${freshOnOpen.includes(n.id) ? " on" : ""}`}>
+                  {freshOnOpen.includes(n.id) && <span class="sr-only">Nowy: </span>}
+                </span>
+                <span class="notice-date">{dayMonth(noticeDate(n))}</span>
+                <span class="notice-text">
+                  <NoticeText notice={n} />
+                  {n.kind === "review" && <span class="muted"> Nie udało się automatycznie przypisać go do konkretnego terminu.</span>}
+                </span>
+                <a href={props.sourcePage} target="_blank" rel="noopener" class="notice-source">
+                  Źródło
+                </a>
+              </li>
+            ))}
+          </ul>
+          {sorted.some((n) => n.kind === "info") && (
+            <p class="notices-ok">
+              <CheckIcon />
+              Harmonogram już uwzględnia te zmiany.
+            </p>
+          )}
+        </div>
+      )}
+    </section>
   );
 }
 
