@@ -89,7 +89,7 @@ Grupa IV” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-co
 - Status: zaplanowane, prowadzi B. Kasza
 - Powód: Fragment tabeli był nieczytelny lub niejednoznaczny
 - Powód: Dzień tygodnia w tabeli nie pasuje do daty
-- Tabela: „Poniedziałek44 14.15 – 15.15 16.11; Gr. Górnicza I” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-0.jpg))
+- Tabela: „Poniedziałek44 14.15 – 15.15 16.11; Gr. Górnicza I” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/fb4d769cafbc7b74578f65467cc7e035-0.jpg))
 
 ```yaml
   - id: a79983dd75ed

@@ -1,0 +1,27 @@
+{
+  "text": "5.11.2026 r. – zaktualizowano godziny zajęć „Słowiki”;",
+  "textSha256": "4fba38b61b7cf25aa2c2c012023fa574f50238dd47a2c89fe54e71108736f6b7",
+  "model": "claude-opus-5-5",
+  "promptVersion": "2026-11-04.1",
+  "createdAt": "2026-11-05T16:31:13.643Z",
+  "usage": {
+    "input_tokens": 2386,
+    "output_tokens": 431
+  },
+  "output": {
+    "is_schedule_change": true,
+    "changes": [
+      {
+        "type": "table_updated",
+        "dates": [],
+        "activity_ref": "Słowiki",
+        "group_refs": [],
+        "new_date": null,
+        "new_start": null,
+        "new_end": null,
+        "uncertain": true,
+        "note": "Data 5.11.2026 to najpewniej data aktualizacji harmonogramu, a nie zajęć. Możliwe też, że zmieniono godziny zajęć Słowiki w dniu 5.11.2026 (time_changed), ale nowe godziny nie zostały podane."
+      }
+    ]
+  }
+}
