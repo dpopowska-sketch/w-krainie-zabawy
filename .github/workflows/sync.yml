@@ -2,9 +2,13 @@ name: Synchronizacja harmonogramu
 
 on:
   schedule:
-    # Czas UTC: 4:15 i 14:15 = 5:15 i 15:15 zimą / 6:15 i 16:15 latem w Polsce.
-    # GitHub może uruchomić zadanie z kilkunastominutowym opóźnieniem.
-    - cron: "15 4,14 * * *"
+    # Sprawdzenia o 8:00, 16:30 i 19:00 czasu polskiego. Cron działa w UTC, więc są dwa
+    # komplety godzin, a zadanie „czas” przepuszcza tylko ten pasujący do obecnej pory roku.
+    # GitHub może uruchomić zadanie z opóźnieniem (zwykle do godziny).
+    - cron: "0 7,18 * * *" # zima (UTC+1): 8:00 i 19:00
+    - cron: "30 15 * * *" # zima: 16:30
+    - cron: "0 6,17 * * *" # lato (UTC+2): 8:00 i 19:00
+    - cron: "30 14 * * *" # lato: 16:30
   workflow_dispatch: # przycisk „Run workflow” w zakładce Actions
   push:
     branches: [main] # zapisana decyzja lub zmiana strony → od razu nowa wersja
@@ -20,7 +24,25 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Przy uruchomieniu z harmonogramu: czy ten cron jest dla obecnej pory roku (zima/lato w Polsce)?
+  # Liczy się, który cron uruchomił zadanie, a nie godzina startu – opóźnienie GitHuba nie przeszkadza.
+  czas:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.check.outputs.run }}
+    steps:
+      - id: check
+        run: |
+          case "${{ github.event.schedule }}" in
+            "") run=true ;;
+            "0 7,18 * * *"|"30 15 * * *") [ "$(TZ=Europe/Warsaw date +%z)" = "+0100" ] && run=true || run=false ;;
+            *) [ "$(TZ=Europe/Warsaw date +%z)" = "+0200" ] && run=true || run=false ;;
+          esac
+          echo "run=$run" >> "$GITHUB_OUTPUT"
+
   sync:
+    needs: czas
+    if: needs.czas.outputs.run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     environment:

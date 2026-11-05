@@ -55,8 +55,8 @@ tylko bieżący miesiąc i widoczne grupy. Pełne dane zostają w repozytorium.
 
 ## Automatyczna synchronizacja
 
-`.github/workflows/sync.yml` uruchamia `npm run sync` w GitHub Actions dwa razy dziennie
-(ok. 5:15 i 15:15 zimą, 6:15 i 16:15 latem), po każdej zmianie w repozytorium oraz ręcznie
+`.github/workflows/sync.yml` uruchamia `npm run sync` w GitHub Actions trzy razy dziennie
+(8:00, 16:30 i 19:00 czasu polskiego; GitHub bywa spóźniony, zwykle do godziny), po każdej zmianie w repozytorium oraz ręcznie
 (zakładka **Actions** → **Synchronizacja harmonogramu** → **Run workflow**), a następnie
 publikuje stronę na GitHub Pages – także po błędzie synchronizacji (z ostatnimi sprawdzonymi
 danymi i ostrzeżeniem). Wymaga sekretu `ANTHROPIC_API_KEY` oraz włączonego GitHub Pages
