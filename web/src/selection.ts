@@ -95,12 +95,6 @@ export function shortCode(key: string): string {
   return (h >>> 0).toString(36).padStart(6, "0").slice(-6);
 }
 
-/** Link z wyborem: kody rodzajów zajęć w parametrze „moje”. */
-export function shareLink(group: string, selection: Selection): string {
-  const params = new URLSearchParams({ grupa: group, moje: selection.selected.map(shortCode).join(".") });
-  return `${location.origin}${location.pathname}#${params}`;
-}
-
 /** Zamienia kody z linku na rodzaje zajęć z bieżącego harmonogramu. */
 export function selectionFromCodes(codes: string, types: ActivityType[]): Selection | null {
   const wanted = new Set(codes.split(".").filter(Boolean));

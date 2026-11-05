@@ -9,7 +9,7 @@ Niepublikowane do czasu decyzji.
 
 Brak.
 
-## Terminy (10)
+## Terminy (8)
 
 ### 2026-10-06 07:30–08:30 · Motylki · Zajęcia rozwijające kompetencje kluczowe z wykorzystaniem robotyki i programowania
 
@@ -42,32 +42,6 @@ Brak.
 
 ```yaml
   - id: d45b988a2130
-    action: confirm   # albo: hide / edit (z polem set)
-```
-
-### 2026-11-05 14:30–15:30 · Motylki · Zajęcia Przedszkolak Mały projektant i technolog
-
-- Status: zaplanowane, prowadzi K. Wilczek
-- Powód: Ogłoszenie o zmianie zostało usunięte ze strony przed terminem zajęć
-- Tabela: „Czwartek 14.30 – 15.30 05.11; Gr. Miki” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-0.jpg))
-- Ogłoszenie: „dodano zajęcia 05.11.2026 r., 14.30 – 15.30 – Przedszkolak Mały projektant i technolog – grupa Miki”
-- Ogłoszenie: „dodano zajęcia 05.11.2026 r., 14.30 – 15.30 – Przedszkolak Mały projektant i technolog – grupa Miki;”
-
-```yaml
-  - id: b54d6ea4992c
-    action: confirm   # albo: hide / edit (z polem set)
-```
-
-### 2026-11-05 14:30–15:30 · Wilczki · Zajęcia Przedszkolak Mały projektant i technolog
-
-- Status: zaplanowane, prowadzi K. Wilczek
-- Powód: Ogłoszenie o zmianie zostało usunięte ze strony przed terminem zajęć
-- Tabela: „Czwartek 14.30 -15.30 05.11; Gr. Miki” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-0.jpg))
-- Ogłoszenie: „dodano zajęcia 05.11.2026 r., 14.30 – 15.30 – Przedszkolak Mały projektant i technolog – grupa Miki”
-- Ogłoszenie: „dodano zajęcia 05.11.2026 r., 14.30 – 15.30 – Przedszkolak Mały projektant i technolog – grupa Miki;”
-
-```yaml
-  - id: e2c115f98871
     action: confirm   # albo: hide / edit (z polem set)
 ```
 

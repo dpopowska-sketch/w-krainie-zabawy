@@ -165,16 +165,23 @@ export function applyTableReplacements(activities: Map<string, PublishedActivity
   }
 }
 
-function applyAnnouncements(activities: Map<string, PublishedActivity>, entries: ChangeEntry[], notices: Notice[], schedule: ScheduledOccurrence[]) {
+function applyAnnouncements(
+  activities: Map<string, PublishedActivity>,
+  entries: ChangeEntry[],
+  notices: Notice[],
+  schedule: ScheduledOccurrence[],
+  inCurrentTable: Set<string>,
+) {
   const config = loadGroups();
   for (const entry of entries) {
     if (!entry.isScheduleChange) continue;
     const source: Source = { type: "announcement", text: entry.text, firstSeen: entry.firstSeen, removedAt: entry.removedAt };
-    const touch = (a: PublishedActivity) => {
+    const touch = (a: PublishedActivity, confirmedByTable = false) => {
       a.sources.push(source);
       if (entry.firstSeen > a.updatedAt) a.updatedAt = entry.firstSeen;
       // Ogłoszenie zniknęło ze strony przed terminem zajęć – nie wiemy, czy zmiana nadal obowiązuje.
-      if (entry.removedAt && a.date >= entry.removedAt.slice(0, 10)) {
+      // Nie dotyczy dodanych zajęć, które są w aktualnej tabeli: wtedy tabela je potwierdza.
+      if (entry.removedAt && !confirmedByTable && a.date >= entry.removedAt.slice(0, 10)) {
         a.verification = "needs_review";
         a.reviewReasons.push("Ogłoszenie o zmianie zostało usunięte ze strony przed terminem zajęć");
       }
@@ -200,7 +207,7 @@ function applyAnnouncements(activities: Map<string, PublishedActivity>, entries:
           const id = activityId(effect.group, effect.date, effect.start, effect.activity);
           const existing = activities.get(id);
           if (existing) {
-            touch(existing);
+            touch(existing, inCurrentTable.has(id));
             continue;
           }
           const added: PublishedActivity = {
@@ -413,7 +420,8 @@ export function build(): { schedule: PublishedSchedule; published: PublishedSche
   const entries = resolveAll(records, index, occurrences);
 
   const notices: Notice[] = [];
-  applyAnnouncements(activities, entries, notices, occurrences);
+  const inCurrentTable = new Set(occurrences.filter((o) => !removedAt.get(o.sourceSha256)).map((o) => activityId(o.group, o.date, o.start, o.activity)));
+  applyAnnouncements(activities, entries, notices, occurrences, inCurrentTable);
   const loaded = loadEvents();
   const events = loaded.events;
   const problems = [...loaded.problems, ...applyDecisions(activities, notices, events, loadDecisions())];

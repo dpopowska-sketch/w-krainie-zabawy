@@ -511,5 +511,25 @@
       "dodano zajęcia 05.11.2026 r., 14.30 – 15.30 – Przedszkolak Mały projektant i technolog – grupa Miki",
       "dodano zajęcia 05.11.2026 r., 14.30 – 15.30 – Przedszkolak Mały projektant i technolog – grupa Miki;"
     ]
+  },
+  {
+    "id": "e2c115f98871",
+    "month": "2026-11",
+    "activity": "Zajęcia Przedszkolak Mały projektant i technolog",
+    "date": "2026-11-05",
+    "start": "14:30",
+    "at": "2026-11-05T06:38:28.868Z",
+    "kind": "changed",
+    "changes": {
+      "weryfikacja": [
+        "do weryfikacji",
+        "zweryfikowane"
+      ]
+    },
+    "status": "scheduled",
+    "announcements": [
+      "dodano zajęcia 05.11.2026 r., 14.30 – 15.30 – Przedszkolak Mały projektant i technolog – grupa Miki",
+      "dodano zajęcia 05.11.2026 r., 14.30 – 15.30 – Przedszkolak Mały projektant i technolog – grupa Miki;"
+    ]
   }
 ]

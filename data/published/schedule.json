@@ -156,10 +156,8 @@
       "subgroup": null,
       "status": "scheduled",
       "previous": null,
-      "verification": "needs_review",
-      "reviewReasons": [
-        "Ogłoszenie o zmianie zostało usunięte ze strony przed terminem zajęć"
-      ],
+      "verification": "verified",
+      "reviewReasons": [],
       "warnings": [],
       "sources": [
         {

@@ -40,7 +40,6 @@ import {
   KindIcon,
   MegaphoneIcon,
   PaletteIcon,
-  ShareIcon,
   StarIcon,
   WarnIcon,
   WolfLogo,
@@ -57,7 +56,6 @@ import {
   sameKind,
   saveSelection,
   selectionFromCodes,
-  shareLink,
   unseenTypes,
   type ActivityType,
   type Selection,
@@ -449,22 +447,6 @@ function GroupPage(props: {
     if (!next.length) setShowAll(false);
   };
 
-  const share = async () => {
-    if (!selection) return;
-    const url = shareLink(group, selection);
-    try {
-      if (navigator.share) {
-        await navigator.share({ title: "Moje zajęcia – Plan przedszkolaka", url });
-        return;
-      }
-      await navigator.clipboard.writeText(url);
-      setInfo("Skopiowano link z wybranymi zajęciami. Otwórz go na innym urządzeniu albo wyślij drugiemu rodzicowi.");
-    } catch (err) {
-      if (err instanceof DOMException && err.name === "AbortError") return; // rodzic zamknął okno udostępniania
-      setInfo(`Link z wybranymi zajęciami: ${url}`);
-    }
-  };
-
   const openEditor = () => {
     setEditing(true);
     requestAnimationFrame(() => document.getElementById("moje-zajecia")?.scrollIntoView({ behavior: "smooth", block: "start" }));
@@ -611,7 +593,6 @@ function GroupPage(props: {
               onSave={save}
               onEdit={openEditor}
               onCancel={() => setEditing(false)}
-              onShare={share}
             />
           )}
         </aside>
@@ -724,6 +705,21 @@ function Greeting(props: { byDay: Map<string, DayEntry[]>; groupName: string; gr
         ? "Dzień dobry! Dziś dzieci czekają jedne zajęcia."
         : `Dzień dobry! Dziś dzieci ${plural(count, "czekają", "czekają", "czeka")} ${count} ${plural(count, "zajęcia", "zajęcia", "zajęć")}.`;
 
+  const reminder = tomorrowEvent && (
+    <div class="reminder">
+      <span class="event-tile">
+        <FlagIcon />
+      </span>
+      <span class="reminder-text">
+        <strong>
+          Jutro, {dayMonth(tomorrow)}: {tomorrowEvent.title}.
+        </strong>{" "}
+        {tomorrowEvent.details}
+      </span>
+      <AddToCalendar event={schoolCalendarEvent(tomorrowEvent, props.groupName, pageUrl())} label={tomorrowEvent.title} />
+    </div>
+  );
+
   return (
     <section class="panel greeting" aria-labelledby="greeting-title">
       <div class="greeting-head">
@@ -733,6 +729,8 @@ function Greeting(props: { byDay: Map<string, DayEntry[]>; groupName: string; gr
         <h1 id="greeting-title">{headline}</h1>
         {!count && next && <span class="muted">Najbliższe zajęcia: {formatDay(next).toLocaleLowerCase("pl")}</span>}
       </div>
+      {/* Chronologicznie: dzisiejsze zajęcia → jutrzejsze wydarzenie → najbliższe zajęcia (od jutra). */}
+      {!count && reminder}
       {shown.length > 0 && (
         <ul class="greeting-cards">
           {shown.map((i) => (
@@ -740,20 +738,7 @@ function Greeting(props: { byDay: Map<string, DayEntry[]>; groupName: string; gr
           ))}
         </ul>
       )}
-      {tomorrowEvent && (
-        <div class="reminder">
-          <span class="event-tile">
-            <FlagIcon />
-          </span>
-          <span class="reminder-text">
-            <strong>
-              Jutro, {dayMonth(tomorrow)}: {tomorrowEvent.title}.
-            </strong>{" "}
-            {tomorrowEvent.details}
-          </span>
-          <AddToCalendar event={schoolCalendarEvent(tomorrowEvent, props.groupName, pageUrl())} label={tomorrowEvent.title} />
-        </div>
-      )}
+      {count > 0 && reminder}
     </section>
   );
 }
@@ -1074,7 +1059,6 @@ function MyActivitiesCard(props: {
   onSave: (s: Selection | null) => void;
   onEdit: () => void;
   onCancel: () => void;
-  onShare: () => void;
 }) {
   const chosen = props.types.filter((t) => props.selection?.selected.some((s) => sameKind(s, t.key)));
   const showEditor = props.editing || !props.selection;
@@ -1095,7 +1079,6 @@ function MyActivitiesCard(props: {
           friendly={props.friendly}
           onSave={props.onSave}
           onCancel={props.friendly && props.selection ? props.onCancel : undefined}
-          onShare={props.selection ? props.onShare : undefined}
         />
       ) : (
         <>
@@ -1107,10 +1090,6 @@ function MyActivitiesCard(props: {
           <div class="btn-row">
             <button type="button" class="btn" onClick={props.onEdit}>
               Zmień wybór
-            </button>
-            <button type="button" class="btn" onClick={props.onShare}>
-              <ShareIcon />
-              Udostępnij drugiemu rodzicowi
             </button>
           </div>
         </>
@@ -1126,7 +1105,6 @@ function SelectionEditor(props: {
   friendly: boolean;
   onSave: (s: Selection | null) => void;
   onCancel?: () => void;
-  onShare?: () => void;
 }) {
   const initiallyChecked = props.types.filter((t) => props.selection?.selected.some((s) => sameKind(s, t.key))).map((t) => t.key);
   const [checked, setChecked] = useState<string[]>(initiallyChecked);
@@ -1172,12 +1150,6 @@ function SelectionEditor(props: {
         <button type="button" class="btn btn-primary btn-grow" onClick={save}>
           {props.friendly ? `Zapisz (${checked.length})` : "Zapisz wybór"}
         </button>
-        {props.onShare && !props.friendly && (
-          <button type="button" class="btn" onClick={props.onShare}>
-            <ShareIcon />
-            Udostępnij
-          </button>
-        )}
       </div>
       {checked.length > 0 && (
         <button type="button" class="link-btn" onClick={() => setChecked([])}>
