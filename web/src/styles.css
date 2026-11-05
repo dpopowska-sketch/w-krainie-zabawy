@@ -548,7 +548,6 @@ ul {
   border: 1px solid var(--notice-line);
   border-radius: 12px;
   overflow: hidden;
-  scroll-margin-top: 16px;
 }
 .notices-head {
   display: flex;
@@ -677,11 +676,6 @@ ul {
   background: var(--accent-tint);
   font-size: 13px;
   color: #067647;
-}
-.badge-table {
-  color: var(--accent-ink);
-  background: var(--accent-soft);
-  text-decoration: none;
 }
 
 /* ── Dwie kolumny ── */
@@ -1653,10 +1647,6 @@ ul {
   padding: 0;
   font-size: 14px;
   color: #1c5a43;
-}
-:root[data-theme="przyjazny"] .badge-table {
-  color: #fff;
-  background: #5b4bb7;
 }
 
 /* Powitanie */

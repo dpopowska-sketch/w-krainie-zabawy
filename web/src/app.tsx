@@ -414,7 +414,6 @@ function GroupPage(props: {
   const [showAll, setShowAll] = useState(false);
   const [editing, setEditing] = useState(false);
   const [info, setInfo] = useState<string | null>(null);
-  const [noticesOpen, setNoticesOpen] = useState(false);
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
 
   // Wybór z linku zapisujemy na tym urządzeniu.
@@ -490,18 +489,7 @@ function GroupPage(props: {
   const days = [...byDay.keys()];
   const day = selectedDay ?? (byDay.has(today) ? today : (days.find((d) => d >= today) ?? days.at(-1) ?? null));
 
-  // Zajęcia, których dotyczy komunikat z bieżącego miesiąca → etykieta „Zmiana w tabeli d.mm” na karcie.
-  const tableChanges = new Map<string, string>();
-  for (const n of notices) {
-    const date = noticeDate(n);
-    if (!date.startsWith(prefix)) continue;
-    for (const name of n.activities ?? []) if ((tableChanges.get(name) ?? "") < date) tableChanges.set(name, date);
-  }
-  const openNotices = () => {
-    setNoticesOpen(true);
-    requestAnimationFrame(() => document.getElementById("komunikaty")?.scrollIntoView({ behavior: "smooth", block: "start" }));
-  };
-  const ctx: CardContext = { groupName, mine, toggleMine, tableChange: (a) => tableChanges.get(a.activity) ?? null, openNotices };
+  const ctx: CardContext = { groupName, mine, toggleMine };
   const summary = {
     activities: groupActivities.filter((a) => a.date.startsWith(prefix)).length,
     events: groupEvents.length,
@@ -560,7 +548,7 @@ function GroupPage(props: {
           </button>
         </div>
       )}
-      {notices.length > 0 && <NoticesBar notices={notices} sourcePage={schedule.sourcePage} open={noticesOpen} setOpen={setNoticesOpen} />}
+      {notices.length > 0 && <NoticesBar notices={notices} sourcePage={schedule.sourcePage} />}
 
       <div class={`layout view-${props.view}`}>
         <section class={`primary${friendly ? " panel" : ""}`} aria-label={`Zajęcia – ${groupName}`}>
@@ -618,9 +606,6 @@ interface CardContext {
   groupName: string;
   mine: (a: PublishedActivity) => boolean;
   toggleMine: (a: PublishedActivity) => void;
-  /** Data (YYYY-MM-DD) komunikatu o zmianie w tabeli dla tych zajęć albo null. */
-  tableChange: (a: PublishedActivity) => string | null;
-  openNotices: () => void;
 }
 
 function MonthBar(props: {
@@ -726,7 +711,8 @@ function NoticeText({ notice }: { notice: Notice }) {
 }
 
 /** Komunikaty przedszkola: jeden zwijany pasek z najnowszym komunikatem i licznikiem nieprzeczytanych. */
-function NoticesBar(props: { notices: Notice[]; sourcePage: string; open: boolean; setOpen: (open: boolean) => void }) {
+function NoticesBar(props: { notices: Notice[]; sourcePage: string }) {
+  const [open, setOpen] = useState(false);
   const [read, setRead] = useState(loadRead);
   // Kropki „nowy” zostają do zwinięcia listy, choć komunikaty są już zapisane jako przeczytane.
   const [freshOnOpen, setFreshOnOpen] = useState<string[]>([]);
@@ -736,7 +722,7 @@ function NoticesBar(props: { notices: Notice[]; sourcePage: string; open: boolea
   const latestNames = noticeNames(latest);
 
   useEffect(() => {
-    if (!props.open) {
+    if (!open) {
       setFreshOnOpen([]);
       return;
     }
@@ -746,10 +732,10 @@ function NoticesBar(props: { notices: Notice[]; sourcePage: string; open: boolea
     const next = [...read, ...fresh];
     saveRead(next);
     setRead(next);
-  }, [props.open, props.notices]);
+  }, [open, props.notices]);
 
   return (
-    <section class={`notices${props.open ? " open" : ""}`} id="komunikaty" aria-labelledby="komunikaty-tytul">
+    <section class={`notices${open ? " open" : ""}`} id="komunikaty" aria-labelledby="komunikaty-tytul">
       <div class="notices-head">
         <span class="notices-icon">
           <MegaphoneIcon />
@@ -759,13 +745,13 @@ function NoticesBar(props: { notices: Notice[]; sourcePage: string; open: boolea
             <strong id="komunikaty-tytul" class="notices-title">
               Komunikaty<span class="notices-title-extra"> przedszkola</span>
             </strong>
-            {!props.open && unread.length > 0 && (
+            {!open && unread.length > 0 && (
               <span class="notices-count">
                 {unread.length} {plural(unread.length, "nowy", "nowe", "nowych")}
               </span>
             )}
           </span>
-          {!props.open && (
+          {!open && (
             <span class="notices-latest">
               <span class="notices-date">{dayMonth(noticeDate(latest))}</span>
               <span class="notices-sep"> · </span>
@@ -776,16 +762,16 @@ function NoticesBar(props: { notices: Notice[]; sourcePage: string; open: boolea
         <button
           type="button"
           class="notices-toggle"
-          aria-expanded={props.open}
+          aria-expanded={open}
           aria-controls="komunikaty-lista"
-          aria-label={props.open ? "Zwiń komunikaty" : "Pokaż wszystkie komunikaty"}
-          onClick={() => props.setOpen(!props.open)}
+          aria-label={open ? "Zwiń komunikaty" : "Pokaż wszystkie komunikaty"}
+          onClick={() => setOpen(!open)}
         >
-          <span class="notices-toggle-label">{props.open ? "Zwiń" : "Pokaż wszystkie"}</span>
-          <ChevronIcon dir={props.open ? "up" : "down"} />
+          <span class="notices-toggle-label">{open ? "Zwiń" : "Pokaż wszystkie"}</span>
+          <ChevronIcon dir={open ? "up" : "down"} />
         </button>
       </div>
-      {props.open && (
+      {open && (
         <div id="komunikaty-lista" class="notices-body">
           <ul class="notices-list">
             {sorted.map((n) => (
@@ -970,7 +956,6 @@ function ActivityRow({ item, ctx, compact = false }: { item: DayItem; ctx: CardC
   const isMine = ctx.mine(a);
   const time = item.movedAway ? formatTimeRange(a.previous!.start, a.previous!.end) : formatTimeRange(a.start, a.end);
   const event = !ghost && a.date >= today ? calendarEvent(a, ctx.groupName, pageUrl()) : null;
-  const tableChange = ctx.tableChange(a);
   const meta = [a.teacher, a.subgroup && `podgrupa ${a.subgroup}`, a.location && `miejsce: ${a.location}`].filter(Boolean).join(" · ");
 
   return (
@@ -991,18 +976,6 @@ function ActivityRow({ item, ctx, compact = false }: { item: DayItem; ctx: CardC
             {shortName(a.activity)}
           </span>
           <Badges item={item} />
-          {tableChange && (
-            <a
-              href="#komunikaty"
-              class="badge badge-table"
-              onClick={(e) => {
-                e.preventDefault();
-                ctx.openNotices();
-              }}
-            >
-              Zmiana w tabeli {dayMonth(tableChange)}
-            </a>
-          )}
         </div>
         {meta && <span class="row-meta">{meta}</span>}
         {review && <span class="row-warning">Termin niepotwierdzony – sprawdź go przed zajęciami.</span>}
