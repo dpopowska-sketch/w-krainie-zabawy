@@ -41,6 +41,7 @@ import {
   KindIcon,
   MegaphoneIcon,
   PaletteIcon,
+  PhoneIcon,
   StarIcon,
   WarnIcon,
   WolfLogo,
@@ -762,7 +763,7 @@ function GroupPage(props: {
               onCancel={() => setEditing(false)}
             />
           )}
-          <PhoneCalendarCard group={group} selection={selection} />
+          <PhoneCalendarCard group={group} selection={selection} types={types} />
         </aside>
       </div>
 
@@ -1305,10 +1306,12 @@ function AddToCalendar({ event, label }: { event: CalendarEvent; label: string }
 }
 
 /** „Kalendarz w telefonie”: subskrypcja, którą telefon sam odświeża (iPhone – webcal, Android – Kalendarz Google). */
-function PhoneCalendarCard({ group, selection }: { group: string; selection: Selection | null }) {
-  const [onlyMine, setOnlyMine] = useState(false);
+function PhoneCalendarCard({ group, selection, types }: { group: string; selection: Selection | null; types: ActivityType[] }) {
+  // Kto wybrał zajęcia gwiazdką, dostaje domyślnie swój kalendarz.
+  const [onlyMine, setOnlyMine] = useState(true);
   const [copied, setCopied] = useState(false);
   const mine = onlyMine && selection !== null;
+  const chosen = selection ? types.filter((t) => selection.selected.some((s) => sameKind(s, t.key))).map((t) => shortName(t.name)) : [];
   const url = feedUrl(group, mine ? selectionCodes(selection.selected) : null);
   const webcal = url.replace(/^https:/, "webcal:");
   const choose = (next: boolean) => {
@@ -1336,15 +1339,25 @@ function PhoneCalendarCard({ group, selection }: { group: string; selection: Sel
         <button type="button" aria-pressed={mine} disabled={!selection} onClick={() => choose(true)}>
           <StarIcon filled size={15} />
           Moje zajęcia
+          {selection && <span class="count-pill">{selection.selected.length}</span>}
         </button>
       </div>
       {!selection && <p class="muted small">Aby dodać tylko zajęcia dziecka, najpierw zaznacz je gwiazdką „Moje”.</p>}
-      <div class="btn-row">
-        <a class="btn btn-primary btn-grow" href={webcal}>
-          iPhone
+      {mine && chosen.length > 0 && <p class="phone-cal-chosen">{chosen.join(", ")} + wydarzenia grupy</p>}
+      <div class="phone-btns">
+        <a class="btn phone-btn" href={webcal}>
+          <PhoneIcon />
+          <span>
+            iPhone
+            <small>Kalendarz Apple</small>
+          </span>
         </a>
-        <a class="btn btn-grow" href={`https://calendar.google.com/calendar/r?cid=${encodeURIComponent(webcal)}`} target="_blank" rel="noopener">
-          Android (Google)
+        <a class="btn phone-btn" href={`https://calendar.google.com/calendar/r?cid=${encodeURIComponent(webcal)}`} target="_blank" rel="noopener">
+          <PhoneIcon />
+          <span>
+            Android
+            <small>Kalendarz Google</small>
+          </span>
         </a>
       </div>
       <button type="button" class="link-btn" onClick={copy}>

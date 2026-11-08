@@ -159,6 +159,15 @@ export function AddToCalendarIcon({ size = 18 }: { size?: number }) {
   );
 }
 
+export function PhoneIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+      <rect x="6" y="2.5" width="12" height="19" rx="3" />
+      <path d="M10.5 18.5h3" />
+    </svg>
+  );
+}
+
 export function MegaphoneIcon({ size = 18 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
