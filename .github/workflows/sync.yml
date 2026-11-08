@@ -144,3 +144,15 @@ jobs:
       - name: Publikacja strony
         id: deploy
         uses: actions/deploy-pages@v4
+
+      # Okres próbny: ta sama strona trafia też na Cloudflare Pages (docelowe miejsce, repo będzie prywatne).
+      # Projekt zakłada się sam przy pierwszej publikacji. Błąd tutaj nie blokuje GitHub Pages.
+      - name: Publikacja na Cloudflare
+        continue-on-error: true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          npx --yes wrangler@4 pages project list | grep -qw wilczki-kalendarz \
+            || npx --yes wrangler@4 pages project create wilczki-kalendarz --production-branch=main
+          npx --yes wrangler@4 pages deploy dist --project-name=wilczki-kalendarz --branch=main --commit-dirty=true
