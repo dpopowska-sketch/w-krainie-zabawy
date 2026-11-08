@@ -29,6 +29,12 @@ export type Decision =
   | { id: string; action: "confirm"; note?: string }
   | { id: string; action: "hide"; note?: string }
   | { id: string; action: "edit"; set: Partial<Pick<PublishedActivity, "date" | "start" | "end" | "teacher" | "activity" | "status">>; note?: string }
+  | {
+      id: string;
+      action: "add";
+      set: Pick<PublishedActivity, "group" | "activity" | "date" | "start"> & Partial<Pick<PublishedActivity, "end" | "teacher">>;
+      note?: string;
+    }
   | { notice: string; action: "dismiss"; note?: string }
   | { event: string; action: "confirm" | "hide"; note?: string }
   | { event: string; action: "edit"; set: Partial<Pick<SchoolEvent, "date" | "endDate" | "start" | "end" | "title" | "details">>; note?: string };
@@ -296,6 +302,29 @@ export function applyDecisions(activities: Map<string, PublishedActivity>, notic
       const idx = notices.findIndex((n) => n.id.startsWith(String(d.notice)));
       if (idx < 0) problems.push(`Decyzja dotyczy nieistniejącego komunikatu: ${d.notice}`);
       else notices.splice(idx, 1);
+      continue;
+    }
+    // Termin spoza tabeli przedszkola (np. próba subskrypcji kalendarza). Kolejne decyzje mogą go zmienić po tym samym id.
+    if (d.action === "add") {
+      if (activities.has(String(d.id))) {
+        problems.push(`Decyzja „add” – termin ${d.id} już istnieje`);
+        continue;
+      }
+      activities.set(String(d.id), {
+        id: String(d.id),
+        ...d.set,
+        teacher: d.set.teacher ?? null,
+        end: d.set.end ?? null,
+        location: null,
+        subgroup: null,
+        status: "scheduled",
+        previous: null,
+        verification: "verified",
+        reviewReasons: [],
+        warnings: [],
+        sources: [{ type: "manual", note: d.note ?? null }],
+        updatedAt: d.set.date,
+      });
       continue;
     }
     const a = activities.get(String(d.id));

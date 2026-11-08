@@ -613,6 +613,24 @@
       "updatedAt": "2026-11-05T16:29:29.695Z"
     },
     {
+      "id": "test-kalendarza",
+      "group": "wilczki",
+      "activity": "Test",
+      "date": "2026-11-12",
+      "start": "10:00",
+      "end": "11:00",
+      "teacher": null,
+      "location": null,
+      "subgroup": null,
+      "status": "scheduled",
+      "previous": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [],
+      "updatedAt": "2026-11-12"
+    },
+    {
       "id": "8af1cbc00a27",
       "group": "wilczki",
       "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",

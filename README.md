@@ -84,7 +84,7 @@ po zmianie w repozytorium i przy ręcznym uruchomieniu.
 ## Weryfikacja ręczna
 
 - `review/pending.md` – lista pozycji do sprawdzenia (generowana automatycznie).
-- `review/decisions.yaml` – Twoje decyzje: `confirm`, `hide`, `edit`, `dismiss`.
+- `review/decisions.yaml` – Twoje decyzje: `confirm`, `hide`, `edit`, `dismiss`, `add` (termin spoza tabeli).
 
 Gdy strona przedszkola jest niedostępna albo odczyt się nie powiedzie, dane nie są
 usuwane ani nadpisywane – błąd trafia do `data/status.json`.

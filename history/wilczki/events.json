@@ -619,5 +619,16 @@
     "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
     "date": "2026-11-13",
     "start": "12:45"
+  },
+  {
+    "id": "test-kalendarza",
+    "month": "2026-11",
+    "activity": "Test",
+    "at": "2026-11-08T18:01:45.459Z",
+    "kind": "added",
+    "date": "2026-11-12",
+    "start": "10:00",
+    "status": "scheduled",
+    "announcements": []
   }
 ]

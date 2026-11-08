@@ -68,6 +68,26 @@ test("decyzje: confirm publikuje, edit poprawia, hide usuwa", () => {
   assert.equal(problems.length, 1);
 });
 
+test("decyzje: add dodaje termin spoza tabeli, późniejszy edit go przenosi", () => {
+  const activities = new Map();
+  const problems = applyDecisions(
+    activities,
+    [],
+    [],
+    [
+      { id: "test-1", action: "add", set: { group: "wilczki", activity: "Test", date: "2026-11-12", start: "10:00", end: "11:00" } },
+      { id: "test-1", action: "edit", set: { date: "2026-11-13", status: "rescheduled" } },
+      { id: "test-1", action: "add", set: { group: "wilczki", activity: "Test", date: "2026-11-14", start: "10:00" } },
+    ],
+  );
+  const a = activities.get("test-1")!;
+  assert.equal(a.date, "2026-11-13");
+  assert.equal(a.status, "rescheduled");
+  assert.deepEqual(a.previous, { date: "2026-11-12", start: "10:00", end: "11:00" });
+  assert.equal(a.verification, "verified");
+  assert.equal(problems.length, 1);
+});
+
 test("wielodniowe wydarzenie – każdy dzień zakresu", () => {
   assert.deepEqual(daysBetween("2026-11-28", "2026-12-02"), ["2026-11-28", "2026-11-29", "2026-11-30", "2026-12-01", "2026-12-02"]);
   assert.deepEqual(daysBetween("2026-11-05", "2026-11-05"), ["2026-11-05"]);

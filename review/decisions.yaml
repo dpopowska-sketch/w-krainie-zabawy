@@ -26,10 +26,29 @@
 #   - event: <identyfikator wydarzenia przedszkolnego>
 #     action: confirm          # opublikuj mimo wątpliwości (albo: hide – nie pokazuj)
 #
+#   - id: <własny identyfikator, np. test-1>
+#     action: add            # dodaj termin spoza tabeli (np. próba kalendarza w telefonie)
+#     set:
+#       group: wilczki
+#       activity: "Test"
+#       date: "2026-11-12"
+#       start: "10:00"
+#       end: "11:00"
+#
 #   - event: <identyfikator wydarzenia przedszkolnego>
 #     action: edit             # popraw i opublikuj
 #     set:
 #       date: "2026-11-12"
 #       title: "Zebranie z rodzicami"
 
-decisions: []
+decisions:
+  # Próba „Kalendarz w telefonie” (2026-11-08) – usunąć po teście.
+  - id: test-kalendarza
+    action: add
+    set:
+      group: wilczki
+      activity: "Test"
+      date: "2026-11-12"
+      start: "10:00"
+      end: "11:00"
+    note: "próba subskrypcji kalendarza"
