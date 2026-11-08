@@ -43,9 +43,8 @@ jobs:
     if: needs.czas.outputs.run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
     steps:
       # Zawsze najnowszy kod z main – także przy „Re-run” starego uruchomienia,
       # który inaczej opublikowałby z powrotem starą wersję strony.
@@ -99,31 +98,49 @@ jobs:
           git push
           echo "changed=true" >> "$GITHUB_OUTPUT"
 
-      # Strona jest publikowana tylko wtedy, gdy coś się zmieniło: dane, błąd synchronizacji (ostrzeżenie dla
-      # rodziców) albo raz dziennie czas sprawdzenia. Po zmianie w repozytorium i ręcznym uruchomieniu – zawsze.
-      - name: Budowanie strony
-        id: build
-        if: steps.commit.outputs.changed == 'true' || github.event_name != 'schedule'
-        run: |
-          # Jadłospis (osobny workflow) mógł w międzyczasie zapisać nowe dane.
-          git pull --ff-only || echo "::warning::Nie udało się pobrać najnowszych danych – strona z danymi z początku uruchomienia."
-          npm run web:build
-
-      - uses: actions/configure-pages@v5
-        if: steps.build.outcome == 'success'
-
-      - uses: actions/upload-pages-artifact@v3
-        if: steps.build.outcome == 'success'
-        with:
-          path: dist
-
-      - name: Publikacja strony
-        id: deploy
-        if: steps.build.outcome == 'success'
-        uses: actions/deploy-pages@v4
-
       - name: Zgłoszenie błędu synchronizacji
         if: steps.sync.outcome == 'failure' || steps.commit.outcome == 'failure'
         run: |
           echo "::error::Synchronizacja lub zapis zakończyły się błędem – szczegóły w krokach powyżej i w data/status.json"
           exit 1
+
+  # Tylko gdy coś się zmieniło: dane, błąd synchronizacji (ostrzeżenie dla rodziców) albo raz dziennie czas
+  # sprawdzenia; po zmianie w repozytorium i ręcznym uruchomieniu – zawsze. Także po błędzie synchronizacji.
+  # Publikacja strony – osobne zadanie ze wspólną kolejką „pages” (także dla menu.yml), więc dwie publikacje
+  # nigdy nie ruszają naraz. Strona jest budowana z najnowszego main, dlatego pominięcie starszej publikacji
+  # czekającej w kolejce niczego nie gubi.
+  strona:
+    needs: sync
+    if: ${{ !cancelled() && needs.sync.result != 'skipped' && (needs.sync.outputs.changed == 'true' || github.event_name != 'schedule') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - run: npm ci
+
+      - name: Budowanie strony
+        run: npm run web:build
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Publikacja strony
+        id: deploy
+        uses: actions/deploy-pages@v4

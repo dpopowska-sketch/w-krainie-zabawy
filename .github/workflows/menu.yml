@@ -22,9 +22,8 @@ jobs:
   menu:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -76,26 +75,48 @@ jobs:
           git push
           echo "changed=true" >> "$GITHUB_OUTPUT"
 
-      # Commit z GITHUB_TOKEN nie uruchamia synchronizacji harmonogramu, więc stronę publikujemy tutaj.
-      - name: Budowanie strony
-        if: steps.commit.outputs.changed == 'true'
-        run: npm run web:build
-
-      - uses: actions/configure-pages@v5
-        if: steps.commit.outputs.changed == 'true'
-
-      - uses: actions/upload-pages-artifact@v3
-        if: steps.commit.outputs.changed == 'true'
-        with:
-          path: dist
-
-      - name: Publikacja strony
-        id: deploy
-        if: steps.commit.outputs.changed == 'true'
-        uses: actions/deploy-pages@v4
-
       - name: Zgłoszenie błędu
         if: steps.menu.outcome == 'failure' || steps.commit.outcome == 'failure'
         run: |
           echo "::error::Sprawdzenie lub zapis jadłospisu zakończyły się błędem – szczegóły w krokach powyżej i w data/menu/status.json"
           exit 1
+
+  # Commit z GITHUB_TOKEN nie uruchamia synchronizacji harmonogramu, więc po zmianie stronę publikujemy tutaj.
+  # Publikacja strony – osobne zadanie ze wspólną kolejką „pages” (także dla sync.yml), więc dwie publikacje
+  # nigdy nie ruszają naraz. Strona jest budowana z najnowszego main, dlatego pominięcie starszej publikacji
+  # czekającej w kolejce niczego nie gubi.
+  strona:
+    needs: menu
+    if: ${{ !cancelled() && needs.menu.outputs.changed == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - run: npm ci
+
+      - name: Budowanie strony
+        run: npm run web:build
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Publikacja strony
+        id: deploy
+        uses: actions/deploy-pages@v4
