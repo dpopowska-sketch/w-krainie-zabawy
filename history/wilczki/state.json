@@ -329,22 +329,22 @@
     "verification": "verified",
     "month": "2026-11"
   },
-  "test-kalendarza": {
-    "activity": "Test",
-    "teacher": null,
-    "date": "2026-11-12",
-    "start": "10:00",
-    "end": "11:00",
-    "status": "scheduled",
-    "verification": "verified",
-    "month": "2026-11"
-  },
   "8af1cbc00a27": {
     "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
     "teacher": "J. Skoczowska",
     "date": "2026-11-13",
     "start": "07:30",
     "end": "08:30",
+    "status": "rescheduled",
+    "verification": "verified",
+    "month": "2026-11"
+  },
+  "test-kalendarza": {
+    "activity": "Test",
+    "teacher": null,
+    "date": "2026-11-13",
+    "start": "10:00",
+    "end": "11:00",
     "status": "rescheduled",
     "verification": "verified",
     "month": "2026-11"

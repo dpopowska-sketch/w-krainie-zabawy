@@ -52,3 +52,9 @@ decisions:
       start: "10:00"
       end: "11:00"
     note: "próba subskrypcji kalendarza"
+  - id: test-kalendarza
+    action: edit
+    set:
+      date: "2026-11-13"
+      status: rescheduled
+    note: "próba – przeniesienie na piątek"

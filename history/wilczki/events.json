@@ -630,5 +630,26 @@
     "start": "10:00",
     "status": "scheduled",
     "announcements": []
+  },
+  {
+    "id": "test-kalendarza",
+    "month": "2026-11",
+    "activity": "Test",
+    "date": "2026-11-13",
+    "start": "10:00",
+    "at": "2026-11-08T18:06:21.656Z",
+    "kind": "changed",
+    "changes": {
+      "data": [
+        "2026-11-12",
+        "2026-11-13"
+      ],
+      "status": [
+        "zaplanowane",
+        "przeniesione"
+      ]
+    },
+    "status": "rescheduled",
+    "announcements": []
   }
 ]

@@ -304,29 +304,6 @@
       "updatedAt": "2026-11-05T16:29:29.695Z"
     },
     {
-      "id": "test-kalendarza",
-      "group": "wilczki",
-      "activity": "Test",
-      "date": "2026-11-12",
-      "start": "10:00",
-      "end": "11:00",
-      "teacher": null,
-      "location": null,
-      "subgroup": null,
-      "status": "scheduled",
-      "previous": null,
-      "verification": "verified",
-      "reviewReasons": [],
-      "warnings": [],
-      "sources": [
-        {
-          "type": "manual",
-          "note": "próba subskrypcji kalendarza"
-        }
-      ],
-      "updatedAt": "2026-11-12"
-    },
-    {
       "id": "8af1cbc00a27",
       "group": "wilczki",
       "activity": "Słowiki - zajęcia oparte na nauce śpiewu oraz kształtowaniu poczucia rytmu",
@@ -364,6 +341,37 @@
         "kind": "moved",
         "at": "2026-11-03T05:02:55.903Z"
       }
+    },
+    {
+      "id": "test-kalendarza",
+      "group": "wilczki",
+      "activity": "Test",
+      "date": "2026-11-13",
+      "start": "10:00",
+      "end": "11:00",
+      "teacher": null,
+      "location": null,
+      "subgroup": null,
+      "status": "rescheduled",
+      "previous": {
+        "date": "2026-11-12",
+        "start": "10:00",
+        "end": "11:00"
+      },
+      "verification": "verified",
+      "reviewReasons": [],
+      "warnings": [],
+      "sources": [
+        {
+          "type": "manual",
+          "note": "próba subskrypcji kalendarza"
+        },
+        {
+          "type": "manual",
+          "note": "próba – przeniesienie na piątek"
+        }
+      ],
+      "updatedAt": "2026-11-12"
     },
     {
       "id": "7ce944a68008",
