@@ -29,6 +29,7 @@ import {
   weekdayLong,
   type Month,
 } from "./dates";
+import { feedUrl, selectionCodes } from "./feed";
 import {
   AddToCalendarIcon,
   CancelIcon,
@@ -761,6 +762,7 @@ function GroupPage(props: {
               onCancel={() => setEditing(false)}
             />
           )}
+          <PhoneCalendarCard group={group} selection={selection} />
         </aside>
       </div>
 
@@ -1289,10 +1291,76 @@ function AddToCalendar({ event, label }: { event: CalendarEvent; label: string }
           <a class="btn btn-small" role="menuitem" href={icsDataUrl(event)} download={icsFileName(event)} onClick={() => setOpen(false)}>
             Apple, Outlook i inne
           </a>
-          <span class="muted cal-note">Zmiany wprowadzone później przez przedszkole nie zaktualizują się w kalendarzu.</span>
+          <span class="muted cal-note">
+            Zmiany wprowadzone później przez przedszkole nie zaktualizują się w kalendarzu.{" "}
+            <a href="#kalendarz-w-telefonie" onClick={() => setOpen(false)}>
+              Kalendarz w telefonie
+            </a>{" "}
+            aktualizuje się sam.
+          </span>
         </span>
       )}
     </span>
+  );
+}
+
+/** „Kalendarz w telefonie”: subskrypcja, którą telefon sam odświeża (iPhone – webcal, Android – Kalendarz Google). */
+function PhoneCalendarCard({ group, selection }: { group: string; selection: Selection | null }) {
+  const [onlyMine, setOnlyMine] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const mine = onlyMine && selection !== null;
+  const url = feedUrl(group, mine ? selectionCodes(selection.selected) : null);
+  const webcal = url.replace(/^https:/, "webcal:");
+  const choose = (next: boolean) => {
+    setOnlyMine(next);
+    setCopied(false);
+  };
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+    } catch {
+      window.prompt("Skopiuj link do kalendarza:", url);
+    }
+  };
+  return (
+    <section class="panel phone-cal" id="kalendarz-w-telefonie" aria-labelledby="phone-cal-title">
+      <div class="panel-head">
+        <h2 id="phone-cal-title">Kalendarz w telefonie</h2>
+        <span class="muted">Dodajesz raz – zmiany wprowadzone przez przedszkole pojawią się same</span>
+      </div>
+      <div class="segmented" role="group" aria-label="Co dodać do kalendarza">
+        <button type="button" aria-pressed={!mine} onClick={() => choose(false)}>
+          Wszystkie zajęcia
+        </button>
+        <button type="button" aria-pressed={mine} disabled={!selection} onClick={() => choose(true)}>
+          <StarIcon filled size={15} />
+          Moje zajęcia
+        </button>
+      </div>
+      {!selection && <p class="muted small">Aby dodać tylko zajęcia dziecka, najpierw zaznacz je gwiazdką „Moje”.</p>}
+      <div class="btn-row">
+        <a class="btn btn-primary btn-grow" href={webcal}>
+          iPhone
+        </a>
+        <a class="btn btn-grow" href={`https://calendar.google.com/calendar/r?cid=${encodeURIComponent(webcal)}`} target="_blank" rel="noopener">
+          Android (Google)
+        </a>
+      </div>
+      <button type="button" class="link-btn" onClick={copy}>
+        {copied ? "Skopiowano link" : "Kopiuj link do kalendarza"}
+      </button>
+      <details class="phone-cal-help">
+        <summary>Jak to działa i co zrobić, jeśli nie działa</summary>
+        <ul>
+          <li>Telefon sam sprawdza zmiany: iPhone mniej więcej co godzinę (od razu – przeciągnij w dół listę „Kalendarze”), Kalendarz Google co kilka do 24 godzin. Najświeższe informacje są zawsze tutaj, na stronie.</li>
+          <li>Odwołane zajęcia zostają w kalendarzu z dopiskiem „ODWOŁANE”.</li>
+          <li>Android: jeśli przycisk nie zadziała, otwórz calendar.google.com w przeglądarce → „Inne kalendarze” → „+” → „Z adresu URL” i wklej skopiowany link. Jeśli kalendarz nie widać w aplikacji, włącz go: Ustawienia → nazwa kalendarza → Synchronizacja.</li>
+          <li>„Moje zajęcia”: wybór jest zapisany w linku. Po zmianie wyboru dodaj kalendarz ponownie, a stary usuń.</li>
+          <li>Po dodaniu kalendarza nie dodawaj już zajęć pojedynczo ikonką kalendarza – pojawiłyby się podwójnie.</li>
+        </ul>
+      </details>
+    </section>
   );
 }
 

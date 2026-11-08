@@ -53,6 +53,22 @@ W `config/groups.json`:
 Strona pokazuje tylko bieżący miesiąc (czas polski); publiczny plik z danymi też zawiera
 tylko bieżący miesiąc i widoczne grupy. Pełne dane zostają w repozytorium.
 
+## Kalendarz w telefonie (subskrypcja)
+
+Panel „Kalendarz w telefonie” daje link do kalendarza, który telefon sam odświeża:
+`https://wilczki-kalendarz.pages.dev/kalendarz/wilczki.ics` (wszystkie zajęcia) albo z `?moje=kod.kod`
+(wybrane rodzaje zajęć – te same kody co `shortCode` w `web/src/selection.ts`). iPhone dostaje link
+`webcal://`, Android – stronę Kalendarza Google `calendar/r?cid=…`.
+
+- Dane: `data/published/calendar.json` (`calendarView` w `src/build.ts`) – widoczne grupy, cały bieżący
+  rok szkolny (od 1 września), potwierdzone wydarzenia.
+- Kalendarz składa funkcja Cloudflare Pages `functions/kalendarz/[plik].ts` przy każdym pobraniu
+  (`web/src/feed.ts`); publikuje się sama razem ze stroną (`wrangler pages deploy` z katalogu repozytorium).
+  Na GitHub Pages ta funkcja nie działa – dlatego linki prowadzą zawsze na adres Cloudflare (`FEED_ORIGIN`).
+- Identyfikator terminu się nie zmienia po odwołaniu ani przeniesieniu, więc telefon przesuwa istniejący wpis.
+  Odwołane zostają z tytułem „ODWOŁANE: …” i `STATUS:CANCELLED`.
+- Odświeżanie zależy od telefonu: iPhone mniej więcej co godzinę, Kalendarz Google co kilka do 24 godzin.
+
 ## Automatyczna synchronizacja
 
 `.github/workflows/sync.yml` uruchamia `npm run sync` w GitHub Actions co godzinę

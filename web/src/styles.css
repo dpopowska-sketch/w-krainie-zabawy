@@ -1113,6 +1113,33 @@ button.freshness {
   line-height: 1.4;
 }
 
+/* „Kalendarz w telefonie” */
+.phone-cal .segmented button {
+  flex: 1;
+}
+.phone-cal .segmented button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.phone-cal .btn-row {
+  margin-top: 12px;
+}
+.phone-cal-help {
+  font-size: 13px;
+  line-height: 1.5;
+}
+.phone-cal-help summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-weight: 500;
+}
+.phone-cal-help ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 6px;
+}
+
 /* ── Kalendarz ── */
 .calendar-wrap {
   display: flex;

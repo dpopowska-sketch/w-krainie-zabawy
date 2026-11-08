@@ -16,7 +16,7 @@
     "evaluate": "tsx src/evaluate.ts",
     "evaluate:announcements": "tsx src/evaluate-announcements.ts",
     "evaluate:menu": "tsx src/evaluate-menu.ts",
-    "typecheck": "tsc --noEmit && tsc --noEmit -p web",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p web && tsc --noEmit -p functions",
     "test": "tsx --test test/*.test.ts",
     "build": "tsx src/build.ts",
     "sync": "tsx src/sync.ts",

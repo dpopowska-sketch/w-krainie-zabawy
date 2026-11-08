@@ -14,12 +14,13 @@ import { loadEvents } from "./events.js";
 import { fold, sameActivity, type IssueCode } from "./normalize.js";
 import { activityGroups, matchActivities, resolveGroupRef } from "./resolve.js";
 import { allDocuments, loadConsensus, sameOccurrence, type ScheduledOccurrence } from "./schedule.js";
-import type { Notice, PublishedActivity, PublishedSchedule, SchoolEvent, Source, Status } from "./published.js";
+import type { CalendarData, Notice, PublishedActivity, PublishedSchedule, SchoolEvent, Source, Status } from "./published.js";
 import type { AnnouncementRecord } from "./schema.js";
 
 export type { Notice, PublishedActivity, PublishedSchedule, SchoolEvent, Source, Status };
 
 export const PUBLISHED_PATH = path.join(DATA_DIR, "published", "schedule.json");
+export const CALENDAR_PATH = path.join(DATA_DIR, "published", "calendar.json");
 const DECISIONS_PATH = path.join(ROOT, "review", "decisions.yaml");
 const PENDING_PATH = path.join(ROOT, "review", "pending.md");
 const ANNOUNCEMENTS_DIR = path.join(DATA_DIR, "announcements");
@@ -445,6 +446,7 @@ export function build(): { schedule: PublishedSchedule; published: PublishedSche
 
   const published = publicView(schedule, config.publicGroups, currentMonthKey());
   writeJson(PUBLISHED_PATH, published);
+  writeJson(CALENDAR_PATH, calendarView(schedule, config.publicGroups, currentMonthKey()));
   return { schedule, published, problems, historyEvents };
 }
 
@@ -470,6 +472,27 @@ function publicView(full: PublishedSchedule, groups: string[], month: string): P
     events: (full.events ?? []).filter(
       (e) => e.verification === "verified" && groups.includes(e.group) && e.date.slice(0, 7) <= month && (e.endDate ?? e.date).slice(0, 7) >= month,
     ),
+  };
+}
+
+/** Pierwszy dzień roku szkolnego, w którym jest dany miesiąc: „2026-11” → „2026-09-01”, „2027-03” → „2026-09-01”. */
+export function schoolYearStart(month: string): string {
+  const [year, m] = month.split("-").map(Number);
+  return `${m! >= 9 ? year : year! - 1}-09-01`;
+}
+
+/**
+ * Subskrypcja kalendarza: grupy z publicGroups, cały bieżący rok szkolny (minione miesiące nie znikają
+ * z telefonu po zmianie miesiąca), wydarzenia tylko potwierdzone. Bez komunikatów i źródeł – plik ma być mały.
+ */
+export function calendarView(full: PublishedSchedule, groups: string[], month: string): CalendarData {
+  const from = schoolYearStart(month);
+  return {
+    groups: full.groups.filter((g) => groups.includes(g.id)),
+    activities: full.activities
+      .filter((a) => groups.includes(a.group) && a.date >= from)
+      .map((a) => ({ ...a, sources: [], reviewReasons: [], warnings: [] })),
+    events: (full.events ?? []).filter((e) => e.verification === "verified" && groups.includes(e.group) && (e.endDate ?? e.date) >= from),
   };
 }
 

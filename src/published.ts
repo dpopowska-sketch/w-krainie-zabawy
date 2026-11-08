@@ -73,6 +73,13 @@ export interface PublishedSchedule {
   events?: SchoolEvent[];
 }
 
+/** Dane subskrypcji „Kalendarz w telefonie” (data/published/calendar.json): cały bieżący rok szkolny, bez komunikatów. */
+export interface CalendarData {
+  groups: { id: string; name: string }[];
+  activities: PublishedActivity[];
+  events: SchoolEvent[];
+}
+
 // ── Jadłospis „Co dziś dobrego?” (data/menu/) ──
 
 export type MealKey = "sniadanie" | "obiad" | "podwieczorek";

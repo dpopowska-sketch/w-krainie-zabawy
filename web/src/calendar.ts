@@ -18,6 +18,8 @@ export interface CalendarEvent {
   end: string;
   /** Wydarzenie całodniowe (bez godziny) – od date do endDate włącznie; start/end są wtedy pomijane. */
   allDay?: { endDate: string };
+  /** Odwołane (subskrypcja) – STATUS:CANCELLED. */
+  cancelled?: boolean;
 }
 
 /** Przesunięcie czasu polskiego względem UTC (w minutach) w danej chwili. */
@@ -130,14 +132,25 @@ export function icsText(e: CalendarEvent, now = new Date()): string {
   return icsCalendarText([e], now);
 }
 
-/** Plik .ics z listą wydarzeń (strona dodaje po jednym). */
-export function icsCalendarText(events: CalendarEvent[], now = new Date()): string {
+/**
+ * Plik .ics z listą wydarzeń (strona dodaje po jednym). Z `subscription` – kalendarz subskrybowany:
+ * nazwa w telefonie i prośba o sprawdzanie zmian co godzinę.
+ */
+export function icsCalendarText(events: CalendarEvent[], now = new Date(), subscription?: { name: string }): string {
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
     "PRODID:-//W krainie zabawy//Harmonogram//PL",
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
+    ...(subscription
+      ? [
+          `X-WR-CALNAME:${escapeIcs(subscription.name)}`,
+          `X-WR-TIMEZONE:${TZ}`,
+          "REFRESH-INTERVAL;VALUE=DURATION:PT1H",
+          "X-PUBLISHED-TTL:PT1H",
+        ]
+      : []),
     ...events.flatMap((e) => veventLines(e, now)),
     "END:VCALENDAR",
   ];
@@ -155,6 +168,7 @@ function veventLines(e: CalendarEvent, now: Date): string[] {
     `SUMMARY:${escapeIcs(e.title)}`,
     `DESCRIPTION:${escapeIcs(e.description)}`,
     `LOCATION:${escapeIcs(e.location)}`,
+    ...(e.cancelled ? ["STATUS:CANCELLED"] : []),
     "END:VEVENT",
   ];
 }
