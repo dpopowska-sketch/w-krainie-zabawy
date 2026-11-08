@@ -2,13 +2,11 @@ name: Synchronizacja harmonogramu
 
 on:
   schedule:
-    # Sprawdzenia o 8:00, 16:30 i 19:00 czasu polskiego. Cron działa w UTC, więc są dwa
+    # Sprawdzenia co godzinę od 7:00 do 17:00 czasu polskiego. Cron działa w UTC, więc są dwa
     # komplety godzin, a zadanie „czas” przepuszcza tylko ten pasujący do obecnej pory roku.
     # GitHub może uruchomić zadanie z opóźnieniem (zwykle do godziny).
-    - cron: "0 7,18 * * *" # zima (UTC+1): 8:00 i 19:00
-    - cron: "30 15 * * *" # zima: 16:30
-    - cron: "0 6,17 * * *" # lato (UTC+2): 8:00 i 19:00
-    - cron: "30 14 * * *" # lato: 16:30
+    - cron: "0 6-16 * * *" # zima (UTC+1): 7:00–17:00
+    - cron: "0 5-15 * * *" # lato (UTC+2): 7:00–17:00
   workflow_dispatch: # przycisk „Run workflow” w zakładce Actions
   push:
     branches: [main] # zapisana decyzja lub zmiana strony → od razu nowa wersja
@@ -35,7 +33,7 @@ jobs:
         run: |
           case "${{ github.event.schedule }}" in
             "") run=true ;;
-            "0 7,18 * * *"|"30 15 * * *") [ "$(TZ=Europe/Warsaw date +%z)" = "+0100" ] && run=true || run=false ;;
+            "0 6-16 * * *") [ "$(TZ=Europe/Warsaw date +%z)" = "+0100" ] && run=true || run=false ;;
             *) [ "$(TZ=Europe/Warsaw date +%z)" = "+0200" ] && run=true || run=false ;;
           esac
           echo "run=$run" >> "$GITHUB_OUTPUT"
@@ -78,14 +76,20 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A data review history
           if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "Brak zmian."
             exit 0
           fi
           if git diff --cached --quiet -- . ':(exclude)data/status.json'; then
-            # Zmienił się tylko czas sprawdzenia – zapisujemy go najwyżej raz dziennie.
+            # Zmienił się tylko status. Zapisujemy go, gdy pojawił się lub zniknął błąd (rodzice widzą wtedy
+            # ostrzeżenie albo przestają je widzieć), a sam czas sprawdzenia – najwyżej raz dziennie.
+            strip='del(.lastChecked, .lastSuccess)'
+            before=$(git show HEAD:data/status.json 2>/dev/null | jq -S "$strip" || echo '{}')
+            after=$(jq -S "$strip" data/status.json)
             last=$(git show HEAD:data/status.json 2>/dev/null | jq -r '.lastChecked // "" | .[0:10]')
-            if [ "$last" = "$(date -u +%F)" ] && [ "${{ steps.sync.outcome }}" = "success" ]; then
-              echo "Tylko status, już zapisany dzisiaj."
+            if [ "$before" = "$after" ] && [ "$last" = "$(date -u +%F)" ]; then
+              echo "changed=false" >> "$GITHUB_OUTPUT"
+              echo "Tylko czas sprawdzenia, już zapisany dzisiaj."
               exit 0
             fi
           fi
@@ -93,23 +97,29 @@ jobs:
           # Ktoś mógł w międzyczasie zapisać decyzję w repozytorium.
           git pull --rebase
           git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
 
-      # Strona jest publikowana zawsze – także po błędzie synchronizacji
-      # (wtedy z ostatnimi sprawdzonymi danymi i ostrzeżeniem dla rodziców).
+      # Strona jest publikowana tylko wtedy, gdy coś się zmieniło: dane, błąd synchronizacji (ostrzeżenie dla
+      # rodziców) albo raz dziennie czas sprawdzenia. Po zmianie w repozytorium i ręcznym uruchomieniu – zawsze.
       - name: Budowanie strony
+        id: build
+        if: steps.commit.outputs.changed == 'true' || github.event_name != 'schedule'
         run: |
           # Jadłospis (osobny workflow) mógł w międzyczasie zapisać nowe dane.
           git pull --ff-only || echo "::warning::Nie udało się pobrać najnowszych danych – strona z danymi z początku uruchomienia."
           npm run web:build
 
       - uses: actions/configure-pages@v5
+        if: steps.build.outcome == 'success'
 
       - uses: actions/upload-pages-artifact@v3
+        if: steps.build.outcome == 'success'
         with:
           path: dist
 
       - name: Publikacja strony
         id: deploy
+        if: steps.build.outcome == 'success'
         uses: actions/deploy-pages@v4
 
       - name: Zgłoszenie błędu synchronizacji

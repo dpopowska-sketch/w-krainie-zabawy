@@ -66,6 +66,16 @@
   }
 }
 
+/* Ciepły wygląd: przełącznik bez ikon i węższy, żeby „Moje zajęcia” mieściło się w jednym wierszu nagłówka. */
+@media (max-width: 1360px) {
+  :root[data-theme="przyjazny"] .module-nav svg {
+    display: none;
+  }
+  :root[data-theme="przyjazny"] .module-nav a {
+    padding: 0 14px;
+  }
+}
+
 /* ═══ Dzień i tydzień ═══ */
 .menu-head {
   gap: 18px;
@@ -637,6 +647,18 @@
   /* Przełącznik modułów pod logo, na całą szerokość. */
   .header-inner {
     flex-wrap: wrap;
+    position: relative;
+  }
+  /* Harmonogram sprawdzeń na całą szerokość ekranu, pod nagłówkiem. */
+  .freshness-wrap {
+    position: static;
+  }
+  .fresh-pop {
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-width: none;
+    top: calc(100% + 6px);
   }
   .brand {
     flex: 1 1 0;

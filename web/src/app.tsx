@@ -1,5 +1,5 @@
 import { createContext, type ComponentChildren } from "preact";
-import { useContext, useEffect, useMemo, useState } from "preact/hooks";
+import { useContext, useEffect, useMemo, useRef, useState } from "preact/hooks";
 import type { Notice, PublishedActivity, PublishedSchedule, SchoolEvent, SyncStatus } from "../../src/published";
 import {
   calendarEvent,
@@ -60,7 +60,7 @@ import {
   type ActivityType,
   type Selection,
 } from "./selection";
-import { MenuNavIcon, MenuPage, PlanNavIcon, isMenuStale, useMenuData } from "./menu";
+import { MENU_CHECK_SCHEDULE, MenuNavIcon, MenuPage, PlanNavIcon, isMenuStale, useMenuData } from "./menu";
 import { applyTheme, loadTheme, type Theme } from "./theme";
 
 type View = "list" | "calendar";
@@ -104,6 +104,8 @@ const SCHEDULE_CHANGE: Record<NonNullable<PublishedActivity["scheduleChange"]>["
 };
 
 const STORAGE_VIEW = "wkz.view";
+/** Harmonogram sprawdzeń strony przedszkola – jak w .github/workflows/sync.yml. */
+export const PLAN_CHECK_SCHEDULE = ["Codziennie co godzinę od 7:00 do 17:00."];
 const STALE_AFTER_HOURS = 36;
 const SOURCE_FALLBACK = "https://przedszkole-zspzernica.pilchowice.pl/harmonogram-zajec-w-krainie-zabawy/";
 /** Domyślny widok zależy od wyglądu; wybór rodzica (zapamiętany) ma pierwszeństwo. */
@@ -343,6 +345,82 @@ function ModuleNav() {
   );
 }
 
+/**
+ * Znacznik „Dane aktualne” w nagłówku. Po kliknięciu: kiedy sprawdzamy źródło, kiedy ostatnio zmieniły się dane
+ * i kiedy ostatnio potwierdziliśmy aktualność (strona zapisuje to przy każdej zmianie i raz dziennie).
+ */
+function Freshness(props: { status: SyncStatus; stale: boolean; checked: string; success: string | null }) {
+  const { module } = useContext(NavContext);
+  const [open, setOpen] = useState(false);
+  const wrap = useRef<HTMLDivElement>(null);
+  const menu = module === "menu";
+  const schedule = menu ? MENU_CHECK_SCHEDULE : PLAN_CHECK_SCHEDULE;
+
+  useEffect(() => {
+    if (!open) return;
+    const close = (e: MouseEvent) => {
+      if (!wrap.current?.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("click", close);
+    return () => document.removeEventListener("click", close);
+  }, [open]);
+
+  return (
+    <div class="freshness-wrap" ref={wrap} onKeyDown={(e) => e.key === "Escape" && setOpen(false)}>
+      <button
+        type="button"
+        class={`freshness${props.stale ? " freshness-stale" : ""}`}
+        aria-expanded={open}
+        aria-controls="fresh-pop"
+        onClick={() => setOpen(!open)}
+      >
+        {props.stale ? (
+          <>
+            <span class="fresh-dot" aria-hidden="true" />
+            <span class="fresh-label">Sprawdzone</span> <span class="fresh-time">{props.success ?? props.checked}</span>
+          </>
+        ) : (
+          <>
+            <span class="fresh-dot" aria-hidden="true" />
+            <span class="fresh-check" aria-hidden="true">
+              <CheckIcon />
+            </span>
+            <span class="fresh-label">Dane aktualne</span>
+            <span class="fresh-label-short">Aktualne</span>
+            <span class="fresh-time">
+              <span class="fresh-sep"> · sprawdzono </span>
+              <span class="fresh-sep-short"> · </span>
+              {props.checked}
+            </span>
+          </>
+        )}
+        <span class="fresh-chev" aria-hidden="true">
+          <ChevronIcon dir={open ? "up" : "down"} />
+        </span>
+      </button>
+      {open && (
+        <div class="fresh-pop" id="fresh-pop" role="region" aria-label="Harmonogram sprawdzeń">
+          <strong>Harmonogram sprawdzeń</strong>
+          <p>
+            Sprawdzamy {menu ? "stronę stołówki szkoły" : "stronę przedszkola"}:
+            {schedule.map((line) => (
+              <span class="fresh-pop-line">{line}</span>
+            ))}
+          </p>
+          <p class="muted">GitHub czasem uruchamia sprawdzenie z kilkunastominutowym opóźnieniem.</p>
+          <dl>
+            <dt>{menu ? "Ostatnia zmiana w jadłospisie" : "Ostatnia zmiana w harmonogramie"}</dt>
+            <dd>{props.status.lastDataChange ? formatTimestamp(props.status.lastDataChange) : "brak danych"}</dd>
+            <dt>Ostatnio potwierdzona aktualność</dt>
+            <dd>{props.status.lastSuccess ? formatTimestamp(props.status.lastSuccess) : "brak danych"}</dd>
+          </dl>
+          <p class="muted small">Czas potwierdzenia zapisujemy przy każdej zmianie i raz dziennie, dlatego może być wcześniejszy niż ostatnie sprawdzenie.</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function Header(props: { status: SyncStatus | null; stale: boolean; subtitle: string; myCount?: number; onMine?: () => void }) {
   const { module } = useContext(NavContext);
   const stale = props.stale;
@@ -361,30 +439,7 @@ function Header(props: { status: SyncStatus | null; stale: boolean; subtitle: st
         </div>
         <ModuleNav />
         <div class="header-spacer" />
-        {checked && (
-          <span class={`freshness${stale ? " freshness-stale" : ""}`}>
-            {stale ? (
-              <>
-                <span class="fresh-dot" aria-hidden="true" />
-                <span class="fresh-label">Sprawdzone</span> <span class="fresh-time">{success ?? checked}</span>
-              </>
-            ) : (
-              <>
-                <span class="fresh-dot" aria-hidden="true" />
-                <span class="fresh-check" aria-hidden="true">
-                  <CheckIcon />
-                </span>
-                <span class="fresh-label">Dane aktualne</span>
-                <span class="fresh-label-short">Aktualne</span>
-                <span class="fresh-time">
-                  <span class="fresh-sep"> · sprawdzono </span>
-                  <span class="fresh-sep-short"> · </span>
-                  {checked}
-                </span>
-              </>
-            )}
-          </span>
-        )}
+        {checked && <Freshness status={props.status!} stale={stale} checked={checked} success={success} />}
         <a href="#wyglad" class="header-link">
           <PaletteIcon size={16} />
           Wygląd
@@ -440,11 +495,17 @@ function Footer({ status, sourcePage }: { status: SyncStatus | null; sourcePage?
         – w razie rozbieżności obowiązuje strona przedszkola. Wydarzenia w grupie pochodzą z wiadomości od wychowawczyni.
       </p>
       <p class="footer-dates">
-        {status?.lastChecked && <>Ostatnie sprawdzenie: {formatTimestamp(status.lastChecked)}</>}
+        Sprawdzamy stronę przedszkola: {PLAN_CHECK_SCHEDULE.join(" ").toLocaleLowerCase("pl")}
         {status?.lastDataChange && (
           <>
             <br />
             Ostatnia zmiana w harmonogramie: {formatTimestamp(status.lastDataChange)}
+          </>
+        )}
+        {status?.lastSuccess && (
+          <>
+            <br />
+            Ostatnio potwierdzona aktualność: {formatTimestamp(status.lastSuccess)}
           </>
         )}
       </p>

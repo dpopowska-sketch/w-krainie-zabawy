@@ -30,6 +30,12 @@ const MEALS: { key: MealKey; title: string }[] = [
   { key: "podwieczorek", title: "Podwieczorek" },
 ];
 
+/** Harmonogram sprawdzeń strony stołówki – jak w src/menu.ts (shouldCheck) i .github/workflows/menu.yml. */
+export const MENU_CHECK_SCHEDULE = [
+  "W dni robocze (bez świąt) o 9:00, 11:00, 13:00, 15:00, 17:00 i 19:00.",
+  "Gdy jadłospis na bieżący tydzień już jest – o 9:00 i 15:00 (korekty).",
+];
+
 const WEEKDAY_SHORT = ["Pn", "Wt", "Śr", "Cz", "Pt"];
 const MENU_PAGE_FALLBACK = "https://zspzernica.pilchowice.pl/stolowka/";
 /** Jadłospis sprawdzamy tylko w dni robocze – po weekendzie z długim piątkiem to nadal nie jest „stare”. */
@@ -368,7 +374,9 @@ function MenuInfo({ status, week, highlighted }: { status: MenuStatus | null; we
         <a href={pageUrl} target="_blank" rel="noopener">
           Strona stołówki
         </a>
-        {status?.lastSuccess && <p>Ostatnia aktualizacja: {formatTimestamp(status.lastSuccess)}</p>}
+        <p>Sprawdzamy stronę stołówki: {MENU_CHECK_SCHEDULE.join(" ").toLocaleLowerCase("pl")}</p>
+        {status?.lastDataChange && <p>Ostatnia zmiana w jadłospisie: {formatTimestamp(status.lastDataChange)}</p>}
+        {status?.lastSuccess && <p>Ostatnio potwierdzona aktualność: {formatTimestamp(status.lastSuccess)}</p>}
         {notes.map((n) => (
           <p class="small muted">{n}</p>
         ))}

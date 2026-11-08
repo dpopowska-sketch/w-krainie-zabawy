@@ -403,6 +403,75 @@ ul {
 .fresh-sep-short {
   display: none;
 }
+/* Znacznik jest przyciskiem – pod nim harmonogram sprawdzeń i ostatnia zmiana. */
+.freshness-wrap {
+  position: relative;
+}
+button.freshness {
+  background: var(--surface);
+  color: var(--text);
+  min-height: 40px;
+}
+.fresh-chev {
+  display: inline-flex;
+  margin-right: -4px;
+  color: var(--muted);
+}
+.fresh-chev svg {
+  width: 14px;
+  height: 14px;
+}
+.fresh-pop {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 20;
+  width: 340px;
+  max-width: calc(100vw - 32px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(16, 24, 40, 0.12);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-2);
+  white-space: normal;
+}
+.fresh-pop strong {
+  font-size: 14px;
+  color: var(--text);
+}
+.fresh-pop-line {
+  display: block;
+  color: var(--text);
+  font-weight: 500;
+}
+.fresh-pop dl {
+  margin: 0;
+  display: grid;
+  gap: 2px;
+}
+.fresh-pop dt {
+  color: var(--muted);
+}
+.fresh-pop dd {
+  margin: 0 0 6px;
+  color: var(--text);
+  font-weight: 500;
+}
+:root[data-theme="przyjazny"] .fresh-pop {
+  border: 0;
+  border-radius: 20px;
+  padding: 16px 18px;
+  box-shadow: 0 10px 30px rgba(31, 45, 51, 0.16);
+}
+:root[data-theme="przyjazny"] .fresh-chev {
+  color: inherit;
+}
 .header-link {
   display: inline-flex;
   align-items: center;
