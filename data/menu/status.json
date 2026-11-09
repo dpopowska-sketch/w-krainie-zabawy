@@ -1,14 +1,17 @@
 {
-  "lastChecked": "2026-11-06T08:06:39.888Z",
+  "lastChecked": "2026-11-09T08:55:59.394Z",
   "lastSuccess": "2026-11-06T08:06:39.888Z",
   "lastDataChange": "2026-11-05T18:39:58.001Z",
-  "errors": [],
+  "errors": [
+    "Odczyt a: Model zgłosił wątpliwość: Wiersz 'Środa' ma puste komórki bez żadnego tekstu (brak informacji typu 'Dzień wolny'), więc closed_text pozostawiono jako null, a posiłki puste.",
+    "Odczyt b: Model zgłosił wątpliwość: Wiersz 'Środa' ma puste komórki we wszystkich posiłkach, bez żadnego tekstu wyjaśniającego (np. 'Dzień wolny'), dlatego closed_text = null, a posiłki są puste – nie wiadomo, czy to dzień bez posiłków, czy brak danych."
+  ],
   "menuPageUrl": "https://zspzernica.pilchowice.pl/stolowka/",
   "allergenDocUrl": "https://zspzernica.pilchowice.pl/wp-content/uploads/2025/06/Substancje-lub-produkty-powodujace-alergie-lub-reakcje-nietolerancji.pdf",
   "currentSource": {
-    "url": "https://zspzernica.pilchowice.pl/wp-content/uploads/2026/11/Jadlospis-02_11_06_11-26r.pdf",
-    "sha256": "57950f0f53bf0c9a31c4a932078c8db57a9702f0725bca32a839ed500c3c6c07",
-    "weekStart": "2026-11-02"
+    "url": "https://zspzernica.pilchowice.pl/wp-content/uploads/2026/11/Jadlospis-09_11_13_11-26r-1.pdf",
+    "sha256": "5932e7ab860653b4e682679f0f4a8d6ca279ed828f99d5d2445bea8cec35c4f3",
+    "weekStart": null
   },
   "waitingForNew": false
 }
