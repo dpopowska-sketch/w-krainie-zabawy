@@ -133,6 +133,21 @@ test("dzień wolny i święto", () => {
   assert.equal(week!.days[0]!.closedText, "Dzień wolny od zajęć");
 });
 
+test("pusty wiersz w święto = dzień bez posiłków", () => {
+  const ex = extractionFromGolden();
+  ex.title = "JADŁOSPIS 09.11 – 13.11.";
+  const empty = { items: [], notes: [], allergens_unassigned: [] };
+  ex.days[2] = { ...ex.days[2]!, closed_text: null, sniadanie: empty, obiad: empty, podwieczorek: empty };
+  const { week, problems } = buildWeek(ex, SOURCE, "x");
+  assert.deepEqual(problems, []);
+  assert.equal(week!.days[2]!.date, "2026-11-11");
+  assert.equal(week!.days[2]!.closed, true);
+  assert.equal(week!.days[2]!.closedText, undefined);
+
+  ex.title = "JADŁOSPIS 02.11 – 06.11.";
+  assert.ok(buildWeek(ex, SOURCE, "x").problems.some((p) => p.includes("2026-11-04")), "pusty zwykły dzień to błąd");
+});
+
 test("różnica między odczytami jest wskazana", () => {
   const a = buildWeek(extractionFromGolden(), SOURCE, "x").week!;
   const ex = extractionFromGolden();

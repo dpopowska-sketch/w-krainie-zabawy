@@ -13,7 +13,7 @@ import { notify, type NotifyItem } from "./notify.js";
 import type { MealKey, MenuDay, MenuIndex, MenuItem, MenuMeal, MenuStatus, MenuWeek } from "./published.js";
 import { MenuExtraction, type MenuExtractionRecord } from "./schema.js";
 
-export const PROMPT_VERSION = "2026-11-05.1";
+export const PROMPT_VERSION = "2026-11-09.1";
 const RUNS = ["a", "b"] as const;
 const EXTRACTIONS = path.join(MENU_DIR, "extractions");
 export const MENU_STATUS_PATH = path.join(MENU_DIR, "status.json");
@@ -43,6 +43,7 @@ Zasady:
 7. Dopisek przy posiłku, który nie jest potrawą (np. „(PRZEDSZKOLE)”), wpisz do notes bez nawiasów i nie interpretuj go.
 8. Jeśli numerów alergenów nie da się jednoznacznie przypisać do pozycji, wpisz je do allergens_unassigned tego posiłku.
 9. Dzień bez posiłków (np. „Dzień wolny”, „Święto”) → closed_text z tym tekstem i puste posiłki.
+   Wiersz dnia bez żadnego tekstu → puste posiłki i closed_text null. To nie jest wątpliwość: czy to święto, sprawdza program.
 10. Tekst pod tabelą (np. zastrzeżenia) dosłownie do document_notes.
 11. Gdy cokolwiek jest nieczytelne lub niejednoznaczne, ustaw uncertain=true i opisz to w note. Lepiej zgłosić wątpliwość niż zgadywać.`;
 
@@ -242,7 +243,10 @@ export function buildWeek(
       return;
     }
     const meals = { sniadanie: toMeal(row.sniadanie), obiad: toMeal(row.obiad), podwieczorek: toMeal(row.podwieczorek) };
-    const closed = row.closed_text !== null && row.closed_text.trim() !== "";
+    const hasText = row.closed_text !== null && row.closed_text.trim() !== "";
+    // Pusty wiersz w święto ustawowe (np. 11.11) to dzień bez posiłków; w zwykły dzień – błąd odczytu.
+    const emptyHoliday = isPolishHoliday(date) && MEALS.every((key) => meals[key].items.length === 0);
+    const closed = hasText || emptyHoliday;
     if (!closed && !isPolishHoliday(date)) {
       for (const key of MEALS) if (meals[key].items.length === 0) problems.push(`${date}: brak posiłku „${key}”.`);
     }
@@ -250,7 +254,7 @@ export function buildWeek(
       const numbers = [...meals[key].items.flatMap((it) => it.allergens), ...meals[key].allergensUnassigned];
       for (const n of numbers) if (!Number.isInteger(n) || n < 1 || n > 14) problems.push(`${date} ${key}: numer alergenu spoza 1–14: ${n}.`);
     }
-    days.push({ date, weekday, closed, ...(closed ? { closedText: row.closed_text!.trim() } : {}), meals });
+    days.push({ date, weekday, closed, ...(hasText ? { closedText: row.closed_text!.trim() } : {}), meals });
   });
 
   const week: MenuWeek = {
