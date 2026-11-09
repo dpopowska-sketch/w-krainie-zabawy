@@ -398,9 +398,7 @@ ul {
 .fresh-time {
   color: var(--muted);
 }
-.fresh-check,
-.fresh-label-short,
-.fresh-sep-short {
+.fresh-check {
   display: none;
 }
 /* Znacznik jest przyciskiem – pod nim harmonogram sprawdzeń i ostatnia zmiana. */
@@ -442,24 +440,13 @@ button.freshness {
   white-space: normal;
 }
 .fresh-pop strong {
-  font-size: 14px;
   color: var(--text);
+}
+.fresh-pop > strong {
+  font-size: 14px;
 }
 .fresh-pop-line {
   display: block;
-  color: var(--text);
-  font-weight: 500;
-}
-.fresh-pop dl {
-  margin: 0;
-  display: grid;
-  gap: 2px;
-}
-.fresh-pop dt {
-  color: var(--muted);
-}
-.fresh-pop dd {
-  margin: 0 0 6px;
   color: var(--text);
   font-weight: 500;
 }
@@ -1616,17 +1603,10 @@ button.freshness {
   background: #fff4d9;
   color: #5a3e00;
 }
-:root[data-theme="przyjazny"] .fresh-dot,
-:root[data-theme="przyjazny"] .fresh-label,
-:root[data-theme="przyjazny"] .fresh-sep {
+:root[data-theme="przyjazny"] .fresh-dot {
   display: none;
 }
-:root[data-theme="przyjazny"] .freshness-stale .fresh-label {
-  display: inline;
-}
-:root[data-theme="przyjazny"] .fresh-check,
-:root[data-theme="przyjazny"] .fresh-label-short,
-:root[data-theme="przyjazny"] .fresh-sep-short {
+:root[data-theme="przyjazny"] .fresh-check {
   display: inline-flex;
 }
 :root[data-theme="przyjazny"] .fresh-time {
@@ -2302,8 +2282,7 @@ button.freshness {
     padding: 0;
     font-size: 12px;
   }
-  .fresh-label,
-  .fresh-sep {
+  .freshness-stale .fresh-label {
     display: none;
   }
   .container {

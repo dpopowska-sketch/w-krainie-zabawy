@@ -107,7 +107,7 @@ const SCHEDULE_CHANGE: Record<NonNullable<PublishedActivity["scheduleChange"]>["
 
 const STORAGE_VIEW = "wkz.view";
 /** Harmonogram sprawdzeń strony przedszkola – jak w .github/workflows/sync.yml. */
-export const PLAN_CHECK_SCHEDULE = ["Codziennie co godzinę od 7:00 do 17:00."];
+export const PLAN_CHECK_SCHEDULE = "codziennie co godzinę od 7:00 do 17:00";
 const STALE_AFTER_HOURS = 36;
 const SOURCE_FALLBACK = "https://przedszkole-zspzernica.pilchowice.pl/harmonogram-zajec-w-krainie-zabawy/";
 /** Domyślny widok zależy od wyglądu; wybór rodzica (zapamiętany) ma pierwszeństwo. */
@@ -348,15 +348,13 @@ function ModuleNav() {
 }
 
 /**
- * Znacznik „Dane aktualne” w nagłówku. Po kliknięciu: kiedy sprawdzamy źródło, kiedy ostatnio zmieniły się dane
- * i kiedy ostatnio potwierdziliśmy aktualność (strona zapisuje to przy każdej zmianie i raz dziennie).
+ * Przycisk „Aktualne” w nagłówku. Po kliknięciu: kiedy sprawdzamy źródło i kiedy ostatnio zmieniły się dane.
  */
 function Freshness(props: { status: SyncStatus; stale: boolean; checked: string; success: string | null }) {
   const { module } = useContext(NavContext);
   const [open, setOpen] = useState(false);
   const wrap = useRef<HTMLDivElement>(null);
   const menu = module === "menu";
-  const schedule = menu ? MENU_CHECK_SCHEDULE : PLAN_CHECK_SCHEDULE;
 
   useEffect(() => {
     if (!open) return;
@@ -387,13 +385,7 @@ function Freshness(props: { status: SyncStatus; stale: boolean; checked: string;
             <span class="fresh-check" aria-hidden="true">
               <CheckIcon />
             </span>
-            <span class="fresh-label">Dane aktualne</span>
-            <span class="fresh-label-short">Aktualne</span>
-            <span class="fresh-time">
-              <span class="fresh-sep"> · sprawdzono </span>
-              <span class="fresh-sep-short"> · </span>
-              {props.checked}
-            </span>
+            <span class="fresh-label">Aktualne</span>
           </>
         )}
         <span class="fresh-chev" aria-hidden="true">
@@ -405,18 +397,19 @@ function Freshness(props: { status: SyncStatus; stale: boolean; checked: string;
           <strong>Harmonogram sprawdzeń</strong>
           <p>
             Sprawdzamy {menu ? "stronę stołówki szkoły" : "stronę przedszkola"}:
-            {schedule.map((line) => (
-              <span class="fresh-pop-line">{line}</span>
-            ))}
+            {menu ? (
+              MENU_CHECK_SCHEDULE.map((line) => <span class="fresh-pop-line">{line}</span>)
+            ) : (
+              <>
+                {" "}
+                <strong>{PLAN_CHECK_SCHEDULE}</strong> (ze względów technicznych, sprawdzanie czasem może odbywać się z lekkim opóźnieniem).
+              </>
+            )}
           </p>
-          <p class="muted">GitHub czasem uruchamia sprawdzenie z kilkunastominutowym opóźnieniem.</p>
-          <dl>
-            <dt>{menu ? "Ostatnia zmiana w jadłospisie" : "Ostatnia zmiana w harmonogramie"}</dt>
-            <dd>{props.status.lastDataChange ? formatTimestamp(props.status.lastDataChange) : "brak danych"}</dd>
-            <dt>Ostatnio potwierdzona aktualność</dt>
-            <dd>{props.status.lastSuccess ? formatTimestamp(props.status.lastSuccess) : "brak danych"}</dd>
-          </dl>
-          <p class="muted small">Czas potwierdzenia zapisujemy przy każdej zmianie i raz dziennie, dlatego może być wcześniejszy niż ostatnie sprawdzenie.</p>
+          <p>
+            {menu ? "Ostatnia zmiana w jadłospisie" : "Ostatnia zmiana w harmonogramie"}:{" "}
+            {props.status.lastDataChange ? formatTimestamp(props.status.lastDataChange) : "brak danych"}
+          </p>
         </div>
       )}
     </div>
@@ -497,7 +490,7 @@ function Footer({ status, sourcePage }: { status: SyncStatus | null; sourcePage?
         – w razie rozbieżności obowiązuje strona przedszkola. Wydarzenia w grupie pochodzą z wiadomości od wychowawczyni.
       </p>
       <p class="footer-dates">
-        Sprawdzamy stronę przedszkola: {PLAN_CHECK_SCHEDULE.join(" ").toLocaleLowerCase("pl")}
+        Sprawdzamy stronę przedszkola: {PLAN_CHECK_SCHEDULE}.
         {status?.lastDataChange && (
           <>
             <br />
