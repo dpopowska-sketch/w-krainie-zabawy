@@ -995,7 +995,8 @@ function Greeting(props: { byDay: Map<string, DayEntry[]>; groupName: string; gr
       </span>
       <span class="reminder-text">
         <strong>
-          Jutro, {dayMonth(tomorrow)}: {tomorrowEvent.title}.
+          Jutro, {dayMonth(tomorrow)}
+          {tomorrowEvent.start ? `, ${formatTimeRange(tomorrowEvent.start, tomorrowEvent.end)}` : ""}: {tomorrowEvent.title}.
         </strong>{" "}
         {tomorrowEvent.details}
       </span>
@@ -1390,7 +1391,10 @@ function EventsCard({ events }: { events: SchoolEvent[] }) {
               {dayMonth(e.date)}
               {e.endDate ? `–${dayMonth(e.endDate)}` : ""} <span class="events-wd">{weekdayShort(e.date)}</span>
             </span>
-            <span>{e.title}</span>
+            <span>
+              {e.title}
+              {e.start && <span class="events-time"> · {formatTimeRange(e.start, e.end)}</span>}
+            </span>
           </li>
         ))}
       </ul>

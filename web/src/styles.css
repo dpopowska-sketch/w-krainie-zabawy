@@ -1368,6 +1368,10 @@ button.freshness {
 .events-list li.past {
   color: var(--faint);
 }
+.events-time {
+  color: var(--muted);
+  white-space: nowrap;
+}
 .events-date {
   font-family: var(--font-mono);
   font-size: 12px;
