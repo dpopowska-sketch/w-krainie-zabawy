@@ -1,0 +1,36 @@
+name: Sprawdzenie zmian
+
+# Każdy pull request: sprawdzenie typów, testy i budowa strony. Bez wywołań API Claude i bez publikacji.
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sprawdzenie:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - run: npm ci
+
+      - name: Sprawdzenie typów
+        run: npm run typecheck
+
+      - name: Testy
+        run: npm test
+
+      - name: Budowanie strony
+        run: npm run web:build
