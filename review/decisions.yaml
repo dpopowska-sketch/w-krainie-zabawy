@@ -58,3 +58,9 @@ decisions:
       date: "2026-11-13"
       status: rescheduled
     note: "próba – przeniesienie na piątek"
+  # WPC-6: wychowawczyni podała godzinę i miejsce zebrania (zastępuje „godzinę oraz salę podam bliżej terminu”).
+  - event: 6eb30edc140b
+    action: edit
+    set:
+      start: "17:00"
+      details: "W szkole."

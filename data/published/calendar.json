@@ -917,10 +917,10 @@
       "group": "wilczki",
       "date": "2026-11-18",
       "endDate": null,
-      "start": null,
+      "start": "17:00",
       "end": null,
       "title": "Zebranie z rodzicami",
-      "details": "godzinę oraz salę podam bliżej terminu.",
+      "details": "W szkole.",
       "verification": "verified",
       "reviewReasons": [],
       "source": "events/wilczki/2026-11.txt"
