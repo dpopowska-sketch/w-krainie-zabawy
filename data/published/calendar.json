@@ -724,13 +724,13 @@
       "end": "10:45",
       "location": null,
       "subgroup": null,
-      "status": "scheduled",
+      "status": "cancelled",
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
       "warnings": [],
       "sources": [],
-      "updatedAt": "2026-11-05T16:29:29.695Z"
+      "updatedAt": "2026-11-17T10:59:53.856Z"
     },
     {
       "id": "2ce8f2ad5296",

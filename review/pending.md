@@ -109,7 +109,7 @@ Grupa IV” ([plik](https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-co
     action: confirm   # albo: hide / edit (z polem set)
 ```
 
-## Komunikaty bez dopasowania (1)
+## Komunikaty bez dopasowania (3)
 
 Pokazywane rodzicom jako tekst ogłoszenia, bez zmiany statusu terminów.
 
@@ -120,5 +120,25 @@ Pokazywane rodzicom jako tekst ogłoszenia, bez zmiany statusu terminów.
 
 ```yaml
   - notice: 8fb045778dce
+    action: dismiss   # ukryj komunikat
+```
+
+### „12.11.2026 r. – zamiana grup Zajęcia ruchowe połączone z elementami sensoplastyki – Motylki;”
+
+- Grupy: Motylki
+- Powód: Nierozpoznany rodzaj zmiany
+
+```yaml
+  - notice: c221de7eb543
+    action: dismiss   # ukryj komunikat
+```
+
+### „19.11.2026 r. – zamiana grup Zajęcia ruchowe połączone z elementami sensoplastyki – Sówki;”
+
+- Grupy: Sówki
+- Powód: Nierozpoznany rodzaj zmiany
+
+```yaml
+  - notice: 96b6a86dd8f7
     action: dismiss   # ukryj komunikat
 ```

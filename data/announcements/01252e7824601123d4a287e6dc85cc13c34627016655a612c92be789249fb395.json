@@ -1,0 +1,31 @@
+{
+  "text": "17.11.2026 r. – odwołano zajęcia KK, gr. Miki;",
+  "textSha256": "01252e7824601123d4a287e6dc85cc13c34627016655a612c92be789249fb395",
+  "model": "claude-opus-5-5",
+  "promptVersion": "2026-11-04.1",
+  "createdAt": "2026-11-17T10:59:51.904Z",
+  "usage": {
+    "input_tokens": 2383,
+    "output_tokens": 99
+  },
+  "output": {
+    "is_schedule_change": true,
+    "changes": [
+      {
+        "type": "cancelled",
+        "dates": [
+          "2026-11-17"
+        ],
+        "activity_ref": "KK",
+        "group_refs": [
+          "Miki"
+        ],
+        "new_date": null,
+        "new_start": null,
+        "new_end": null,
+        "uncertain": false,
+        "note": null
+      }
+    ]
+  }
+}

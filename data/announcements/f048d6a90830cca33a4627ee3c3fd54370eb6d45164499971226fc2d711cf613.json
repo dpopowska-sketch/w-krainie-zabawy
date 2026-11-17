@@ -1,0 +1,31 @@
+{
+  "text": "13.11.2026 r. – odwołane zajecia KK, gr. Górnicza;",
+  "textSha256": "f048d6a90830cca33a4627ee3c3fd54370eb6d45164499971226fc2d711cf613",
+  "model": "claude-opus-5-5",
+  "promptVersion": "2026-11-04.1",
+  "createdAt": "2026-11-17T10:59:49.858Z",
+  "usage": {
+    "input_tokens": 2384,
+    "output_tokens": 101
+  },
+  "output": {
+    "is_schedule_change": true,
+    "changes": [
+      {
+        "type": "cancelled",
+        "dates": [
+          "2026-11-13"
+        ],
+        "activity_ref": "KK",
+        "group_refs": [
+          "Górnicza"
+        ],
+        "new_date": null,
+        "new_start": null,
+        "new_end": null,
+        "uncertain": false,
+        "note": null
+      }
+    ]
+  }
+}

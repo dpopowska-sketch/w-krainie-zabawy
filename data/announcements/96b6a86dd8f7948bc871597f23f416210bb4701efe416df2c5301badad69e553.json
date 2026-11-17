@@ -1,0 +1,31 @@
+{
+  "text": "19.11.2026 r. – zamiana grup Zajęcia ruchowe połączone z elementami sensoplastyki – Sówki;",
+  "textSha256": "96b6a86dd8f7948bc871597f23f416210bb4701efe416df2c5301badad69e553",
+  "model": "claude-opus-5-5",
+  "promptVersion": "2026-11-04.1",
+  "createdAt": "2026-11-17T10:59:57.539Z",
+  "usage": {
+    "input_tokens": 2401,
+    "output_tokens": 317
+  },
+  "output": {
+    "is_schedule_change": true,
+    "changes": [
+      {
+        "type": "other",
+        "dates": [
+          "2026-11-19"
+        ],
+        "activity_ref": "Zajęcia ruchowe połączone z elementami sensoplastyki",
+        "group_refs": [
+          "Sówki"
+        ],
+        "new_date": null,
+        "new_start": null,
+        "new_end": null,
+        "uncertain": true,
+        "note": "Zamiana grup na zajęciach. Z linii nie wynika, z którą grupą zamieniono Sówki ani czy Sówki przychodzą zamiast innej grupy, czy zostały przesunięte."
+      }
+    ]
+  }
+}

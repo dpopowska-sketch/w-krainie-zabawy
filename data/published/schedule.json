@@ -464,7 +464,7 @@
       "end": "10:45",
       "location": null,
       "subgroup": null,
-      "status": "scheduled",
+      "status": "cancelled",
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
@@ -477,9 +477,27 @@
           "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-1.jpg",
           "cellText": "Środa\n9.45-10.45\n04.11; 18.11;\n25.11;",
           "firstSeen": "2026-11-05T16:29:29.695Z"
+        },
+        {
+          "type": "announcement",
+          "text": "18.11.2026 r. – odwołano zajęcia TUS;",
+          "firstSeen": "2026-11-17T10:59:53.856Z",
+          "removedAt": null
+        },
+        {
+          "type": "announcement",
+          "text": "18.11.2026 r. – odwołano zajęcia TUS;",
+          "firstSeen": "2026-11-17T10:59:53.856Z",
+          "removedAt": null
+        },
+        {
+          "type": "announcement",
+          "text": "18.11.2026 r. – odwołano zajęcia TUS;",
+          "firstSeen": "2026-11-17T10:59:53.856Z",
+          "removedAt": null
         }
       ],
-      "updatedAt": "2026-11-05T16:29:29.695Z"
+      "updatedAt": "2026-11-17T10:59:53.856Z"
     },
     {
       "id": "2ce8f2ad5296",

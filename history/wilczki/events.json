@@ -651,5 +651,26 @@
     },
     "status": "rescheduled",
     "announcements": []
+  },
+  {
+    "id": "e77470fc3051",
+    "month": "2026-11",
+    "activity": "TUS - zajęcia rozwijające kompetencje emocjonalno-społeczne",
+    "date": "2026-11-18",
+    "start": "09:45",
+    "at": "2026-11-17T10:59:57.610Z",
+    "kind": "changed",
+    "changes": {
+      "status": [
+        "zaplanowane",
+        "odwołane"
+      ]
+    },
+    "status": "cancelled",
+    "announcements": [
+      "18.11.2026 r. – odwołano zajęcia TUS;",
+      "18.11.2026 r. – odwołano zajęcia TUS;",
+      "18.11.2026 r. – odwołano zajęcia TUS;"
+    ]
   }
 ]

@@ -1,0 +1,31 @@
+{
+  "text": "12.11.2026 r. – zamiana grup Zajęcia ruchowe połączone z elementami sensoplastyki – Motylki;",
+  "textSha256": "c221de7eb543921af15592c23c63909a6aad0e032ce1e1f337c4526384cbfcbd",
+  "model": "claude-opus-5-5",
+  "promptVersion": "2026-11-04.1",
+  "createdAt": "2026-11-17T10:59:47.513Z",
+  "usage": {
+    "input_tokens": 2401,
+    "output_tokens": 416
+  },
+  "output": {
+    "is_schedule_change": true,
+    "changes": [
+      {
+        "type": "other",
+        "dates": [
+          "2026-11-12"
+        ],
+        "activity_ref": "ruchowe połączone z elementami sensoplastyki",
+        "group_refs": [
+          "Motylki"
+        ],
+        "new_date": null,
+        "new_start": null,
+        "new_end": null,
+        "uncertain": true,
+        "note": "„Zamiana grup” – nie wiadomo, z którą grupą zamieniono Motylki ani czy zmienia się godzina; możliwe, że Motylki mają zajęcia w terminie innej grupy lub inna grupa przejmuje ich termin."
+      }
+    ]
+  }
+}

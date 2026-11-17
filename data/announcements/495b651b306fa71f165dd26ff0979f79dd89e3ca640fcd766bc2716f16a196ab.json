@@ -1,0 +1,29 @@
+{
+  "text": "18.11.2026 r. – odwołano zajęcia TUS;",
+  "textSha256": "495b651b306fa71f165dd26ff0979f79dd89e3ca640fcd766bc2716f16a196ab",
+  "model": "claude-opus-5-5",
+  "promptVersion": "2026-11-04.1",
+  "createdAt": "2026-11-17T10:59:53.856Z",
+  "usage": {
+    "input_tokens": 2377,
+    "output_tokens": 96
+  },
+  "output": {
+    "is_schedule_change": true,
+    "changes": [
+      {
+        "type": "cancelled",
+        "dates": [
+          "2026-11-18"
+        ],
+        "activity_ref": "TUS",
+        "group_refs": [],
+        "new_date": null,
+        "new_start": null,
+        "new_end": null,
+        "uncertain": false,
+        "note": null
+      }
+    ]
+  }
+}
