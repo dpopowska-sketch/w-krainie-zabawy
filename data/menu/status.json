@@ -1,14 +1,14 @@
 {
-  "lastChecked": "2026-11-20T08:12:50.983Z",
-  "lastSuccess": "2026-11-20T08:12:50.983Z",
-  "lastDataChange": "2026-11-16T08:06:49.341Z",
+  "lastChecked": "2026-11-23T09:09:01.850Z",
+  "lastSuccess": "2026-11-23T09:09:01.850Z",
+  "lastDataChange": "2026-11-23T09:09:01.850Z",
   "errors": [],
   "menuPageUrl": "https://zspzernica.pilchowice.pl/stolowka/",
   "allergenDocUrl": "https://zspzernica.pilchowice.pl/wp-content/uploads/2025/06/Substancje-lub-produkty-powodujace-alergie-lub-reakcje-nietolerancji.pdf",
   "currentSource": {
-    "url": "https://zspzernica.pilchowice.pl/wp-content/uploads/2026/11/Jadlospis-16_11_20_11-26r.pdf",
-    "sha256": "ef7869284e653cddaa21f727aecd89dc78ce7482f7776b0028efbda0e622db84",
-    "weekStart": "2026-11-16"
+    "url": "https://zspzernica.pilchowice.pl/wp-content/uploads/2026/11/Jadlospis-23_11_27_11-26r.pdf",
+    "sha256": "703d2b3ab5f8087f47eee1cb9de8857e4f6ff6fb19e1170f82de8f7bf2ee9c49",
+    "weekStart": "2026-11-23"
   },
   "waitingForNew": false
 }
