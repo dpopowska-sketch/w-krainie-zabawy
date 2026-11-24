@@ -638,14 +638,9 @@ function GroupPage(props: {
     return new Map([...map.entries()].sort(([a], [b]) => a.localeCompare(b)));
   }, [groupActivities, groupEvents, filtering, selection, prefix]);
 
-  // Komunikaty o minionych dniach chowamy, tak jak minione dni na liście.
-  const notices = schedule.notices.filter(
-    (n) =>
-      !n.removedAt &&
-      (n.groups === "all" || n.groups.includes(group)) &&
-      (n.dates.length === 0 || n.dates.some((d) => d.startsWith(prefix))) &&
-      !(n.dates.length > 0 && n.dates.every((d) => d < today)),
-  );
+  // Wszystkie komunikaty ze strony przedszkola z całego miesiąca – także o minionych dniach i o innych grupach
+  // (te są oznaczone „nie dotyczy grupy”).
+  const notices = schedule.notices.filter((n) => !n.removedAt && (n.dates.length === 0 || n.dates.some((d) => d.startsWith(prefix))));
 
   // W kalendarzu domyślnie zaznaczony jest dziś albo najbliższy dzień z zajęciami.
   const days = [...byDay.keys()];
@@ -710,7 +705,7 @@ function GroupPage(props: {
           </button>
         </div>
       )}
-      {notices.length > 0 && <NoticesBar notices={notices} sourcePage={schedule.sourcePage} />}
+      {notices.length > 0 && <NoticesBar notices={notices} group={group} groupName={groupName} sourcePage={schedule.sourcePage} />}
 
       <div class={`layout view-${props.view}`}>
         <section class={`primary${friendly ? " panel" : ""}`} aria-label={`Zajęcia – ${groupName}`}>
@@ -851,17 +846,32 @@ function noticeDate(n: Notice): string {
   return m ? `${m[3]}-${m[2]!.padStart(2, "0")}-${m[1]!.padStart(2, "0")}` : warsawDate(n.firstSeen);
 }
 
-/** Komunikat o aktualizacji tabeli skracamy do nazw zajęć; inne pokazujemy bez zmian. */
+const APPLIED_LABEL: Record<NonNullable<Notice["change"]>, string> = {
+  cancelled: "Odwołano",
+  rescheduled: "Przeniesiono",
+  time_changed: "Zmieniono godzinę",
+  additional: "Dodatkowe zajęcia",
+};
+
+/**
+ * Komunikat o aktualizacji tabeli albo o wprowadzonej zmianie skracamy do nazw zajęć
+ * (pełne nazwy zamiast skrótów z ogłoszenia, np. „KK”); inne pokazujemy bez zmian.
+ */
 function noticeNames(n: Notice): string[] | null {
-  return n.kind === "info" && n.activities?.length ? n.activities.map(shortName) : null;
+  return (n.kind === "info" || n.kind === "applied") && n.activities?.length ? [...new Set(n.activities.map(shortName))] : null;
+}
+
+function noticeLabel(n: Notice): string {
+  return n.kind === "applied" && n.change ? APPLIED_LABEL[n.change] : "Zaktualizowano terminy";
 }
 
 function NoticeText({ notice }: { notice: Notice }) {
   const names = noticeNames(notice);
-  if (!names) return <>{notice.text}</>;
+  // Treść ze strony przedszkola: jedna linia, bez średnika na końcu (przed dopiskiem „Nie dotyczy…”).
+  if (!names) return <>{notice.text.replace(/\s+/g, " ").replace(/[\s;,.]+$/, "")}.</>;
   return (
     <>
-      Zaktualizowano terminy:{" "}
+      {noticeLabel(notice)}:{" "}
       {names.map((name, i) => (
         <>
           {i > 0 && ", "}
@@ -874,14 +884,17 @@ function NoticeText({ notice }: { notice: Notice }) {
 }
 
 /** Komunikaty przedszkola: jeden zwijany pasek z najnowszym komunikatem i licznikiem nieprzeczytanych. */
-function NoticesBar(props: { notices: Notice[]; sourcePage: string }) {
+function NoticesBar(props: { notices: Notice[]; group: string; groupName: string; sourcePage: string }) {
   const [open, setOpen] = useState(false);
   const [read, setRead] = useState(loadRead);
   // Kropki „nowy” zostają do zwinięcia listy, choć komunikaty są już zapisane jako przeczytane.
   const [freshOnOpen, setFreshOnOpen] = useState<string[]>([]);
+  const ours = (n: Notice) => n.groups === "all" || n.groups.includes(props.group);
   const sorted = [...props.notices].sort((a, b) => noticeDate(b).localeCompare(noticeDate(a)) || b.firstSeen.localeCompare(a.firstSeen));
-  const unread = sorted.filter((n) => !read.includes(n.id));
-  const latest = sorted[0]!;
+  // Licznik „nowe” i podgląd w zwiniętym pasku – tylko komunikaty dotyczące tej grupy.
+  const relevant = sorted.filter(ours);
+  const unread = relevant.filter((n) => !read.includes(n.id));
+  const latest = relevant[0] ?? sorted[0]!;
   const latestNames = noticeNames(latest);
 
   useEffect(() => {
@@ -889,7 +902,7 @@ function NoticesBar(props: { notices: Notice[]; sourcePage: string }) {
       setFreshOnOpen([]);
       return;
     }
-    const fresh = props.notices.filter((n) => !read.includes(n.id)).map((n) => n.id);
+    const fresh = props.notices.filter((n) => ours(n) && !read.includes(n.id)).map((n) => n.id);
     if (!fresh.length) return;
     setFreshOnOpen(fresh);
     const next = [...read, ...fresh];
@@ -918,7 +931,7 @@ function NoticesBar(props: { notices: Notice[]; sourcePage: string }) {
             <span class="notices-latest">
               <span class="notices-date">{dayMonth(noticeDate(latest))}</span>
               <span class="notices-sep"> · </span>
-              {latestNames ? `Zaktualizowano terminy: ${latestNames.join(", ")}` : latest.text}
+              {latestNames ? `${noticeLabel(latest)}: ${latestNames.join(", ")}` : latest.text}
             </span>
           )}
         </div>
@@ -938,14 +951,18 @@ function NoticesBar(props: { notices: Notice[]; sourcePage: string }) {
         <div id="komunikaty-lista" class="notices-body">
           <ul class="notices-list">
             {sorted.map((n) => (
-              <li class="notice-item">
+              <li class={`notice-item${ours(n) ? "" : " other-group"}`}>
                 <span class={`notice-dot${freshOnOpen.includes(n.id) ? " on" : ""}`}>
                   {freshOnOpen.includes(n.id) && <span class="sr-only">Nowy: </span>}
                 </span>
                 <span class="notice-date">{dayMonth(noticeDate(n))}</span>
                 <span class="notice-text">
                   <NoticeText notice={n} />
-                  {n.kind === "review" && <span class="muted"> Nie udało się automatycznie przypisać go do konkretnego terminu.</span>}
+                  {ours(n) ? (
+                    n.kind === "review" && <span class="muted"> Nie udało się automatycznie przypisać go do konkretnego terminu.</span>
+                  ) : (
+                    <span class="notice-other"> Nie dotyczy grupy „{props.groupName}”.</span>
+                  )}
                 </span>
                 <a href={props.sourcePage} target="_blank" rel="noopener" class="notice-source">
                   Źródło
@@ -953,7 +970,7 @@ function NoticesBar(props: { notices: Notice[]; sourcePage: string }) {
               </li>
             ))}
           </ul>
-          {sorted.some((n) => n.kind === "info") && (
+          {sorted.some((n) => n.kind === "info" || n.kind === "applied") && (
             <p class="notices-ok">
               <CheckIcon />
               Harmonogram już uwzględnia te zmiany.

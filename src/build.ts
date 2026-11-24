@@ -12,9 +12,9 @@ import { updateHistory } from "./history.js";
 import type { SourceDocument } from "./discover.js";
 import { loadEvents } from "./events.js";
 import { fold, sameActivity, type IssueCode } from "./normalize.js";
-import { activityGroups, matchActivities, resolveGroupRef } from "./resolve.js";
+import { activityGroups, matchActivities, resolveGroupRef, type Effect } from "./resolve.js";
 import { allDocuments, loadConsensus, sameOccurrence, type ScheduledOccurrence } from "./schedule.js";
-import type { CalendarData, Notice, PublishedActivity, PublishedSchedule, SchoolEvent, Source, Status } from "./published.js";
+import type { AppliedChange, CalendarData, Notice, PublishedActivity, PublishedSchedule, SchoolEvent, Source, Status } from "./published.js";
 import type { AnnouncementRecord } from "./schema.js";
 
 export type { Notice, PublishedActivity, PublishedSchedule, SchoolEvent, Source, Status };
@@ -172,6 +172,13 @@ export function applyTableReplacements(activities: Map<string, PublishedActivity
   }
 }
 
+const EFFECT_CHANGE: Record<Effect["kind"], AppliedChange> = {
+  cancel: "cancelled",
+  reschedule: "rescheduled",
+  time_change: "time_changed",
+  add: "additional",
+};
+
 function applyAnnouncements(
   activities: Map<string, PublishedActivity>,
   entries: ChangeEntry[],
@@ -199,6 +206,18 @@ function applyAnnouncements(
     const noticeGroups = new Set<string>();
     const noticeDates = new Set<string>();
     const noticeActivities = new Set<string>();
+    // Zmiany wprowadzone w harmonogramie – rodzice widzą je też na liście komunikatów.
+    const appliedGroups = new Set<string>();
+    const appliedDates = new Set<string>();
+    const appliedActivities = new Set<string>();
+    const appliedChanges = new Set<AppliedChange>();
+    const markApplied = (a: PublishedActivity, kind: Effect["kind"]) => {
+      appliedGroups.add(a.group);
+      appliedDates.add(a.date);
+      if (a.previous) appliedDates.add(a.previous.date);
+      appliedActivities.add(a.activity);
+      appliedChanges.add(EFFECT_CHANGE[kind]);
+    };
     for (const { change, resolution } of entry.changes) {
       if (resolution.status !== "applied") {
         (resolution.status === "info" ? infoReasons : reviewReasons).push(resolution.reason);
@@ -219,6 +238,7 @@ function applyAnnouncements(
           const existing = activities.get(id);
           if (existing) {
             touch(existing, inCurrentTable.has(id));
+            markApplied(existing, effect.kind);
             continue;
           }
           const added: PublishedActivity = {
@@ -241,6 +261,7 @@ function applyAnnouncements(
           };
           activities.set(id, added);
           touch(added);
+          markApplied(added, effect.kind);
           continue;
         }
         const target = activities.get(activityId(effect.target.group, effect.target.date, effect.target.start, effect.target.activity));
@@ -255,7 +276,30 @@ function applyAnnouncements(
           target.end = effect.end;
         }
         touch(target);
+        markApplied(target, effect.kind);
       }
+    }
+    // Ogłoszenie, które w całości zmieniło harmonogram (bez wątpliwości) – na listę komunikatów jako „wprowadzone”.
+    if (!reviewReasons.length && appliedChanges.size) {
+      const notice: Notice = {
+        id: entry.textSha256.slice(0, 12),
+        kind: "applied",
+        // Jeden rodzaj na komunikat; przy mieszanych zmianach (rzadkie) bierzemy pierwszy.
+        change: [...appliedChanges][0]!,
+        text: entry.text.replace(/^[–-]\s*/, ""),
+        groups: [...appliedGroups],
+        dates: [...appliedDates].sort(),
+        activities: [...appliedActivities],
+        reason: "Zmiana wprowadzona w harmonogramie",
+        firstSeen: entry.firstSeen,
+        removedAt: entry.removedAt,
+      };
+      // Poprawiona linia na stronie (np. dopisany średnik) to ta sama zmiana – zostaje nowsza wersja.
+      const key = (n: Notice) => JSON.stringify([n.change, [...n.groups].sort(), n.dates, [...(n.activities ?? [])].sort()]);
+      const same = notices.findIndex((n) => n.kind === "applied" && key(n) === key(notice));
+      if (same >= 0) notices.splice(same, 1);
+      notices.push(notice);
+      continue;
     }
     if (reviewReasons.length || infoReasons.length) {
       notices.push({
@@ -494,9 +538,8 @@ function publicView(full: PublishedSchedule, groups: string[], month: string): P
     sourcePage: full.sourcePage,
     groups: full.groups.filter((g) => groups.includes(g.id)),
     activities: full.activities.filter((a) => groups.includes(a.group) && (inMonth(a.date) || (a.previous !== null && inMonth(a.previous.date)))),
-    notices: full.notices.filter(
-      (n) => (n.groups === "all" || n.groups.some((g) => groups.includes(g))) && (n.dates.length === 0 || n.dates.some(inMonth)),
-    ),
+    // Komunikaty: wszystkie ze strony przedszkola (także dla innych grup – strona oznacza je „nie dotyczy”).
+    notices: full.notices.filter((n) => n.dates.length === 0 || n.dates.some(inMonth)),
     // Wydarzenia przedszkolne: tylko potwierdzone, w tym miesiącu (także wielodniowe zachodzące na miesiąc).
     events: (full.events ?? []).filter(
       (e) => e.verification === "verified" && groups.includes(e.group) && e.date.slice(0, 7) <= month && (e.endDate ?? e.date).slice(0, 7) >= month,

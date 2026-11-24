@@ -718,6 +718,14 @@ button.freshness {
 .notice-text strong {
   font-weight: 600;
 }
+/* Komunikat dla innej grupy – widoczny, ale wyciszony. */
+.notice-item.other-group .notice-text,
+.notice-item.other-group .notice-date {
+  color: var(--muted);
+}
+.notice-other {
+  font-style: italic;
+}
 .notice-source {
   font-size: 13px;
   text-decoration: none;

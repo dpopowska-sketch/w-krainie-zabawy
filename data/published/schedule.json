@@ -410,7 +410,7 @@
       "end": "10:45",
       "location": null,
       "subgroup": null,
-      "status": "scheduled",
+      "status": "cancelled",
       "previous": null,
       "verification": "verified",
       "reviewReasons": [],
@@ -423,9 +423,27 @@
           "url": "https://przedszkole-zspzernica.pilchowice.pl/wordpress/wp-content/uploads/2026/11/d3c87885065988ed44f59fd14f22a697-1.jpg",
           "cellText": "Wtorek\n9.45-10.45\n03.11; 10.11; 17.11;",
           "firstSeen": "2026-11-05T16:29:29.695Z"
+        },
+        {
+          "type": "announcement",
+          "text": "17.11.2026 r. – odwołano zajęcia KK, gr. Miki;",
+          "firstSeen": "2026-11-17T10:59:51.904Z",
+          "removedAt": null
+        },
+        {
+          "type": "announcement",
+          "text": "17.11.2026 r. – odwołano zajęcia KK, gr. Miki;",
+          "firstSeen": "2026-11-17T10:59:51.904Z",
+          "removedAt": null
+        },
+        {
+          "type": "announcement",
+          "text": "17.11.2026 r. – odwołano zajęcia KK, gr. Miki;",
+          "firstSeen": "2026-11-17T10:59:51.904Z",
+          "removedAt": null
         }
       ],
-      "updatedAt": "2026-11-05T16:29:29.695Z"
+      "updatedAt": "2026-11-17T10:59:51.904Z"
     },
     {
       "id": "fc259daa726a",
@@ -709,6 +727,25 @@
       "removedAt": null
     },
     {
+      "id": "f62f3d5385ea",
+      "kind": "applied",
+      "change": "additional",
+      "text": "dodano zajęcia 05.11.2026 r., 14.30 – 15.30 – Przedszkolak Mały projektant i technolog – grupa Miki;",
+      "groups": [
+        "motylki",
+        "wilczki"
+      ],
+      "dates": [
+        "2026-11-05"
+      ],
+      "activities": [
+        "Zajęcia Przedszkolak Mały projektant i technolog"
+      ],
+      "reason": "Zmiana wprowadzona w harmonogramie",
+      "firstSeen": "2026-11-05T05:12:33.390Z",
+      "removedAt": null
+    },
+    {
       "id": "ab961fedea10",
       "kind": "info",
       "text": "04.11.2026 r. – zaktualizowano tabelę o zajęcia Przedszkolak mały projektant i technolog oraz o Zajęcia rozwijające kompetencje z wykorzystaniem robotyki i programowania;",
@@ -746,6 +783,96 @@
       ],
       "reason": "Przedszkole zaktualizowało tabelę terminów",
       "firstSeen": "2026-11-05T16:31:13.643Z",
+      "removedAt": null
+    },
+    {
+      "id": "c221de7eb543",
+      "kind": "review",
+      "text": "12.11.2026 r. – zamiana grup Zajęcia ruchowe połączone z elementami sensoplastyki – Motylki;",
+      "groups": [
+        "motylki"
+      ],
+      "dates": [
+        "2026-11-12"
+      ],
+      "activities": [
+        "Zajęcia ruchowe połączone z elementami sensoplastyki"
+      ],
+      "reason": "Nierozpoznany rodzaj zmiany",
+      "firstSeen": "2026-11-17T10:59:47.513Z",
+      "removedAt": null
+    },
+    {
+      "id": "f048d6a90830",
+      "kind": "applied",
+      "change": "cancelled",
+      "text": "13.11.2026 r. – odwołane zajecia KK, gr. Górnicza;",
+      "groups": [
+        "zabki"
+      ],
+      "dates": [
+        "2026-11-13"
+      ],
+      "activities": [
+        "Zajęcia korekcyjno-kompensacyjne"
+      ],
+      "reason": "Zmiana wprowadzona w harmonogramie",
+      "firstSeen": "2026-11-17T10:59:49.858Z",
+      "removedAt": null
+    },
+    {
+      "id": "01252e782460",
+      "kind": "applied",
+      "change": "cancelled",
+      "text": "17.11.2026 r. – odwołano zajęcia KK, gr. Miki;",
+      "groups": [
+        "motylki",
+        "wilczki"
+      ],
+      "dates": [
+        "2026-11-17"
+      ],
+      "activities": [
+        "Zajęcia korekcyjno-kompensacyjne"
+      ],
+      "reason": "Zmiana wprowadzona w harmonogramie",
+      "firstSeen": "2026-11-17T10:59:51.904Z",
+      "removedAt": null
+    },
+    {
+      "id": "495b651b306f",
+      "kind": "applied",
+      "change": "cancelled",
+      "text": "18.11.2026 r. – odwołano zajęcia TUS;",
+      "groups": [
+        "motylki",
+        "wilczki"
+      ],
+      "dates": [
+        "2026-11-18"
+      ],
+      "activities": [
+        "TUS - zajęcia rozwijające kompetencje emocjonalno-społeczne"
+      ],
+      "reason": "Zmiana wprowadzona w harmonogramie",
+      "firstSeen": "2026-11-17T10:59:53.856Z",
+      "removedAt": null
+    },
+    {
+      "id": "96b6a86dd8f7",
+      "kind": "review",
+      "text": "19.11.2026 r. – zamiana grup Zajęcia ruchowe połączone z elementami sensoplastyki – Sówki;",
+      "groups": [
+        "sowki"
+      ],
+      "dates": [
+        "2026-11-19"
+      ],
+      "activities": [
+        "Zajęcia ruchowe połączone z elementami sensoplastyki"
+      ],
+      "reason": "Nierozpoznany rodzaj zmiany",
+      "firstSeen": "2026-11-17T10:59:57.539Z",
       "removedAt": null
     }
   ],
