@@ -31,6 +31,15 @@ test("grupy: nazwa, odmiana, miejsce, nieznana", () => {
   assert.equal(resolveGroupRef("Rybki", config), null);
 });
 
+test("„KK” to zajęcia korekcyjno-kompensacyjne, nie robotyka (kompetencje kluczowe)", () => {
+  const r = resolveChange(change({ dates: ["2026-11-17"], activity_ref: "KK", group_refs: ["Miki"] }), occurrences, config);
+  assert.ok(r.status === "applied", r.status === "applied" ? "" : r.reason);
+  assert.equal(r.activity, "Zajęcia korekcyjno-kompensacyjne");
+  // Miki = Motylki + Wilczki.
+  const targets = [...new Set(r.effects.map((e) => ("target" in e ? `${e.target.group} ${e.target.date} ${e.target.start}` : "")))].sort();
+  assert.deepEqual(targets, ["motylki 2026-11-17 09:45", "wilczki 2026-11-17 09:45"]);
+});
+
 test("nieznana grupa → weryfikacja", () => {
   const r = resolveChange(change({ dates: ["2026-10-15"], activity_ref: "Słowiki", group_refs: ["Rybki"] }), occurrences, config);
   assert.equal(r.status, "needs_review");

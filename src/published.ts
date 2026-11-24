@@ -32,10 +32,18 @@ export interface PublishedActivity {
   updatedAt: string;
 }
 
+/** Rodzaj zmiany wprowadzonej w harmonogramie na podstawie ogłoszenia. */
+export type AppliedChange = "cancelled" | "rescheduled" | "time_changed" | "additional";
+
 export interface Notice {
   id: string;
-  /** review = nie udało się przypisać do terminu; info = tylko informacja (np. zaktualizowana tabela). */
-  kind: "review" | "info";
+  /**
+   * review = nie udało się przypisać do terminu; info = tylko informacja (np. zaktualizowana tabela);
+   * applied = zmiana wprowadzona w harmonogramie (odwołanie, przeniesienie, nowa godzina, dodatkowe zajęcia).
+   */
+  kind: "review" | "info" | "applied";
+  /** Rodzaj wprowadzonej zmiany – tylko przy kind „applied”. */
+  change?: AppliedChange;
   text: string;
   groups: string[] | "all";
   /** Daty z ogłoszenia (YYYY-MM-DD) – komunikat pokazujemy w miesiącach, których dotyczy. Puste = zawsze. */

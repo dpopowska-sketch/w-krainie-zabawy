@@ -672,5 +672,26 @@
       "18.11.2026 r. – odwołano zajęcia TUS;",
       "18.11.2026 r. – odwołano zajęcia TUS;"
     ]
+  },
+  {
+    "id": "e630fb8a644c",
+    "month": "2026-11",
+    "activity": "Zajęcia korekcyjno-kompensacyjne",
+    "date": "2026-11-17",
+    "start": "09:45",
+    "at": "2026-11-24T06:17:18.594Z",
+    "kind": "changed",
+    "changes": {
+      "status": [
+        "zaplanowane",
+        "odwołane"
+      ]
+    },
+    "status": "cancelled",
+    "announcements": [
+      "17.11.2026 r. – odwołano zajęcia KK, gr. Miki;",
+      "17.11.2026 r. – odwołano zajęcia KK, gr. Miki;",
+      "17.11.2026 r. – odwołano zajęcia KK, gr. Miki;"
+    ]
   }
 ]

@@ -163,7 +163,7 @@ npm run evaluate:announcements  # ogłoszenia vs test/golden/announcements-2026-
 
 - Claude tylko interpretuje tekst (rodzaj zmiany, daty, zajęcia, grupy – tak jak napisano).
 - Dopasowanie do terminów robi kod (`src/resolve.ts`) z aliasami z `config/groups.json`
-  (np. `kk` → kompetencje kluczowe, `Miki` → Motylki i Wilczki).
+  (np. `kk` → zajęcia korekcyjno-kompensacyjne, `Miki` → Motylki i Wilczki).
 - Zmiana jest stosowana tylko przy jednoznacznym dopasowaniu. Nieznana grupa, kilka pasujących zajęć,
   brak terminu w danym dniu lub niejednoznaczne ogłoszenie → **do weryfikacji**, harmonogram bez zmian.
 - Do harmonogramu trafiają tylko terminy zgodne w obu przebiegach odczytu.
