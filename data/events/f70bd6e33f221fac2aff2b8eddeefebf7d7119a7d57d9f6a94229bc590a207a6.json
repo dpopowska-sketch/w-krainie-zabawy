@@ -1,0 +1,116 @@
+{
+  "file": "events/wilczki/2026-11.txt",
+  "textSha256": "f70bd6e33f221fac2aff2b8eddeefebf7d7119a7d57d9f6a94229bc590a207a6",
+  "model": "claude-opus-5-5",
+  "promptVersion": "2026-11-04.1",
+  "createdAt": "2026-11-24T07:25:57.972Z",
+  "usage": {
+    "input_tokens": 2513,
+    "output_tokens": 1777
+  },
+  "output": {
+    "events": [
+      {
+        "date": "2026-11-05",
+        "end_date": null,
+        "start": null,
+        "end": null,
+        "title": "Dzień Postaci z Bajek",
+        "details": "dzieci przychodzą od rana przebrane za postacie bajkowe.",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "date": "2026-11-09",
+        "end_date": null,
+        "start": null,
+        "end": null,
+        "title": "Wyjście do biblioteki",
+        "details": "zajęcia patryjotyczne.",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "date": "2026-11-10",
+        "end_date": null,
+        "start": null,
+        "end": null,
+        "title": "Akcja Szkoła do hymnu",
+        "details": "w tym dniu proszę by dzieci były elegancko ubranę.",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "date": "2026-11-16",
+        "end_date": null,
+        "start": null,
+        "end": null,
+        "title": "Dzień Tolerancji",
+        "details": "zajęcia z psychologiem.",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "date": "2026-11-18",
+        "end_date": null,
+        "start": null,
+        "end": null,
+        "title": "Zebranie z rodzicami",
+        "details": "godzinę oraz salę podam bliżej terminu.",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "date": "2026-11-20",
+        "end_date": null,
+        "start": null,
+        "end": null,
+        "title": "Dzień Praw Dziecka",
+        "details": null,
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "date": "2026-11-25",
+        "end_date": null,
+        "start": null,
+        "end": null,
+        "title": "Dzień Pluszowego Misia",
+        "details": null,
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "date": "2026-11-27",
+        "end_date": null,
+        "start": null,
+        "end": null,
+        "title": "Andrzejki",
+        "details": "Dzieci będą wykonywać różne eksperymenty(mogą się przy tym pobrudzić). Mogą przebrać się za czarodziejów.",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "date": "2026-11-30",
+        "end_date": null,
+        "start": null,
+        "end": null,
+        "title": "Pożegnanie kolegi z grupy - Franka",
+        "details": "Dzieci mogą przygotować dla niego kartki na pamiątkę.",
+        "uncertain": false,
+        "note": null
+      },
+      {
+        "date": "2026-11-30",
+        "end_date": null,
+        "start": null,
+        "end": null,
+        "title": "kartki świąteczne dla osób z DPS",
+        "details": "Tego dnia będziemy również wspólnie z klasą 2b wykonywać kartki świąteczne dla osób z DPS. Proszę o przyniesienie różnych materiałów i ozdób, np. brokatowych kartek, naklejek, świątecznych wycinanek itp.",
+        "uncertain": false,
+        "note": null
+      }
+    ],
+    "skipped": []
+  }
+}
