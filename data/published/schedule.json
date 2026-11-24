@@ -873,7 +873,10 @@
       "details": "Dzieci będą wykonywać różne eksperymenty(mogą się przy tym pobrudzić). Mogą przebrać się za czarodziejów.",
       "verification": "verified",
       "reviewReasons": [],
-      "source": "events/wilczki/2026-11.txt"
+      "source": "events/wilczki/2026-11.txt",
+      "kind": "event",
+      "project": null,
+      "tentative": false
     },
     {
       "id": "c32e56340219",
@@ -886,7 +889,10 @@
       "details": "Dzieci mogą przygotować dla niego kartki na pamiątkę.",
       "verification": "verified",
       "reviewReasons": [],
-      "source": "events/wilczki/2026-11.txt"
+      "source": "events/wilczki/2026-11.txt",
+      "kind": "event",
+      "project": null,
+      "tentative": false
     },
     {
       "id": "10565c675222",
@@ -895,7 +901,7 @@
       "endDate": null,
       "start": null,
       "end": null,
-      "title": "kartki świąteczne dla osób z DPS",
+      "title": "Kartki świąteczne dla osób z DPS",
       "details": "Tego dnia będziemy również wspólnie z klasą 2b wykonywać kartki świąteczne dla osób z DPS. Proszę o przyniesienie różnych materiałów i ozdób, np. brokatowych kartek, naklejek, świątecznych wycinanek itp.",
       "verification": "verified",
       "reviewReasons": [],
