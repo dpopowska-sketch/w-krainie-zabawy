@@ -138,6 +138,18 @@ export function FlagIcon({ size = 18 }: { size?: number }) {
   );
 }
 
+/** Autobus – wycieczka (cały dzień, poza przedszkolem). */
+export function BusIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="4" y="3.5" width="16" height="14" rx="3" />
+      <path d="M4 10.5h16M8 21v-3.5M16 21v-3.5" />
+      <circle cx="8.5" cy="14" r="1" />
+      <circle cx="15.5" cy="14" r="1" />
+    </svg>
+  );
+}
+
 export function StarIcon({ filled, size = 16 }: { filled: boolean; size?: number }) {
   return filled ? (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

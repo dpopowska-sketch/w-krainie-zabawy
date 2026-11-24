@@ -50,8 +50,11 @@ W `config/groups.json`:
   - `RRRR-MM.md` – harmonogram miesiąca (stan aktualny) i dziennik zmian z datami,
   - `events.json`, `state.json` – te same dane w formie do przetwarzania.
 
-Strona pokazuje tylko bieżący miesiąc (czas polski); publiczny plik z danymi też zawiera
-tylko bieżący miesiąc i widoczne grupy. Pełne dane zostają w repozytorium.
+Strona otwiera się na bieżącym miesiącu (czas polski); strzałkami i paskiem miesięcy można przejść
+do kolejnych – aż do czerwca roku szkolnego (`lastPublicMonth` w `src/build.ts`, `visibleMonths` w
+`web/src/dates.ts`). Publiczny plik z danymi zawiera tylko te miesiące i widoczne grupy – minionych
+miesięcy nie publikujemy. Pełne dane zostają w repozytorium. W miesiącu bez planu zajęć dodatkowych
+strona pisze, że plan pojawi się po opublikowaniu przez przedszkole.
 
 ## Kalendarz w telefonie (subskrypcja)
 
@@ -101,6 +104,17 @@ wiadomość odczytuje Claude (`npm run events`, także w każdej synchronizacji;
 pliki). Kod sprawdza daty; wątpliwe wydarzenia nie są publikowane i trafiają do `review/pending.md`
 oraz powiadomień (decyzja `- event: <id>` w `review/decisions.yaml`). Pominięte zdania (powitanie,
 podpis) też są wypisane w `review/pending.md`.
+
+Wiadomość może zapowiadać wydarzenia na kolejne miesiące – do końca roku szkolnego (np. wycieczki
+w marcu w pliku `2026-12.txt`). Rok bez podanego roku dobierany jest do roku szkolnego z nazwy pliku.
+
+**Wycieczki** (pozycje, które wiadomość nazywa wycieczkami, także pod nagłówkiem „Wycieczki…”) mają
+własny wygląd: kolor (zielony w wyglądzie nowoczesnym, niebieski w ciepłym), autobus i dopisek „cały dzień,
+poza przedszkolem”; w kalendarzu barwią cały dzień. Nazwa projektu z nagłówka (np. „Sensoplastyka”)
+jest pokazywana przy wycieczce. Karta „Wycieczki w tym roku” zbiera wszystkie nadchodzące.
+Kilka dni do wyboru („16.03 lub 17.03”) albo „do potwierdzenia” = wycieczka w każdym z tych dni
+z oznaczeniem „Termin do potwierdzenia” (przerywana ramka). Odczyty sprzed wersji z wycieczkami
+(`2026-11-04.1`) zostają ważne i są traktowane jak zwykłe wydarzenia.
 
 ## Jadłospis „Co dziś dobrego?”
 

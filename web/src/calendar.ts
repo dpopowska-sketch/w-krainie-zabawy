@@ -78,10 +78,22 @@ export function calendarEvent(a: PublishedActivity, groupName: string, pageUrl: 
   };
 }
 
-/** Wydarzenie przedszkolne; bez godziny → całodniowe (także wielodniowe). */
+/** Wydarzenie przedszkolne; bez godziny → całodniowe (także wielodniowe). Wycieczka ma dopisek w tytule. */
 export function schoolCalendarEvent(e: SchoolEvent, groupName: string, pageUrl: string): CalendarEvent {
-  const description = [e.details, `Grupa: ${groupName}`, `Aktualny harmonogram: ${pageUrl}`].filter(Boolean).join("\n");
-  const base = { uid: `${e.id}@w-krainie-zabawy`, title: `${e.title} (${groupName})`, description, location: PLACE, date: e.date };
+  const trip = e.kind === "trip";
+  const description = [
+    e.tentative && "Termin do potwierdzenia.",
+    e.details,
+    trip && "Wycieczka – cały dzień, poza przedszkolem.",
+    e.project && `Projekt: ${e.project}`,
+    `Grupa: ${groupName}`,
+    `Aktualny harmonogram: ${pageUrl}`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+  const title = `${trip ? "Wycieczka: " : ""}${e.title}${e.tentative ? " (do potwierdzenia)" : ""} (${groupName})`;
+  // Miejsce wycieczki jest w tytule – nie wpisujemy przedszkola jako miejsca.
+  const base = { uid: `${e.id}@w-krainie-zabawy`, title, description, location: trip ? "" : PLACE, date: e.date };
   if (!e.start) return { ...base, start: "00:00", end: "00:00", allDay: { endDate: e.endDate ?? e.date } };
   return { ...base, start: e.start, end: e.end ?? addMinutes(e.start, DEFAULT_MINUTES) };
 }

@@ -485,11 +485,21 @@ function currentMonthKey(): string {
 }
 
 /**
- * To, co widzą rodzice: tylko grupy z publicGroups i tylko bieżący miesiąc
- * (termin przeniesiony z/do tego miesiąca też się liczy).
+ * Ostatni miesiąc, który rodzice mogą obejrzeć: czerwiec roku szkolnego (wakacje: bieżący miesiąc).
+ * „2026-11” → „2027-06”, „2027-07” → „2027-07”.
  */
-function publicView(full: PublishedSchedule, groups: string[], month: string): PublishedSchedule {
-  const inMonth = (d: string) => d.startsWith(month);
+export function lastPublicMonth(month: string): string {
+  const june = `${Number(schoolYearStart(month).slice(0, 4)) + 1}-06`;
+  return june > month ? june : month;
+}
+
+/**
+ * To, co widzą rodzice: tylko grupy z publicGroups, od bieżącego miesiąca do czerwca roku szkolnego
+ * (termin przeniesiony z/do tych miesięcy też się liczy). Minione miesiące nie są publikowane.
+ */
+export function publicView(full: PublishedSchedule, groups: string[], month: string): PublishedSchedule {
+  const last = lastPublicMonth(month);
+  const inMonth = (d: string) => d.slice(0, 7) >= month && d.slice(0, 7) <= last;
   return {
     sourcePage: full.sourcePage,
     groups: full.groups.filter((g) => groups.includes(g.id)),
@@ -497,9 +507,9 @@ function publicView(full: PublishedSchedule, groups: string[], month: string): P
     notices: full.notices.filter(
       (n) => (n.groups === "all" || n.groups.some((g) => groups.includes(g))) && (n.dates.length === 0 || n.dates.some(inMonth)),
     ),
-    // Wydarzenia przedszkolne: tylko potwierdzone, w tym miesiącu (także wielodniowe zachodzące na miesiąc).
+    // Wydarzenia przedszkolne: tylko potwierdzone, w tych miesiącach (także wielodniowe zachodzące na nie).
     events: (full.events ?? []).filter(
-      (e) => e.verification === "verified" && groups.includes(e.group) && e.date.slice(0, 7) <= month && (e.endDate ?? e.date).slice(0, 7) >= month,
+      (e) => e.verification === "verified" && groups.includes(e.group) && e.date.slice(0, 7) <= last && (e.endDate ?? e.date).slice(0, 7) >= month,
     ),
   };
 }

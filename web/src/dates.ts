@@ -156,3 +156,30 @@ export function formatDayWithYear(iso: string): string {
     new Intl.DateTimeFormat("pl-PL", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(utcNoon(iso)),
   ).replace(/\s*r\.$/, "");
 }
+
+/** Miesiąc przesunięty o `n` (może być ujemne). */
+export function addMonths(m: Month, n: number): Month {
+  const index = m.year * 12 + m.month - 1 + n;
+  return { year: Math.floor(index / 12), month: (index % 12) + 1 };
+}
+
+/**
+ * Miesiące, które rodzic może obejrzeć: od bieżącego do czerwca roku szkolnego (w wakacje – tylko bieżący).
+ * Tak samo jak lastPublicMonth w src/build.ts – dane innych miesięcy nie są publikowane.
+ */
+export function visibleMonths(current: Month): Month[] {
+  const juneYear = current.month >= 9 ? current.year + 1 : current.year;
+  const months = [current];
+  while (monthKey(months.at(-1)!) < `${juneYear}-06`) months.push(addMonths(months.at(-1)!, 1));
+  return months;
+}
+
+/** „lis” – skrót na pasku miesięcy. */
+export function formatMonthShort(m: Month): string {
+  return capitalize(new Intl.DateTimeFormat("pl-PL", { month: "short", timeZone: "UTC" }).format(utcNoon(`${monthKey(m)}-01`)).replace(".", ""));
+}
+
+/** „listopada” – w zdaniu „Wróć do listopada”. */
+export function formatMonthGenitive(m: Month): string {
+  return new Intl.DateTimeFormat("pl-PL", { day: "numeric", month: "long", timeZone: "UTC" }).format(utcNoon(`${monthKey(m)}-01`)).replace(/^\d+\s*/, "");
+}

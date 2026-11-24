@@ -1,8 +1,9 @@
 // Testy wydarzeń przedszkolnych – walidacja odczytu, decyzje i kalendarz. Bez AI.
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { applyDecisions } from "../src/build.js";
+import { applyDecisions, lastPublicMonth, publicView } from "../src/build.js";
 import { eventId, parseFileName, validateEvents } from "../src/events.js";
+import type { PublishedSchedule } from "../src/published.js";
 import type { ParsedEvent } from "../src/schema.js";
 import { googleCalendarUrl, icsText, schoolCalendarEvent } from "../web/src/calendar.js";
 import { daysBetween } from "../web/src/dates.js";
@@ -10,7 +11,7 @@ import { daysBetween } from "../web/src/dates.js";
 const META = { group: "wilczki", year: 2026, month: 11 };
 
 function parsed(partial: Partial<ParsedEvent>): ParsedEvent {
-  return { date: "2026-11-05", end_date: null, start: null, end: null, title: "Dzień Postaci z Bajek", details: null, uncertain: false, note: null, ...partial };
+  return { date: "2026-11-05", end_date: null, start: null, end: null, title: "Dzień Postaci z Bajek", details: null, uncertain: false, note: null, kind: "wydarzenie", project: null, other_dates: [], to_confirm: false, ...partial };
 }
 
 test("nazwa pliku: grupa i miesiąc", () => {
@@ -31,7 +32,9 @@ test("wątpliwości → do rozstrzygnięcia", () => {
     { uncertain: true, note: "w przyszłym tygodniu" },
     { date: "2026-11-31" },
     { date: "5.11" },
-    { date: "2027-03-01" },
+    { date: "2026-03-01" },
+    { date: "2027-09-01" },
+    { date: "2026-09-30" },
     { end_date: "2026-11-01" },
     { end_date: "2026-12-30" },
   ];
@@ -39,8 +42,10 @@ test("wątpliwości → do rozstrzygnięcia", () => {
     const [e] = validateEvents([parsed(c)], META, "f");
     assert.equal(e!.verification, "needs_review", JSON.stringify(c));
   }
-  // Sąsiedni miesiąc jest dopuszczalny (np. 1.12 w wiadomości listopadowej).
-  assert.equal(validateEvents([parsed({ date: "2026-12-01" })], META, "f")[0]!.verification, "verified");
+  // Sąsiedni miesiąc jest dopuszczalny (np. 1.12 w wiadomości listopadowej), tak samo kolejne miesiące roku szkolnego.
+  for (const date of ["2026-10-30", "2026-12-01", "2027-03-04", "2027-08-31"]) {
+    assert.equal(validateEvents([parsed({ date })], META, "f")[0]!.verification, "verified", date);
+  }
 });
 
 test("decyzje: confirm publikuje, edit poprawia, hide usuwa", () => {
@@ -108,4 +113,51 @@ test("kalendarz: wydarzenie całodniowe i z godziną", () => {
   const e2 = schoolCalendarEvent(timed!, "Wilczki", "https://example.org/");
   assert.ok(icsText(e2).replace(/\r\n /g, "").includes("DTSTART:20261118T153000Z"));
   assert.equal(e2.end, "17:30");
+});
+
+test("wycieczki: rodzaj, projekt i kilka dni do wyboru", () => {
+  const events = validateEvents(
+    [
+      parsed({ date: "2027-03-16", title: "Chlebowa Chata", kind: "wycieczka", project: "Preorientacja zawodowa:", other_dates: ["2027-03-17"], to_confirm: true }),
+      parsed({ date: "2027-03-04", title: "Kopalnia Guido", kind: "wycieczka" }),
+      parsed({ date: "2026-12-07", title: "Mikołaj" }),
+    ],
+    { ...META, month: 12 },
+    "f",
+  );
+  assert.deepEqual(
+    events.map((e) => [e.date, e.kind, e.project, e.tentative, e.verification]),
+    [
+      ["2027-03-16", "trip", "Preorientacja zawodowa", true, "verified"],
+      ["2027-03-17", "trip", "Preorientacja zawodowa", true, "verified"],
+      ["2027-03-04", "trip", null, false, "verified"],
+      ["2026-12-07", "event", null, false, "verified"],
+    ],
+  );
+  assert.notEqual(events[0]!.id, events[1]!.id);
+});
+
+test("starszy odczyt bez nowych pól = zwykłe wydarzenie", () => {
+  const { kind, project, other_dates, to_confirm, ...old } = parsed({});
+  const [e] = validateEvents([old], META, "f");
+  assert.equal(e!.kind, "event");
+  assert.equal(e!.tentative, false);
+  assert.equal(e!.id, eventId("wilczki", "2026-11-05", "Dzień Postaci z Bajek"));
+});
+
+test("strona: od bieżącego miesiąca do czerwca roku szkolnego", () => {
+  assert.equal(lastPublicMonth("2026-11"), "2027-06");
+  assert.equal(lastPublicMonth("2027-06"), "2027-06");
+  assert.equal(lastPublicMonth("2027-07"), "2027-07");
+  assert.equal(lastPublicMonth("2027-09"), "2028-06");
+  const events = validateEvents(
+    ["2026-10-20", "2026-11-25", "2027-03-04", "2027-06-04", "2027-07-01"].map((date) => parsed({ date, title: date })),
+    { ...META, month: 11 },
+    "f",
+  );
+  const full: PublishedSchedule = { sourcePage: "", groups: [{ id: "wilczki", name: "Wilczki" }], activities: [], notices: [], events };
+  assert.deepEqual(
+    publicView(full, ["wilczki"], "2026-11").events!.map((e) => e.date),
+    ["2026-11-25", "2027-03-04", "2027-06-04"],
+  );
 });

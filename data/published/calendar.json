@@ -871,7 +871,10 @@
       "details": "dzieci przychodzą od rana przebrane za postacie bajkowe.",
       "verification": "verified",
       "reviewReasons": [],
-      "source": "events/wilczki/2026-11.txt"
+      "source": "events/wilczki/2026-11.txt",
+      "kind": "event",
+      "project": null,
+      "tentative": false
     },
     {
       "id": "2d6e0c06a123",
@@ -884,7 +887,10 @@
       "details": "zajęcia patryjotyczne.",
       "verification": "verified",
       "reviewReasons": [],
-      "source": "events/wilczki/2026-11.txt"
+      "source": "events/wilczki/2026-11.txt",
+      "kind": "event",
+      "project": null,
+      "tentative": false
     },
     {
       "id": "452821782dc0",
@@ -897,7 +903,10 @@
       "details": "w tym dniu proszę by dzieci były elegancko ubranę.",
       "verification": "verified",
       "reviewReasons": [],
-      "source": "events/wilczki/2026-11.txt"
+      "source": "events/wilczki/2026-11.txt",
+      "kind": "event",
+      "project": null,
+      "tentative": false
     },
     {
       "id": "87085192a6df",
@@ -910,7 +919,10 @@
       "details": "zajęcia z psychologiem.",
       "verification": "verified",
       "reviewReasons": [],
-      "source": "events/wilczki/2026-11.txt"
+      "source": "events/wilczki/2026-11.txt",
+      "kind": "event",
+      "project": null,
+      "tentative": false
     },
     {
       "id": "6eb30edc140b",
@@ -923,7 +935,10 @@
       "details": "W szkole.",
       "verification": "verified",
       "reviewReasons": [],
-      "source": "events/wilczki/2026-11.txt"
+      "source": "events/wilczki/2026-11.txt",
+      "kind": "event",
+      "project": null,
+      "tentative": false
     },
     {
       "id": "5c389bcb810f",
@@ -936,7 +951,10 @@
       "details": null,
       "verification": "verified",
       "reviewReasons": [],
-      "source": "events/wilczki/2026-11.txt"
+      "source": "events/wilczki/2026-11.txt",
+      "kind": "event",
+      "project": null,
+      "tentative": false
     },
     {
       "id": "37d28de29c3a",
@@ -949,7 +967,10 @@
       "details": "dzieci mogą przynieść swoje ulubione misie i/ lub przebrać się za misie.",
       "verification": "verified",
       "reviewReasons": [],
-      "source": "events/wilczki/2026-11.txt"
+      "source": "events/wilczki/2026-11.txt",
+      "kind": "event",
+      "project": null,
+      "tentative": false
     },
     {
       "id": "7e58c2ffe271",
@@ -962,7 +983,218 @@
       "details": "dzieci mogą przebrać się za czarodziejów i wróżki.",
       "verification": "verified",
       "reviewReasons": [],
-      "source": "events/wilczki/2026-11.txt"
+      "source": "events/wilczki/2026-11.txt",
+      "kind": "event",
+      "project": null,
+      "tentative": false
+    },
+    {
+      "id": "e6b9ef48b39c",
+      "group": "wilczki",
+      "date": "2026-12-01",
+      "endDate": null,
+      "start": null,
+      "end": null,
+      "title": "Wizyta pani higienistki z gabinetu stomatologicznego",
+      "details": "Zajęcia dotyczące higieny jamy ustnej.",
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-12.txt",
+      "kind": "event",
+      "project": null,
+      "tentative": false
+    },
+    {
+      "id": "be66b8d0cf01",
+      "group": "wilczki",
+      "date": "2026-12-03",
+      "endDate": null,
+      "start": null,
+      "end": null,
+      "title": "Warsztaty świąteczne z Osikowej Doliny",
+      "details": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-12.txt",
+      "kind": "event",
+      "project": null,
+      "tentative": false
+    },
+    {
+      "id": "ab4f149955c1",
+      "group": "wilczki",
+      "date": "2026-12-07",
+      "endDate": null,
+      "start": null,
+      "end": null,
+      "title": "Mikołaj",
+      "details": "dzieci przychodzą ubrane świątecznie i przynoszą lampiony z zeszłego roku. Nasza grupa planuje przygotować występ dla Mikołaja.",
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-12.txt",
+      "kind": "event",
+      "project": null,
+      "tentative": false
+    },
+    {
+      "id": "8d3b0cdebee6",
+      "group": "wilczki",
+      "date": "2026-12-08",
+      "endDate": null,
+      "start": null,
+      "end": null,
+      "title": "Występ świąteczny dla osób z DPS",
+      "details": "Osoby, które zadeklarowały przygotowanie ciast, proszę o przyniesienie ich rano, już pokrojonych na porcje.",
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-12.txt",
+      "kind": "event",
+      "project": null,
+      "tentative": false
+    },
+    {
+      "id": "486b1c184aaf",
+      "group": "wilczki",
+      "date": "2026-12-15",
+      "endDate": null,
+      "start": "12:30",
+      "end": null,
+      "title": "Występ dla rodziców",
+      "details": "w naszej sali.",
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-12.txt",
+      "kind": "event",
+      "project": null,
+      "tentative": false
+    },
+    {
+      "id": "1bea0b460a38",
+      "group": "wilczki",
+      "date": "2026-12-18",
+      "endDate": null,
+      "start": null,
+      "end": null,
+      "title": "Wigilijka",
+      "details": "Dzieci przychodzą ubrane elegancko. Proszę, aby każde dziecko przyniosło pierniczki, owoce, opłatek oraz drobne ozdoby świąteczne, którymi udekorujemy wspólny stół.",
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-12.txt",
+      "kind": "event",
+      "project": null,
+      "tentative": false
+    },
+    {
+      "id": "5ecf870c1fa5",
+      "group": "wilczki",
+      "date": "2027-03-04",
+      "endDate": null,
+      "start": null,
+      "end": null,
+      "title": "Kopalnia Guido, „Mali Pomocnicy Sztygara”",
+      "details": "koszt 45 zł + dodatkowo koszt dojazdu.",
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-12.txt",
+      "kind": "trip",
+      "project": null,
+      "tentative": false
+    },
+    {
+      "id": "44cb23507277",
+      "group": "wilczki",
+      "date": "2027-03-04",
+      "endDate": null,
+      "start": null,
+      "end": null,
+      "title": "Kopalnia Guido, „Podziemne Królestwo Maszyn”",
+      "details": "koszt 35 zł + dodatkowo koszt dojazdu.",
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-12.txt",
+      "kind": "trip",
+      "project": null,
+      "tentative": false
+    },
+    {
+      "id": "ca82a0fbf25e",
+      "group": "wilczki",
+      "date": "2027-03-16",
+      "endDate": null,
+      "start": null,
+      "end": null,
+      "title": "Chlebowa Chata",
+      "details": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-12.txt",
+      "kind": "trip",
+      "project": "Preorientacja zawodowa",
+      "tentative": true
+    },
+    {
+      "id": "2451083151cb",
+      "group": "wilczki",
+      "date": "2027-03-17",
+      "endDate": null,
+      "start": null,
+      "end": null,
+      "title": "Chlebowa Chata",
+      "details": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-12.txt",
+      "kind": "trip",
+      "project": "Preorientacja zawodowa",
+      "tentative": true
+    },
+    {
+      "id": "630040ce3f45",
+      "group": "wilczki",
+      "date": "2027-04-05",
+      "endDate": null,
+      "start": null,
+      "end": null,
+      "title": "Warsztaty teatralne",
+      "details": "w Teatrze w Gliwicach",
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-12.txt",
+      "kind": "trip",
+      "project": "Preorientacja zawodowa",
+      "tentative": false
+    },
+    {
+      "id": "de654aca154d",
+      "group": "wilczki",
+      "date": "2027-05-11",
+      "endDate": null,
+      "start": null,
+      "end": null,
+      "title": "Rudy",
+      "details": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-12.txt",
+      "kind": "trip",
+      "project": "Preorientacja zawodowa",
+      "tentative": false
+    },
+    {
+      "id": "b9493947ce20",
+      "group": "wilczki",
+      "date": "2027-06-04",
+      "endDate": null,
+      "start": null,
+      "end": null,
+      "title": "Funzeum",
+      "details": null,
+      "verification": "verified",
+      "reviewReasons": [],
+      "source": "events/wilczki/2026-12.txt",
+      "kind": "trip",
+      "project": "Sensoplastyka",
+      "tentative": false
     }
   ]
 }
