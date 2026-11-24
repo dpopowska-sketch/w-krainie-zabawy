@@ -111,18 +111,8 @@ jobs:
       - name: Budowanie strony
         run: npm run web:build
 
-      - uses: actions/configure-pages@v5
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
-      - name: Publikacja strony
-        id: deploy
-        uses: actions/deploy-pages@v4
-
-      # Okres próbny: ta sama strona trafia też na Cloudflare Pages (docelowe miejsce, repo będzie prywatne).
-      # Projekt zakłada się sam przy pierwszej publikacji. Błąd tutaj nie blokuje GitHub Pages.
+      # Najpierw Cloudflare Pages (docelowe miejsce, adres dla rodziców), potem GitHub Pages – błąd jednej
+      # publikacji nie blokuje drugiej. Projekt na Cloudflare zakłada się sam przy pierwszej publikacji.
       - name: Publikacja na Cloudflare
         continue-on-error: true
         env:
@@ -132,3 +122,15 @@ jobs:
           npx --yes wrangler@4 pages project list | grep -qw wilczki-kalendarz \
             || npx --yes wrangler@4 pages project create wilczki-kalendarz --production-branch=main
           npx --yes wrangler@4 pages deploy dist --project-name=wilczki-kalendarz --branch=main --commit-dirty=true
+
+      # Okres próbny: ta sama strona także na GitHub Pages. Błąd tutaj widać jako nieudane zadanie,
+      # ale strona na Cloudflare jest już opublikowana.
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+      - name: Publikacja strony
+        id: deploy
+        uses: actions/deploy-pages@v4
