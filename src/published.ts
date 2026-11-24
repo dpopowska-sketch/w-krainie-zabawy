@@ -62,6 +62,12 @@ export interface SchoolEvent {
   reviewReasons: string[];
   /** Plik z wiadomością, np. events/wilczki/2026-11.txt. */
   source: string;
+  /** Wycieczka (cały dzień, poza przedszkolem) albo zwykłe wydarzenie w grupie. Brak = wydarzenie (starsze dane). */
+  kind?: "event" | "trip";
+  /** Projekt unijny, w ramach którego jest wycieczka, np. „Preorientacja zawodowa”. */
+  project?: string | null;
+  /** Termin do potwierdzenia – np. jeden z kilku podanych dni. */
+  tentative?: boolean;
 }
 
 export interface PublishedSchedule {

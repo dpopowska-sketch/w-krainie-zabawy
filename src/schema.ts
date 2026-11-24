@@ -74,6 +74,10 @@ export const ParsedEvent = z.object({
   details: z.string().nullable().describe("Pozostała część opisu dosłownie, bez nazwy; null, jeśli nic nie zostaje"),
   uncertain: z.boolean().describe("true, jeśli datę lub treść da się zrozumieć na więcej niż jeden sposób"),
   note: z.string().nullable().describe("Krótki opis wątpliwości, jeśli uncertain=true"),
+  kind: z.enum(["wydarzenie", "wycieczka"]).describe("'wycieczka', jeśli tekst nazywa to wycieczką (także pozycja pod nagłówkiem 'Wycieczki…'); inaczej 'wydarzenie'"),
+  project: z.string().nullable().describe("Nazwa projektu z nagłówka, pod którym jest pozycja (np. 'Sensoplastyka'), przepisana z tekstu; inaczej null"),
+  other_dates: z.array(z.string()).describe("Inne możliwe dni, gdy tekst podaje kilka dni do wyboru (np. '16.03 lub 17.03' → date=pierwszy, tu pozostałe), YYYY-MM-DD; inaczej []"),
+  to_confirm: z.boolean().describe("true, jeśli tekst mówi, że termin ma być jeszcze potwierdzony albo podaje kilka dni do wyboru"),
 });
 export type ParsedEvent = z.infer<typeof ParsedEvent>;
 

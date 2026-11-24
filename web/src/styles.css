@@ -2258,6 +2258,358 @@ button.freshness {
 }
 
 /* ═══ Telefon ═══ */
+/* ===== Kolejne miesiące i wycieczki (WPC-8) ===== */
+:root,
+:root[data-theme="nowoczesny"] {
+  --trip: #17804a;
+  --trip-ink: #0e5c34;
+  --trip-soft: #e6f4ec;
+  --trip-row: #f3faf6;
+}
+:root[data-theme="przyjazny"] {
+  --trip: #2c64b5;
+  --trip-ink: #173f78;
+  --trip-soft: #e3edfa;
+  --trip-row: #e3edfa;
+}
+
+/* Przełączanie miesięcy */
+.month-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.month-name {
+  display: flex;
+  align-items: baseline;
+  gap: 4px 16px;
+  flex-wrap: wrap;
+}
+.month-arrow {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-btn);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+.month-arrow:hover:not(:disabled) {
+  background: var(--seg-bg);
+}
+.month-arrow:disabled {
+  color: var(--faint);
+  cursor: default;
+  opacity: 0.5;
+}
+.month-back {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-btn);
+  background: var(--surface);
+  color: var(--accent);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.month-strip {
+  flex-basis: 100%;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(52px, 1fr);
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+.month-chip {
+  min-height: 46px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-btn);
+  background: var(--surface);
+  color: var(--text-2);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.month-chip.now {
+  color: var(--accent);
+  font-weight: 600;
+}
+.month-chip[aria-current="true"] {
+  background: var(--text);
+  border-color: var(--text);
+  color: #fff;
+  font-weight: 600;
+}
+.month-marks {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  min-height: 7px;
+}
+.month-chip[aria-current="true"] .dot-event {
+  background: #fff;
+}
+.month-chip[aria-current="true"] .mark-trip {
+  background: #7fd1a3;
+}
+.mark-trip {
+  width: 13px;
+  height: 7px;
+  border-radius: 4px;
+  background: var(--trip);
+  flex-shrink: 0;
+}
+.plan-note {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: var(--radius-card);
+  background: var(--seg-bg);
+  color: var(--text-2);
+  font-size: 14px;
+  line-height: 1.45;
+}
+.plan-note svg {
+  flex-shrink: 0;
+  color: var(--muted);
+}
+
+/* Wycieczka na liście */
+.row.event.trip {
+  background: var(--trip-row);
+}
+.trip-tile {
+  width: var(--tile);
+  height: var(--tile);
+  border-radius: var(--radius-tile);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--trip);
+  color: #fff;
+  flex-shrink: 0;
+}
+.row.event.tentative {
+  outline: 1.5px dashed var(--trip);
+  outline-offset: -3px;
+}
+.row.trip .event-label {
+  display: block;
+  font-family: var(--font);
+  font-weight: 600;
+  color: var(--trip-ink);
+}
+.trip-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.badge-tentative {
+  color: var(--moved);
+  background: #fff4e2;
+}
+.badge-project {
+  color: var(--text-2);
+  border: 1px solid #c9ced6;
+  background: var(--surface);
+}
+
+/* Wycieczka w kalendarzu – cały dzień */
+.cal-cell.trip {
+  background: var(--trip-soft);
+  box-shadow: inset 0 0 0 1px var(--trip);
+}
+.cal-cell.trip-tentative {
+  outline: 1.5px dashed var(--trip);
+  outline-offset: -2px;
+}
+.cal-cell.trip.has:not(:disabled):hover {
+  background: var(--trip-soft);
+}
+.cal-cell.selected .mark-trip {
+  background: #7fd1a3;
+}
+.legend-tentative {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 1.5px dashed var(--trip);
+  flex-shrink: 0;
+}
+.pill-trip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--trip);
+  color: #fff;
+}
+.pill-trip svg {
+  flex-shrink: 0;
+}
+
+/* Karta „Wycieczki w tym roku” */
+.trips-list li {
+  display: block;
+  padding: 0;
+}
+.trip-link {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 10px;
+  align-items: baseline;
+  padding: 9px 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.35;
+  text-align: left;
+  cursor: pointer;
+}
+.trip-link:hover .trip-title {
+  text-decoration: underline;
+}
+.trip-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.trip-title {
+  font-weight: 500;
+}
+
+/* Wygląd ciepły */
+:root[data-theme="przyjazny"] .month-arrow,
+:root[data-theme="przyjazny"] .month-back {
+  min-height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--seg-bg);
+}
+:root[data-theme="przyjazny"] .month-arrow {
+  width: 44px;
+  height: 44px;
+}
+:root[data-theme="przyjazny"] .month-back {
+  padding: 0 18px;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-size: 15px;
+  font-weight: 700;
+}
+:root[data-theme="przyjazny"] .month-chip {
+  min-height: 50px;
+  border: 0;
+  border-radius: 18px;
+  background: var(--seg-bg);
+  font-size: 14px;
+}
+:root[data-theme="przyjazny"] .month-chip.now {
+  color: var(--accent-ink);
+  font-weight: 700;
+}
+:root[data-theme="przyjazny"] .month-chip[aria-current="true"] {
+  background: #1f2d33;
+  color: #fff;
+  font-weight: 700;
+}
+:root[data-theme="przyjazny"] .month-chip .dot-event {
+  background: #f6c453;
+  box-shadow: 0 0 0 1.5px #1f2d33;
+}
+:root[data-theme="przyjazny"] .month-chip[aria-current="true"] .mark-trip,
+:root[data-theme="przyjazny"] .cal-cell.selected .mark-trip {
+  background: #8db6ef;
+}
+:root[data-theme="przyjazny"] .plan-note {
+  border-radius: 18px;
+}
+:root[data-theme="przyjazny"] .row.event.trip {
+  background: var(--trip-row);
+  color: #102b52;
+}
+:root[data-theme="przyjazny"] .row.event.tentative {
+  background: var(--surface);
+  outline: 2px dashed var(--trip);
+  outline-offset: -2px;
+}
+:root[data-theme="przyjazny"] .row.event.trip .tile {
+  background: var(--trip);
+  color: #fff;
+}
+:root[data-theme="przyjazny"] .row.trip .event-label {
+  font-weight: 700;
+  color: var(--trip-ink);
+}
+:root[data-theme="przyjazny"] .row.event.trip .row-details {
+  color: #1f3a5f;
+}
+:root[data-theme="przyjazny"] .row.event.trip .cal-btn {
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--trip-ink);
+}
+:root[data-theme="przyjazny"] .row.event.trip .badge-project {
+  border-color: #b9cdea;
+}
+:root[data-theme="przyjazny"] .cal-cell.trip,
+:root[data-theme="przyjazny"] .calendar-wrap.big .cal-cell.trip {
+  background: var(--trip-soft);
+  box-shadow: none;
+}
+:root[data-theme="przyjazny"] .cal-cell.trip-tentative,
+:root[data-theme="przyjazny"] .calendar-wrap.big .cal-cell.trip-tentative {
+  background: var(--surface);
+  outline: 2px dashed var(--trip);
+  outline-offset: -2px;
+}
+:root[data-theme="przyjazny"] .cal-cell.trip.selected,
+:root[data-theme="przyjazny"] .cal-cell.trip-tentative.selected {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+:root[data-theme="przyjazny"] .trips-card .events-head .trip-tile {
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+}
+:root[data-theme="przyjazny"] .trips-list {
+  gap: 6px;
+}
+:root[data-theme="przyjazny"] .trips-list li {
+  border: 0;
+}
+:root[data-theme="przyjazny"] .trip-link {
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 16px;
+  background: var(--seg-bg);
+}
+:root[data-theme="przyjazny"] .trip-link .events-date {
+  color: var(--trip-ink);
+}
+:root[data-theme="przyjazny"] .trip-title {
+  font-weight: 700;
+}
+
 @media (max-width: 720px) {
   .header-inner {
     padding: 12px 16px;
@@ -2594,5 +2946,30 @@ button.freshness {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+}
+
+/* Telefon: pasek miesiąca (WPC-8) */
+@media (max-width: 720px) {
+  .month-nav {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .month-name {
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .month-arrow,
+  :root[data-theme="przyjazny"] .month-arrow {
+    width: 44px;
+    height: 44px;
+  }
+  .month-back {
+    flex-basis: 100%;
+  }
+  .month-strip {
+    grid-auto-columns: 52px;
   }
 }

@@ -17,6 +17,8 @@ import {
   formatCheck,
   formatDay,
   formatMonth,
+  formatMonthGenitive,
+  formatMonthShort,
   formatShortDay,
   formatTimeRange,
   formatTimestamp,
@@ -26,12 +28,14 @@ import {
   todayIso,
   warsawDate,
   weekRangeLabel,
+  visibleMonths,
   weekdayLong,
   type Month,
 } from "./dates";
 import { feedUrl, selectionCodes } from "./feed";
 import {
   AddToCalendarIcon,
+  BusIcon,
   CancelIcon,
   CheckIcon,
   ChevronIcon,
@@ -190,7 +194,7 @@ export function App() {
   const [route, setRoute] = useState<Route>(readRoute);
   const menu = useMenuData(route.module === "menu");
   const [view, setViewState] = useState<View>(() => initial.view ?? storedView() ?? DEFAULT_VIEW[loadTheme()]);
-  // Publikujemy tylko bieżący miesiąc – bez przeglądania innych.
+  // Strona otwiera się na bieżącym miesiącu; kolejne (do czerwca) rodzic przełącza w GroupPage.
   const month = currentMonth();
 
   const setTheme = (t: Theme) => {
@@ -542,6 +546,31 @@ function ThemePicker({ theme, onChange }: { theme: Theme; onChange: (t: Theme) =
   );
 }
 
+/** Ta sama wycieczka w kilku możliwych dniach (do potwierdzenia) liczy się raz. */
+function tripKey(e: SchoolEvent): string {
+  return e.tentative ? `${e.title}|${e.date.slice(0, 7)}` : e.id;
+}
+
+/** Wpisy dni jednego miesiąca: wydarzenia (zawsze) i zajęcia przepuszczone przez `keep` (wybór „Moje”). */
+function buildByDay(activities: PublishedActivity[], events: SchoolEvent[], prefix: string, keep: (a: PublishedActivity) => boolean): Map<string, DayEntry[]> {
+  const map = new Map<string, DayEntry[]>();
+  const add = (day: string, item: DayEntry) => map.set(day, [...(map.get(day) ?? []), item]);
+  // Wydarzenia w grupie zawsze – niezależnie od wyboru w „Moich zajęciach”; wielodniowe w każdym dniu.
+  for (const e of events) for (const day of daysBetween(e.date, e.endDate ?? e.date)) if (day.startsWith(prefix)) add(day, { event: e });
+  for (const a of activities) {
+    if (!keep(a)) continue;
+    if (a.date.startsWith(prefix)) add(a.date, { activity: a, movedAway: false });
+    // Na pierwotny dzień przeniesionych zajęć zostawiamy informację „przeniesione na…”.
+    if (a.status === "rescheduled" && a.previous && a.previous.date !== a.date && a.previous.date.startsWith(prefix)) {
+      add(a.previous.date, { activity: a, movedAway: true });
+    }
+  }
+  // Wycieczki, potem wydarzenia na początku dnia, potem zajęcia według godziny.
+  const startOf = (i: DayEntry) => ("event" in i ? (i.event.kind === "trip" ? "" : "0") : ((i.movedAway ? i.activity.previous?.start : i.activity.start) ?? "99:99"));
+  for (const items of map.values()) items.sort((x, y) => startOf(x).localeCompare(startOf(y)));
+  return new Map([...map.entries()].sort(([a], [b]) => a.localeCompare(b)));
+}
+
 function GroupPage(props: {
   schedule: PublishedSchedule;
   status: SyncStatus | null;
@@ -554,13 +583,32 @@ function GroupPage(props: {
   /** Wybór zajęć z udostępnionego linku (do zapisania na tym urządzeniu). */
   linkCodes: string | null;
 }) {
-  const { schedule, month, theme } = props;
+  const { schedule, theme } = props;
   const group = props.group.id;
   const groupName = props.group.name;
+  const months = useMemo(() => visibleMonths(props.month), [monthKey(props.month)]);
+  const [month, setMonthState] = useState<Month>(props.month);
   const prefix = monthKey(month);
   const today = todayIso();
   const friendly = theme === "przyjazny";
 
+  const [selectedDay, setSelectedDay] = useState<string | null>(null);
+  const setMonth = (m: Month) => {
+    setMonthState(m);
+    setSelectedDay(null);
+  };
+  /** Z karty „Wycieczki w tym roku”: miesiąc wycieczki, w kalendarzu zaznaczony jej dzień, na liście przewinięcie do niego. */
+  const goToDay = (day: string) => {
+    const [year, m] = day.split("-").map(Number);
+    setMonthState({ year: year!, month: m! });
+    setSelectedDay(day);
+    setTimeout(() => {
+      const target = props.view === "list" ? document.getElementById(`d-${day}`) : document.querySelector(".primary");
+      target?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  };
+
+  const allGroupActivities = useMemo(() => schedule.activities.filter((a) => a.group === group), [schedule, group]);
   const groupActivities = useMemo(
     () => schedule.activities.filter((a) => a.group === group && (a.date.startsWith(prefix) || a.previous?.date.startsWith(prefix))),
     [schedule, group, prefix],
@@ -569,14 +617,33 @@ function GroupPage(props: {
     () => (schedule.events ?? []).filter((e) => e.group === group && daysBetween(e.date, e.endDate ?? e.date).some((d) => d.startsWith(prefix))),
     [schedule, group, prefix],
   );
-  const types = useMemo(() => activityTypes(groupActivities), [groupActivities]);
+  // Rodzaje zajęć ze wszystkich opublikowanych miesięcy – wybór „Moje” nie znika w miesiącu bez planu.
+  const types = useMemo(() => activityTypes(allGroupActivities), [allGroupActivities]);
+  const trips = useMemo(
+    () => (schedule.events ?? []).filter((e) => e.group === group && e.kind === "trip" && (e.endDate ?? e.date) >= today),
+    [schedule, group, today],
+  );
+  /** Miesiące z wydarzeniami i wycieczkami – znaczki na pasku miesięcy. */
+  const marks = useMemo(() => {
+    const result = new Map<string, { events: boolean; trips: boolean }>();
+    for (const e of schedule.events ?? []) {
+      if (e.group !== group) continue;
+      for (const d of daysBetween(e.date, e.endDate ?? e.date)) {
+        const key = d.slice(0, 7);
+        const mark = result.get(key) ?? { events: false, trips: false };
+        if (e.kind === "trip") mark.trips = true;
+        else mark.events = true;
+        result.set(key, mark);
+      }
+    }
+    return result;
+  }, [schedule, group]);
 
   const [selection, setSelection] = useState<Selection | null>(() => loadSelection(group));
   // Domyślnie (przy każdym otwarciu strony) widać tylko wybrane zajęcia.
   const [showAll, setShowAll] = useState(false);
   const [editing, setEditing] = useState(false);
   const [info, setInfo] = useState<string | null>(null);
-  const [selectedDay, setSelectedDay] = useState<string | null>(null);
 
   // Wybór z linku zapisujemy na tym urządzeniu.
   useEffect(() => {
@@ -619,24 +686,15 @@ function GroupPage(props: {
   const unseen = selection ? unseenTypes(selection, types) : [];
   const mine = (a: PublishedActivity) => selection !== null && isSelected(selection, a);
 
-  const byDay = useMemo(() => {
-    const map = new Map<string, DayEntry[]>();
-    const add = (day: string, item: DayEntry) => map.set(day, [...(map.get(day) ?? []), item]);
-    // Wydarzenia w grupie zawsze – niezależnie od wyboru w „Moich zajęciach”; wielodniowe w każdym dniu.
-    for (const e of groupEvents) for (const day of daysBetween(e.date, e.endDate ?? e.date)) if (day.startsWith(prefix)) add(day, { event: e });
-    for (const a of groupActivities) {
-      if (filtering && !isSelected(selection!, a)) continue;
-      if (a.date.startsWith(prefix)) add(a.date, { activity: a, movedAway: false });
-      // Na pierwotny dzień przeniesionych zajęć zostawiamy informację „przeniesione na…”.
-      if (a.status === "rescheduled" && a.previous && a.previous.date !== a.date && a.previous.date.startsWith(prefix)) {
-        add(a.previous.date, { activity: a, movedAway: true });
-      }
-    }
-    // Wydarzenia na początku dnia, potem zajęcia według godziny.
-    const startOf = (i: DayEntry) => ("event" in i ? "" : ((i.movedAway ? i.activity.previous?.start : i.activity.start) ?? "99:99"));
-    for (const items of map.values()) items.sort((x, y) => startOf(x).localeCompare(startOf(y)));
-    return new Map([...map.entries()].sort(([a], [b]) => a.localeCompare(b)));
-  }, [groupActivities, groupEvents, filtering, selection, prefix]);
+  const allGroupEvents = useMemo(() => (schedule.events ?? []).filter((e) => e.group === group), [schedule, group]);
+  const keep = (a: PublishedActivity) => !filtering || isSelected(selection!, a);
+  const byDay = useMemo(() => buildByDay(allGroupActivities, allGroupEvents, prefix, keep), [allGroupActivities, allGroupEvents, filtering, selection, prefix]);
+  // Powitanie („Dziś…”, „Jutro…”) zawsze dotyczy bieżącego miesiąca, niezależnie od oglądanego.
+  const currentPrefix = monthKey(props.month);
+  const todayByDay = useMemo(
+    () => (currentPrefix === prefix ? byDay : buildByDay(allGroupActivities, allGroupEvents, currentPrefix, keep)),
+    [byDay, allGroupActivities, allGroupEvents, filtering, selection, prefix, currentPrefix],
+  );
 
   // Komunikaty o minionych dniach chowamy, tak jak minione dni na liście.
   const notices = schedule.notices.filter(
@@ -652,15 +710,23 @@ function GroupPage(props: {
   const day = selectedDay ?? (byDay.has(today) ? today : (days.find((d) => d >= today) ?? days.at(-1) ?? null));
 
   const ctx: CardContext = { groupName, mine, toggleMine };
+  const monthActivities = groupActivities.filter((a) => a.date.startsWith(prefix)).length;
+  // Miesiąc bez żadnych zajęć dodatkowych (także odwołanych): planu jeszcze nie ma.
+  const noPlan = monthActivities === 0 && prefix > currentPrefix;
   const summary = {
-    activities: groupActivities.filter((a) => a.date.startsWith(prefix)).length,
-    events: groupEvents.length,
+    activities: monthActivities,
+    events: groupEvents.filter((e) => e.kind !== "trip").length,
+    trips: new Set(groupEvents.filter((e) => e.kind === "trip").map(tripKey)).size,
     cancelled: groupActivities.filter((a) => a.status === "cancelled" && a.date.startsWith(prefix)).length,
+    noPlan,
   };
 
   const monthBar = (
     <MonthBar
       month={month}
+      months={months}
+      marks={marks}
+      onMonth={setMonth}
       summary={summary}
       view={props.view}
       setView={props.setView}
@@ -672,9 +738,24 @@ function GroupPage(props: {
     />
   );
 
+  const planNote = noPlan && (
+    <p class="plan-note">
+      <InfoIcon />
+      <span>
+        Plan zajęć dodatkowych na {formatMonth(month).split(" ")[0]!.toLocaleLowerCase("pl")} pojawi się tutaj, gdy przedszkole go opublikuje. Na
+        razie widać tylko wydarzenia i wycieczki.
+      </span>
+    </p>
+  );
   const empty =
     byDay.size === 0 ? (
-      <p class="message">{filtering ? "W tym miesiącu nie ma terminów wybranych zajęć." : "Brak opublikowanych zajęć tej grupy w tym miesiącu."}</p>
+      <p class="message">
+        {noPlan
+          ? "W tym miesiącu nie ma jeszcze zapowiedzianych wydarzeń ani wycieczek."
+          : filtering
+            ? "W tym miesiącu nie ma terminów wybranych zajęć."
+            : "Brak opublikowanych zajęć tej grupy w tym miesiącu."}
+      </p>
     ) : null;
 
   const selectedPanel = props.view === "calendar" && day && (
@@ -689,7 +770,7 @@ function GroupPage(props: {
       myCount={friendly ? (selection?.selected.length ?? 0) : undefined}
       onMine={friendly ? openEditor : undefined}
     >
-      {friendly && <Greeting byDay={byDay} groupName={groupName} groupEvents={groupEvents} ctx={ctx} />}
+      {friendly && <Greeting byDay={todayByDay} groupName={groupName} groupEvents={allGroupEvents} ctx={ctx} />}
       {!friendly && monthBar}
 
       {info && (
@@ -715,6 +796,7 @@ function GroupPage(props: {
       <div class={`layout view-${props.view}`}>
         <section class={`primary${friendly ? " panel" : ""}`} aria-label={`Zajęcia – ${groupName}`}>
           {friendly && monthBar}
+          {planNote}
           {empty ??
             (props.view === "list" ? (
               <WeekList key={`${group}-${prefix}`} byDay={byDay} ctx={ctx} />
@@ -744,7 +826,8 @@ function GroupPage(props: {
               />
             </div>
           )}
-          {groupEvents.length > 0 && <EventsCard events={groupEvents} />}
+          {groupEvents.some((e) => e.kind !== "trip") && <EventsCard events={groupEvents.filter((e) => e.kind !== "trip")} />}
+          {trips.length > 0 && <TripsCard trips={trips} onPick={goToDay} />}
           {types.length > 0 && (
             <MyActivitiesCard
               types={types}
@@ -773,7 +856,11 @@ interface CardContext {
 
 function MonthBar(props: {
   month: Month;
-  summary: { activities: number; events: number; cancelled: number };
+  /** Miesiące do obejrzenia: od bieżącego do czerwca. */
+  months: Month[];
+  marks: Map<string, { events: boolean; trips: boolean }>;
+  onMonth: (m: Month) => void;
+  summary: { activities: number; events: number; trips: number; cancelled: number; noPlan: boolean };
   view: View;
   setView: (v: View) => void;
   filtering: boolean;
@@ -782,17 +869,44 @@ function MonthBar(props: {
   onMine: () => void;
   onEdit: () => void;
 }) {
-  const { activities, events, cancelled } = props.summary;
+  const { activities, events, trips, cancelled, noPlan } = props.summary;
   const parts = [
-    `${activities} ${plural(activities, "zajęcia dodatkowe", "zajęcia dodatkowe", "zajęć dodatkowych")}`,
+    !noPlan && `${activities} ${plural(activities, "zajęcia dodatkowe", "zajęcia dodatkowe", "zajęć dodatkowych")}`,
     events > 0 && `${events} ${plural(events, "wydarzenie", "wydarzenia", "wydarzeń")} w grupie`,
+    trips > 0 && `${trips} ${plural(trips, "wycieczka", "wycieczki", "wycieczek")}`,
     cancelled > 0 && `${cancelled} ${plural(cancelled, "odwołane", "odwołane", "odwołanych")}`,
+    noPlan && "plan zajęć dodatkowych jeszcze nieopublikowany",
   ].filter(Boolean);
+  const key = monthKey(props.month);
+  const index = props.months.findIndex((m) => monthKey(m) === key);
+  const prev = index > 0 ? props.months[index - 1] : null;
+  const next = index >= 0 && index < props.months.length - 1 ? props.months[index + 1] : null;
+  const first = props.months[0]!;
+  const many = props.months.length > 1;
   return (
     <div class="month-bar">
       <div class="month-title">
-        <h1>{formatMonth(props.month)}</h1>
-        <span class="muted month-summary">{parts.join(" · ")}</span>
+        <div class="month-nav">
+          {many && (
+            <button type="button" class="month-arrow" aria-label={prev ? `Poprzedni miesiąc: ${formatMonth(prev)}` : "Poprzedni miesiąc"} disabled={!prev} onClick={() => prev && props.onMonth(prev)}>
+              <ChevronIcon dir="left" />
+            </button>
+          )}
+          <div class="month-name">
+            <h1 aria-live="polite">{formatMonth(props.month)}</h1>
+            <span class="muted month-summary">{parts.join(" · ")}</span>
+          </div>
+          {many && (
+            <button type="button" class="month-arrow" aria-label={next ? `Następny miesiąc: ${formatMonth(next)}` : "Następny miesiąc"} disabled={!next} onClick={() => next && props.onMonth(next)}>
+              <ChevronIcon dir="right" />
+            </button>
+          )}
+          {index > 0 && (
+            <button type="button" class="month-back" onClick={() => props.onMonth(first)}>
+              Wróć do {formatMonthGenitive(first)}
+            </button>
+          )}
+        </div>
       </div>
       <div class="month-controls">
         <div class="segmented" role="group" aria-label="Widok">
@@ -814,6 +928,30 @@ function MonthBar(props: {
           </button>
         </div>
       </div>
+      {many && (
+        <nav class="month-strip" aria-label="Miesiące roku szkolnego">
+          {props.months.map((m) => {
+            const k = monthKey(m);
+            const mark = props.marks.get(k);
+            const label = [formatMonth(m), mark?.events && "wydarzenia w grupie", mark?.trips && "wycieczki"].filter(Boolean).join(", ");
+            return (
+              <button
+                type="button"
+                class={`month-chip${k === monthKey(first) ? " now" : ""}`}
+                aria-current={k === key ? "true" : undefined}
+                aria-label={label}
+                onClick={() => props.onMonth(m)}
+              >
+                <span>{formatMonthShort(m)}</span>
+                <span class="month-marks" aria-hidden="true">
+                  {mark?.events && <span class="dot-event" />}
+                  {mark?.trips && <span class="mark-trip" />}
+                </span>
+              </button>
+            );
+          })}
+        </nav>
+      )}
       {props.filtering && (
         <p class="filter-note muted">
           Moje zajęcia dodatkowe ({props.selectionCount}) + wydarzenia grupy ·{" "}
@@ -1053,8 +1191,14 @@ function WeekList({ byDay, ctx }: { byDay: Map<string, DayEntry[]>; ctx: CardCon
       {weeks.map((w) => {
         const all = w.days.flatMap(([, items]) => items);
         const acts = all.filter((i) => "activity" in i && !i.movedAway).length;
-        const evs = new Set(all.flatMap((i) => ("event" in i ? [i.event.id] : []))).size;
-        const countLabel = [acts && `${acts} ${plural(acts, "termin", "terminy", "terminów")}`, evs && `${evs} ${plural(evs, "wydarzenie", "wydarzenia", "wydarzeń")}`]
+        const weekEvents = all.flatMap((i) => ("event" in i ? [i.event] : []));
+        const evs = new Set(weekEvents.filter((e) => e.kind !== "trip").map((e) => e.id)).size;
+        const trips = new Set(weekEvents.filter((e) => e.kind === "trip").map(tripKey)).size;
+        const countLabel = [
+          acts && `${acts} ${plural(acts, "termin", "terminy", "terminów")}`,
+          evs && `${evs} ${plural(evs, "wydarzenie", "wydarzenia", "wydarzeń")}`,
+          trips && `${trips} ${plural(trips, "wycieczka", "wycieczki", "wycieczek")}`,
+        ]
           .filter(Boolean)
           .join(" · ");
         return (
@@ -1234,26 +1378,34 @@ function ActivityDetails({ activity: a }: { activity: PublishedActivity }) {
   );
 }
 
-/** Wydarzenie w grupie – od wychowawczyni, dla wszystkich dzieci, widoczne zawsze. */
+/** Wydarzenie w grupie – od wychowawczyni, dla wszystkich dzieci, widoczne zawsze. Wycieczka ma własny wygląd. */
 function EventRow({ event: e, ctx }: { event: SchoolEvent; ctx: CardContext }) {
   const today = todayIso();
   const cal = (e.endDate ?? e.date) >= today ? schoolCalendarEvent(e, ctx.groupName, pageUrl()) : null;
+  const trip = e.kind === "trip";
   return (
-    <li class="row event">
+    <li class={`row event${trip ? " trip" : ""}${e.tentative ? " tentative" : ""}`}>
       <span class="row-time" />
-      <span class="tile event-tile" aria-hidden="true">
-        <FlagIcon />
+      <span class={`tile ${trip ? "trip-tile" : "event-tile"}`} aria-hidden="true">
+        {trip ? <BusIcon size={20} /> : <FlagIcon />}
       </span>
       <div class="row-body">
         <span class="event-label">
-          Wydarzenie w grupie{e.endDate ? ` · ${dayMonth(e.date)}–${dayMonth(e.endDate)}` : ""}
+          {trip ? "Wycieczka · cały dzień, poza przedszkolem" : "Wydarzenie w grupie"}
+          {e.endDate ? ` · ${dayMonth(e.date)}–${dayMonth(e.endDate)}` : ""}
           {e.start ? ` · ${formatTimeRange(e.start, e.end)}` : ""}
         </span>
         <div class="row-title-line">
           <span class="row-title">{e.title}</span>
-          <span class="badge badge-event">Wydarzenie w grupie</span>
+          {!trip && <span class="badge badge-event">Wydarzenie w grupie</span>}
         </div>
         {e.details && <span class="row-details">{e.details}</span>}
+        {(e.project || e.tentative) && (
+          <span class="trip-badges">
+            {e.tentative && <span class="badge badge-tentative">Termin do potwierdzenia</span>}
+            {e.project && <span class="badge badge-project">Projekt unijny: {e.project}</span>}
+          </span>
+        )}
       </div>
       <div class="row-actions">
         {cal ? <AddToCalendar event={cal} label={e.title} /> : <span class="action-spacer" />}
@@ -1403,6 +1555,49 @@ function EventsCard({ events }: { events: SchoolEvent[] }) {
   );
 }
 
+/** „Wycieczki w tym roku”: wszystkie nadchodzące wycieczki; kliknięcie przenosi do ich miesiąca. */
+function TripsCard({ trips, onPick }: { trips: SchoolEvent[]; onPick: (day: string) => void }) {
+  // Ta sama wycieczka w kilku możliwych dniach (do potwierdzenia) – jedna pozycja z oboma dniami.
+  const items: { first: SchoolEvent; dates: string[] }[] = [];
+  for (const t of trips) {
+    const same = t.tentative && items.find((i) => i.first.tentative && i.first.title === t.title && i.first.date.slice(0, 7) === t.date.slice(0, 7));
+    if (same) same.dates.push(t.date);
+    else items.push({ first: t, dates: [t.date] });
+  }
+  return (
+    <div class="panel trips-card">
+      <div class="events-head">
+        <span class="tile trip-tile" aria-hidden="true">
+          <BusIcon size={20} />
+        </span>
+        <div class="panel-head">
+          <h2>Wycieczki w tym roku</h2>
+          <span class="muted">
+            {items.length} {plural(items.length, "zaplanowana", "zaplanowane", "zaplanowanych")} · cały dzień
+          </span>
+        </div>
+      </div>
+      <ul class="events-list trips-list">
+        {items.map(({ first: t, dates }) => (
+          <li>
+            <button type="button" class="trip-link" onClick={() => onPick(t.date)}>
+              <span class="events-date">
+                {dates.map((d) => dayMonth(d)).join(" lub ")}{" "}
+                <span class="events-wd">{t.tentative ? "do potwierdzenia" : weekdayShort(t.date)}</span>
+              </span>
+              <span class="trip-text">
+                <span class="trip-title">{t.title}</span>
+                {t.project && <span class="muted small">{t.project}</span>}
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+      <p class="muted small">Kliknij wycieczkę, aby przejść do jej miesiąca.</p>
+    </div>
+  );
+}
+
 function weekdayShort(iso: string): string {
   return ["nd", "pn", "wt", "śr", "czw", "pt", "sb"][new Date(`${iso}T12:00:00Z`).getUTCDay()]!;
 }
@@ -1540,7 +1735,10 @@ function CalendarGrid(props: {
         present.add(kindOf(i.activity.activity));
         if (i.activity.status === "cancelled") anyCancelled = true;
       }
-  const anyEvent = [...props.byDay.values()].some((items) => items.some((i) => "event" in i));
+  const allEvents = [...props.byDay.values()].flatMap((items) => items.filter((i): i is { event: SchoolEvent } => "event" in i));
+  const anyEvent = allEvents.some((i) => i.event.kind !== "trip");
+  const anyTrip = allEvents.some((i) => i.event.kind === "trip");
+  const anyTentative = allEvents.some((i) => i.event.kind === "trip" && i.event.tentative);
 
   return (
     <div class={`calendar-wrap${props.big ? " big" : ""}`}>
@@ -1553,12 +1751,20 @@ function CalendarGrid(props: {
         {cells.map((day, index) => {
           if (!day) return <div class="cal-cell empty" />;
           const items = props.byDay.get(day) ?? [];
-          const events = items.filter((i): i is { event: SchoolEvent } => "event" in i);
+          const all = items.filter((i): i is { event: SchoolEvent } => "event" in i);
+          const events = all.filter((i) => i.event.kind !== "trip");
+          const dayTrips = all.filter((i) => i.event.kind === "trip");
+          // Pewna wycieczka barwi cały dzień; sama wycieczka do potwierdzenia – przerywana ramka.
+          const tripClass = dayTrips.some((i) => !i.event.tentative) ? " trip" : dayTrips.length ? " trip-tentative" : "";
           const acts = items.filter((i): i is DayItem => "activity" in i);
           const weekend = index % 7 >= 5;
           const label = `${formatDay(day)}${
             items.length
               ? `: ${[
+                  dayTrips.length &&
+                    `${dayTrips.length === 1 ? "wycieczka" : `${dayTrips.length} ${plural(dayTrips.length, "wycieczka", "wycieczki", "wycieczek")}`}${
+                      tripClass === " trip-tentative" ? " (do potwierdzenia)" : ""
+                    }`,
                   events.length && `${events.length} ${plural(events.length, "wydarzenie", "wydarzenia", "wydarzeń")}`,
                   acts.length && `${acts.length} ${plural(acts.length, "zajęcia", "zajęcia", "zajęć")}`,
                 ]
@@ -1569,7 +1775,7 @@ function CalendarGrid(props: {
           return (
             <button
               type="button"
-              class={`cal-cell${day === today ? " today" : ""}${day === props.selected ? " selected" : ""}${items.length ? " has" : ""}${weekend ? " weekend" : ""}${day < today ? " past" : ""}`}
+              class={`cal-cell${day === today ? " today" : ""}${day === props.selected ? " selected" : ""}${items.length ? " has" : ""}${weekend ? " weekend" : ""}${day < today ? " past" : ""}${tripClass}`}
               aria-label={label}
               aria-pressed={props.selected ? day === props.selected : undefined}
               disabled={items.length === 0}
@@ -1577,6 +1783,7 @@ function CalendarGrid(props: {
             >
               <span class="cal-num">{Number(day.slice(8))}</span>
               <span class="dots" aria-hidden="true">
+                {dayTrips.length > 0 && <span class="mark-trip" />}
                 {events.length > 0 && <span class="dot-event" />}
                 {acts.slice(0, 3).map((i) => (
                   <span class={`dot kind-${kindOf(i.activity.activity)}${i.movedAway || i.activity.status === "cancelled" ? " hollow" : ""}`} />
@@ -1584,6 +1791,12 @@ function CalendarGrid(props: {
               </span>
               {props.big && (
                 <span class="pills" aria-hidden="true">
+                  {dayTrips.map((e) => (
+                    <span class="pill pill-trip">
+                      <BusIcon size={13} />
+                      {e.event.title}
+                    </span>
+                  ))}
                   {events.map((e) => (
                     <span class="pill pill-event">{e.event.title}</span>
                   ))}
@@ -1600,6 +1813,18 @@ function CalendarGrid(props: {
         })}
       </div>
       <div class="legend legend-dots">
+        {anyTrip && (
+          <span class="legend-item legend-strong">
+            <span class="mark-trip" />
+            Wycieczka – cały dzień
+          </span>
+        )}
+        {anyTentative && (
+          <span class="legend-item">
+            <span class="legend-tentative" />
+            do potwierdzenia
+          </span>
+        )}
         {anyEvent && (
           <span class="legend-item legend-strong">
             <span class="dot-event" />
@@ -1627,6 +1852,21 @@ function CalendarGrid(props: {
       </div>
       {props.big && (
         <div class="legend legend-pills">
+          {anyTrip && (
+            <span class="legend-item">
+              <span class="pill pill-trip">
+                <BusIcon size={13} />
+                Wycieczka
+              </span>
+              cały dzień, poza przedszkolem
+            </span>
+          )}
+          {anyTentative && (
+            <span class="legend-item">
+              <span class="legend-tentative" />
+              do potwierdzenia
+            </span>
+          )}
           {anyEvent && (
             <span class="legend-item">
               <span class="pill pill-event">Wydarzenie</span>wydarzenie w grupie
