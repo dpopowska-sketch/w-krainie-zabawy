@@ -67,7 +67,7 @@ Panel „Kalendarz w telefonie” daje link do kalendarza, który telefon sam od
   rok szkolny (od 1 września), potwierdzone wydarzenia.
 - Kalendarz składa funkcja Cloudflare Pages `functions/kalendarz/[plik].ts` przy każdym pobraniu
   (`web/src/feed.ts`); publikuje się sama razem ze stroną (`wrangler pages deploy` z katalogu repozytorium).
-  Na GitHub Pages ta funkcja nie działa – dlatego linki prowadzą zawsze na adres Cloudflare (`FEED_ORIGIN`).
+  Linki prowadzą na stały adres Cloudflare (`FEED_ORIGIN`), także przy podglądzie lokalnym.
 - Identyfikator terminu się nie zmienia po odwołaniu ani przeniesieniu, więc telefon przesuwa istniejący wpis.
   Odwołane zostają z tytułem „ODWOŁANE: …” i `STATUS:CANCELLED`.
 - Odświeżanie zależy od telefonu: iPhone mniej więcej co godzinę, Kalendarz Google co kilka do 24 godzin.
@@ -76,8 +76,13 @@ Panel „Kalendarz w telefonie” daje link do kalendarza, który telefon sam od
 
 `.github/workflows/sync.yml` uruchamia `npm run sync` w GitHub Actions co godzinę
 od 7:00 do 17:00 czasu polskiego (GitHub bywa spóźniony, zwykle do godziny), po każdej zmianie w repozytorium oraz ręcznie
-(zakładka **Actions** → **Synchronizacja harmonogramu** → **Run workflow**). Wymaga sekretu
-`ANTHROPIC_API_KEY` oraz włączonego GitHub Pages ze źródłem **GitHub Actions** (Settings → Pages).
+(zakładka **Actions** → **Synchronizacja harmonogramu** → **Run workflow**). Wymaga sekretów
+repozytorium (Settings → Secrets and variables → Actions, zakładka **Repository secrets**):
+`ANTHROPIC_API_KEY`, `CLOUDFLARE_API_TOKEN` (uprawnienie Pages: Edit) i `CLOUDFLARE_ACCOUNT_ID`.
+
+Strona dla rodziców jest publikowana tylko na Cloudflare Pages: https://wilczki-kalendarz.pages.dev
+(projekt `wilczki-kalendarz`, `npx wrangler@4 pages deploy`). Repozytorium jest prywatne – darmowy plan
+GitHub daje 2000 minut Actions miesięcznie (Settings → Billing → Usage).
 
 Zmiany danych są zapisywane w repozytorium od razu; sam czas sprawdzenia – raz dziennie. Strona jest
 publikowana tylko wtedy, gdy coś zapisano: zmiana danych, pojawienie się lub zniknięcie błędu synchronizacji

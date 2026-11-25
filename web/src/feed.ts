@@ -5,7 +5,7 @@ import type { CalendarData } from "../../src/published.js";
 import { calendarEvent, icsCalendarText, schoolCalendarEvent, type CalendarEvent } from "./calendar.js";
 import { activityKey, sameKind, shortCode } from "./selection.js";
 
-/** Adres na Cloudflare – tylko tam działa funkcja składająca kalendarz (GitHub Pages jej nie ma). */
+/** Stały adres strony na Cloudflare – tam działa funkcja składająca kalendarz (także dla podglądu lokalnego). */
 export const FEED_ORIGIN = "https://wilczki-kalendarz.pages.dev";
 
 /** Link do subskrypcji; `codes` = null → wszystkie zajęcia grupy. */

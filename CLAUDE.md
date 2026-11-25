@@ -8,8 +8,8 @@ Najpierw przeczytaj `README.md`: opisuje cały przepływ danych, pliki i decyzje
 dodatkowych „W krainie zabawy” ze [strony przedszkola](https://przedszkole-zspzernica.pilchowice.pl/harmonogram-zajec-w-krainie-zabawy/),
 wydarzenia grupy i jadłospis („Co dziś dobrego?”, ze stołówki szkoły: zspzernica.pilchowice.pl/stolowka).
 
-- Strona: https://wilczki-kalendarz.pages.dev (Cloudflare Pages) i równolegle, w okresie próbnym,
-  https://dpopowska-sketch.github.io/w-krainie-zabawy/ (GitHub Pages).
+- Strona: https://wilczki-kalendarz.pages.dev (tylko Cloudflare Pages; GitHub Pages wyłączone 25.11.2026).
+  Repozytorium jest prywatne – nie publikuj nic na GitHub Pages i pilnuj zużycia minut Actions.
 - Stos: TypeScript, Node (`tsx`), Vite + Preact w `web/`, funkcje Cloudflare w `functions/`, testy `node:test`.
 - Publikowana jest tylko grupa **Wilczki** (`config/groups.json` → `publicGroups`).
 - „Słowiki” to **zajęcia** (śpiew), nie grupa. „Miki” to lokalizacja (Motylki + Wilczki).
@@ -49,8 +49,6 @@ wydarzenia grupy i jadłospis („Co dziś dobrego?”, ze stołówki szkoły: z
 - Synchronizacja (`.github/workflows/sync.yml`) działa co godzinę od 7:00 do 17:00 czasu polskiego
   i po każdym pushu do `main`. Jadłospis ma osobny `menu.yml`.
 
-## Otwarte sprawy (stan na 9.11.2026)
+## Otwarte sprawy (stan na 25.11.2026)
 
-- Okres próbny dwóch hostingów. Po akceptacji: usunąć kroki GitHub Pages i `continue-on-error`
-  przy Cloudflare, zaktualizować README, a repozytorium stanie się prywatne.
 - Do rozważenia: żeby `sync.yml` i `menu.yml` nie publikowały strony w tym samym momencie.
